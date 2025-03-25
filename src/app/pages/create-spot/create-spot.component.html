@@ -1,6 +1,8 @@
 <mat-card class="create-card">
   <mat-card-title>Create Surf Spot</mat-card-title>
+
   <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" required />
@@ -12,11 +14,81 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
+      <mat-label>Country</mat-label>
+      <input matInput formControlName="country" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Region</mat-label>
+      <input matInput formControlName="region" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Wave Type</mat-label>
+      <mat-select formControlName="waveType">
+        <mat-option value="Reef break">Reef break</mat-option>
+        <mat-option value="Beach break">Beach break</mat-option>
+        <mat-option value="Point break">Point break</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Swell Direction</mat-label>
+      <mat-select formControlName="swellDirection">
+        <mat-option value="N">N</mat-option>
+        <mat-option value="NW">NW</mat-option>
+        <mat-option value="W">W</mat-option>
+        <mat-option value="SW">SW</mat-option>
+        <mat-option value="S">S</mat-option>
+        <mat-option value="SE">SE</mat-option>
+        <mat-option value="E">E</mat-option>
+        <mat-option value="NE">NE</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Tide</mat-label>
+      <mat-select formControlName="tide">
+        <mat-option value="Low">Low</mat-option>
+        <mat-option value="Mid">Mid</mat-option>
+        <mat-option value="High">High</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Wind Direction</mat-label>
+      <mat-select formControlName="windDirection">
+        <mat-option value="Offshore">Offshore</mat-option>
+        <mat-option value="Onshore">Onshore</mat-option>
+        <mat-option value="Cross-shore">Cross-shore</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
       <mat-label>Difficulty</mat-label>
       <mat-select formControlName="difficulty">
         <mat-option value="Beginner">Beginner</mat-option>
         <mat-option value="Intermediate">Intermediate</mat-option>
         <mat-option value="Advanced">Advanced</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Crowd Factor</mat-label>
+      <mat-select formControlName="crowdFactor">
+        <mat-option value="Low">Low</mat-option>
+        <mat-option value="Medium">Medium</mat-option>
+        <mat-option value="High">High</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Season</mat-label>
+      <mat-select formControlName="season" multiple>
+        <mat-option value="Spring">Spring</mat-option>
+        <mat-option value="Summer">Summer</mat-option>
+        <mat-option value="Fall">Fall</mat-option>
+        <mat-option value="Winter">Winter</mat-option>
       </mat-select>
     </mat-form-field>
 

@@ -28,11 +28,20 @@ export class CreateSpotComponent {
   form = this.fb.group({
     name: ['', Validators.required],
     description: [''],
+    country: [''],
+    region: [''],
+    waveType: [''],
+    swellDirection: [''],
+    tide: [''],
+    windDirection: [''],
     difficulty: ['Intermediate'],
+    season: [[]], // multi-select
+    crowdFactor: ['Medium'],
     lat: [0],
     lng: [0],
     imageUrl: [''],
   });
+  
 
   constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {}
 
