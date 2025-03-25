@@ -28,6 +28,14 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/comments`, data, { withCredentials: true });
   }
 
+  updateComment(id: string, data: any) {
+    return this.http.put(`${this.baseUrl}/comments/${id}`, data, { withCredentials: true });
+  }
+
+  deleteComment(id: string) {
+    return this.http.delete(`${this.baseUrl}/comments/${id}`, { withCredentials: true });
+  }
+
   getUser() {
     return this.http.get(`${this.baseUrl}/user`, { withCredentials: true });
   }
