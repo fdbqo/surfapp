@@ -1,19 +1,21 @@
 <mat-card class="spot-card" [class.preview-card]="isPreview">
-  <div class="card-image-container">
-    <img mat-card-image [src]="spot.imageUrl || '/assets/placeholder-surf.jpg'" alt="{{ spot.name || 'Surf Spot' }}" />
-    <div class="rating-badge" *ngIf="spot.rating">
-      <span class="rating-value">{{ spot.rating.toFixed(1) }}</span>
-      <span class="rating-stars">{{ getStarRating(spot.rating) }}</span>
+  <div class="card-image-wrapper">
+    <div class="card-image-container">
+      <img class="card-image" [src]="spot.imageUrl || '/assets/placeholder-surf.jpg'" alt="{{ spot.name || 'Surf Spot' }}" />
+      <div class="rating-badge" *ngIf="spot.rating">
+        <span class="rating-value">{{ spot.rating.toFixed(1) }}</span>
+        <span class="rating-stars">{{ getStarRating(spot.rating) }}</span>
+      </div>
+      <div class="preview-badge" *ngIf="isPreview">Preview</div>
+      <button 
+        *ngIf="isAdmin && !isPreview" 
+        mat-icon-button 
+        class="delete-button" 
+        (click)="confirmDelete($event)"
+        aria-label="Delete surf spot">
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
-    <div class="preview-badge" *ngIf="isPreview">Preview</div>
-    <button 
-      *ngIf="isAdmin && !isPreview" 
-      mat-icon-button 
-      class="delete-button" 
-      (click)="confirmDelete($event)"
-      aria-label="Delete surf spot">
-      <mat-icon>delete</mat-icon>
-    </button>
   </div>
 
   <mat-card-header>
