@@ -1,6 +1,6 @@
 .navbar {
   background-color: #111;
-  color: #87cefa;
+  color: white;
   padding: 0 1.5rem;
   height: 64px;
   display: flex;
@@ -16,7 +16,7 @@
 .title {
   font-size: 1.5rem;
   font-weight: 500;
-  color: #87cefa;
+  color: white;
   margin-right: 1.5rem;
   display: flex;
   align-items: center;
@@ -35,14 +35,14 @@
   display: flex;
   align-items: center;
   transition: all 0.2s ease;
+  color: white !important;
 }
 
 .nav-links a:hover {
-  background-color: rgba(135, 206, 250, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .active-link {
-  color: #ffffff !important;
   font-weight: 500 !important;
 }
 
@@ -53,7 +53,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background-color: #87cefa;
+  background-color: white;
 }
 
 .spacer {
@@ -63,53 +63,62 @@
 .navbar-right {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.user-profile {
-  display: flex;
-  align-items: center;
-}
-
-.profile-button {
-  display: flex;
-  align-items: center;
-  padding: 0 8px;
-  border-radius: 24px;
+/* New profile badge styling */
+.profile-badge {
+  min-width: 0;
+  padding: 0;
   height: 40px;
-  background-color: rgba(135, 206, 250, 0.1);
+  width: 40px;
+  border-radius: 20px;
+  background-color: #2a2a2a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
 }
 
-.profile-button:hover {
-  background-color: rgba(135, 206, 250, 0.2);
+.profile-badge:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.avatar {
+.badge-icon {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(135, 206, 250, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  overflow: hidden;
 }
 
-.username {
-  margin: 0 8px;
-  max-width: 120px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.user-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .login-button {
   display: flex;
   align-items: center;
   border-radius: 24px;
-  background-color: rgba(135, 206, 250, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   padding: 0 16px;
   height: 40px;
+  color: white !important;
 }
 
 .login-button:hover {
-  background-color: rgba(135, 206, 250, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .login-button mat-icon {
@@ -123,6 +132,8 @@
   padding: 0 !important;
   margin-top: 8px !important;
   background-color: #1e1e1e !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
 }
 
 ::ng-deep .mat-mdc-menu-content {
@@ -130,15 +141,15 @@
 }
 
 ::ng-deep .mat-mdc-menu-item {
-  color: #87cefa !important;
+  color: white !important;
 }
 
 ::ng-deep .mat-mdc-menu-item:hover {
-  background-color: rgba(135, 206, 250, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 ::ng-deep .mat-mdc-menu-item .mat-icon {
-  color: #6ba5c7 !important;
+  color: #ccc !important;
   margin-right: 8px !important;
 }
 
@@ -149,12 +160,23 @@
   background-color: #111;
 }
 
+.menu-avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .menu-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(135, 206, 250, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+  overflow: hidden;
 }
 
 .menu-user-info {
@@ -165,24 +187,20 @@
 
 .menu-username {
   font-weight: 500;
-  color: #87cefa;
+  color: white;
 }
 
 .menu-email {
   font-size: 0.8rem;
-  color: #6ba5c7;
+  color: #ccc;
 }
 
 ::ng-deep .mat-divider {
-  border-top-color: rgba(135, 206, 250, 0.2) !important;
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .username {
-    display: none;
-  }
-  
   .nav-links a {
     padding: 0 8px;
   }

@@ -1,6 +1,6 @@
 <mat-toolbar class="navbar">
     <div class="navbar-left">
-      <span class="title">🏄 SurfSpots</span>
+      <span class="title">SurfApp</span>
       <div class="nav-links">
         <a mat-button routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <a mat-button routerLink="/spots" routerLinkActive="active-link">Spots</a>
@@ -12,36 +12,40 @@
   
     <div class="navbar-right">
       <ng-container *ngIf="user; else loginButton">
-        <div class="user-profile">
-          <button mat-button [matMenuTriggerFor]="menu" class="profile-button">
-            <img [src]="user.image || '/assets/default-avatar.png'" alt="profile" class="avatar" />
-            <span class="username">{{ user.name }}</span>
-            <mat-icon>arrow_drop_down</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu" class="profile-menu">
-            <div class="menu-header">
-              <img [src]="user.image || '/assets/default-avatar.png'" alt="profile" class="menu-avatar" />
-              <div class="menu-user-info">
-                <span class="menu-username">{{ user.name }}</span>
-                <span class="menu-email">{{ user.email }}</span>
+        <button mat-button [matMenuTriggerFor]="menu" class="profile-badge">
+          <div class="badge-icon" [style.backgroundColor]="user.iconColor || '#4CAF50'">
+            <span *ngIf="!user.image">{{ getUserInitials() }}</span>
+            <img *ngIf="user.image" [src]="user.image" alt="profile" class="user-avatar" />
+          </div>
+        </button>
+        <mat-menu #menu="matMenu" class="profile-menu">
+          <div class="menu-header">
+            <div class="menu-avatar-container">
+              <div class="menu-avatar" [style.backgroundColor]="user.iconColor || '#4CAF50'">
+                <span *ngIf="!user.image">{{ getUserInitials() }}</span>
+                <img *ngIf="user.image" [src]="user.image" alt="profile" class="user-avatar" />
               </div>
             </div>
-            <mat-divider></mat-divider>
-            <button mat-menu-item routerLink="/profile">
-              <mat-icon>person</mat-icon>
-              <span>My Profile</span>
-            </button>
-            <button mat-menu-item routerLink="/favorites">
-              <mat-icon>favorite</mat-icon>
-              <span>Favorites</span>
-            </button>
-            <mat-divider></mat-divider>
-            <button mat-menu-item (click)="logout()">
-              <mat-icon>exit_to_app</mat-icon>
-              <span>Logout</span>
-            </button>
-          </mat-menu>
-        </div>
+            <div class="menu-user-info">
+              <span class="menu-username">{{ user.name }}</span>
+              <span class="menu-email">{{ user.email }}</span>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>My Profile</span>
+          </button>
+          <button mat-menu-item routerLink="/favorites">
+            <mat-icon>favorite</mat-icon>
+            <span>Favorites</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
       </ng-container>
   
       <ng-template #loginButton>

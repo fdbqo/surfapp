@@ -35,6 +35,15 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  getUserInitials(): string {
+    if (!this.user || !this.user.name) return '?';
+    
+    const nameParts = this.user.name.split(' ');
+    if (nameParts.length === 1) return nameParts[0].charAt(0).toUpperCase();
+    
+    return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+  }
+
   login() {
     window.location.href =
       'https://surfapi2.vercel.app/api/auth/signin/google';
