@@ -28,6 +28,7 @@ import { ApiService } from '../../services/api.service';
 export class CommentSectionComponent implements OnChanges {
   @Input() comments: any[] = [];
   @Input() currentUser: any = null;
+  @Input() spotId: string = '';
   
   displayedComments: any[] = [];
   replyingTo: string | null = null;
@@ -72,6 +73,7 @@ export class CommentSectionComponent implements OnChanges {
   }
   
   getStarRating(rating: number): string {
+    if (!rating) return '';
     return '★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating));
   }
   
@@ -102,9 +104,8 @@ export class CommentSectionComponent implements OnChanges {
     
     const reply = {
       text: this.replyText,
-      rating: parentComment.rating, // Inherit parent rating
-      spotId: parentComment.spotId,
       parentId: parentComment._id
+      // No need to include spotId or rating for replies - the backend will handle it
     };
     
     this.api.postComment(reply).subscribe({
