@@ -35,7 +35,7 @@
   display: flex;
   align-items: center;
   transition: all 0.2s ease;
-  color: white !important;
+  color: #87cefa !important;
 }
 
 .nav-links a:hover {
