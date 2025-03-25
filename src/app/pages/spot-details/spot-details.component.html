@@ -1,7 +1,7 @@
 <div class="details-container">
   <!-- Loading state -->
   <div *ngIf="loading" class="loading-container">
-    <mat-spinner diameter="50"></mat-spinner>
+    <mat-spinner diameter="40"></mat-spinner>
     <p>Loading spot details...</p>
   </div>
 
@@ -16,27 +16,26 @@
   <div *ngIf="!loading && !error && spot" class="spot-content">
     <div class="header-section">
       <div class="header-content">
-        <h1 class="spot-name">{{ spot.name }}</h1>
+        <div class="title-rating">
+          <h1 class="spot-name">{{ spot.name }}</h1>
+          <div class="spot-rating" *ngIf="spot.rating">
+            <span class="rating-stars">{{ getStarRating(spot.rating) }}</span>
+            <span class="rating-value">{{ spot.rating.toFixed(1) }}</span>
+            <span class="rating-count">({{ spot.comments?.length || 0 }} reviews)</span>
+          </div>
+        </div>
         <div class="spot-location">
           <mat-icon>location_on</mat-icon>
           <span>{{ spot.region }}, {{ spot.country }}</span>
         </div>
-
-        <div *ngIf="spot.rating" class="spot-rating">
-          <span class="rating-value">{{ spot.rating.toFixed(1) }}</span>
-          <span class="rating-stars">{{ getStarRating(spot.rating) }}</span>
-          <span class="rating-count">({{ spot.comments?.length || 0 }} reviews)</span>
-        </div>
       </div>
-
+      
       <div class="header-actions" *ngIf="isAdmin">
-        <button mat-raised-button color="primary" [routerLink]="['/edit', spot._id]">
+        <button mat-icon-button color="primary" [routerLink]="['/edit', spot._id]" matTooltip="Edit">
           <mat-icon>edit</mat-icon>
-          Edit
         </button>
-        <button mat-raised-button color="warn" (click)="deleteSpot()">
+        <button mat-icon-button color="warn" (click)="deleteSpot()" matTooltip="Delete">
           <mat-icon>delete</mat-icon>
-          Delete
         </button>
       </div>
     </div>
@@ -46,123 +45,137 @@
         <div class="main-image-container">
           <img [src]="spot.imageUrl || '/assets/placeholder-surf.jpg'" alt="{{ spot.name }}" class="main-image">
         </div>
+      </div>
 
-        <!-- Additional media gallery would go here -->
-        <div class="media-gallery">
-          <!-- Placeholder for future media gallery -->
+      <div class="info-tabs">
+        <div class="tab-buttons">
+          <button 
+            [class.active]="activeTab === 0" 
+            (click)="setActiveTab(0)" 
+            class="tab-button">
+            <mat-icon>waves</mat-icon>
+            <span>Conditions</span>
+          </button>
+          <button 
+            [class.active]="activeTab === 1" 
+            (click)="setActiveTab(1)" 
+            class="tab-button">
+            <mat-icon>info</mat-icon>
+            <span>About</span>
+          </button>
+          <button 
+            [class.active]="activeTab === 2" 
+            (click)="setActiveTab(2)" 
+            class="tab-button">
+            <mat-icon>place</mat-icon>
+            <span>Location</span>
+          </button>
+          <button 
+            [class.active]="activeTab === 3" 
+            (click)="setActiveTab(3)" 
+            class="tab-button">
+            <mat-icon>comment</mat-icon>
+            <span>Reviews</span>
+          </button>
         </div>
-      </div>
 
-      <div class="info-section">
-        <mat-card class="info-card">
-          <mat-card-header>
-            <mat-card-title>Surf Conditions</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="info-grid">
-              <div class="info-item">
-                <span class="info-label">Difficulty</span>
-                <span class="info-value">{{ spot.difficulty || 'N/A' }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Wave Type</span>
-                <span class="info-value">{{ spot.waveType || 'N/A' }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Swell Direction</span>
-                <span class="info-value">{{ spot.swellDirection || 'N/A' }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Wind Direction</span>
-                <span class="info-value">{{ spot.windDirection || 'N/A' }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Tide</span>
-                <span class="info-value">{{ spot.tide || 'N/A' }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Crowd Factor</span>
-                <span class="info-value">{{ spot.crowdFactor || 'N/A' }}</span>
-              </div>
+        <!-- Conditions Tab -->
+        <div class="tab-content" *ngIf="activeTab === 0">
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Difficulty</span>
+              <span class="info-value">{{ spot.difficulty || 'N/A' }}</span>
             </div>
-
-            <div class="seasons-section" *ngIf="spot.season?.length">
-              <span class="info-label">Best Seasons</span>
-              <div class="seasons-chips">
-                <span class="season-chip" *ngFor="let season of spot.season">{{ season }}</span>
-              </div>
+            <div class="info-item">
+              <span class="info-label">Wave Type</span>
+              <span class="info-value">{{ spot.waveType || 'N/A' }}</span>
             </div>
-          </mat-card-content>
-        </mat-card>
+            <div class="info-item">
+              <span class="info-label">Swell Direction</span>
+              <span class="info-value">{{ spot.swellDirection || 'N/A' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Wind Direction</span>
+              <span class="info-value">{{ spot.windDirection || 'N/A' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Tide</span>
+              <span class="info-value">{{ spot.tide || 'N/A' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Crowd Factor</span>
+              <span class="info-value">{{ spot.crowdFactor || 'N/A' }}</span>
+            </div>
+          </div>
+          
+          <div class="seasons-section" *ngIf="spot.season?.length">
+            <span class="info-label">Best Seasons</span>
+            <div class="seasons-chips">
+              <span class="season-chip" *ngFor="let season of spot.season">{{ season }}</span>
+            </div>
+          </div>
+        </div>
 
-        <mat-card class="description-card">
-          <mat-card-header>
-            <mat-card-title>About this spot</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <p class="spot-description">{{ spot.description || 'No description available.' }}</p>
-          </mat-card-content>
-        </mat-card>
+        <!-- About Tab -->
+        <div class="tab-content" *ngIf="activeTab === 1">
+          <p class="spot-description">{{ spot.description || 'No description available.' }}</p>
+        </div>
 
-        <mat-card class="location-card">
-          <mat-card-header>
-            <mat-card-title>Location</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <app-spot-map [latitude]="spot.location?.lat" [longitude]="spot.location?.lng" [spotName]="spot.name">
-            </app-spot-map>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
+        <!-- Location Tab -->
+        <div class="tab-content" *ngIf="activeTab === 2">
+          <app-spot-map 
+            [latitude]="spot.location?.lat" 
+            [longitude]="spot.location?.lng"
+            [spotName]="spot.name">
+          </app-spot-map>
+        </div>
 
-    <mat-divider class="section-divider"></mat-divider>
-
-    <div class="comments-section">
-      <h2>Reviews & Comments</h2>
-
-      <div class="comment-form-container" *ngIf="user">
-        <mat-card class="comment-form-card">
-          <mat-card-header>
-            <img [src]="user.image || '/assets/default-avatar.png'" alt="Your avatar" class="comment-avatar">
-            <mat-card-title>Add your review</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+        <!-- Reviews Tab -->
+        <div class="tab-content" *ngIf="activeTab === 3">
+          <div class="comment-form-container" *ngIf="user">
+            <div class="comment-form-header">
+              <img [src]="user.image || '/assets/default-avatar.png'" alt="Your avatar" class="comment-avatar">
               <div class="rating-input">
-                <span class="rating-label">Your rating:</span>
-                <div class="rating-stars-input">
-                  <button type="button" *ngFor="let star of [1, 2, 3, 4, 5]"
-                    (click)="commentForm.get('rating')?.setValue(star)"
-                    [class.active]="commentForm.get('rating')?.value >= star" class="star-button">
-                    ★
-                  </button>
-                </div>
+                <button 
+                  type="button" 
+                  *ngFor="let star of [1, 2, 3, 4, 5]" 
+                  (click)="commentForm.get('rating')?.setValue(star)"
+                  [class.active]="commentForm.get('rating')?.value >= star"
+                  class="star-button">
+                  ★
+                </button>
               </div>
-
+            </div>
+            
+            <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
               <mat-form-field appearance="outline" class="comment-input">
-                <mat-label>Write your comment</mat-label>
-                <textarea matInput formControlName="text" placeholder="Share your experience at this surf spot..."
-                  rows="4">
-                  </textarea>
-                <mat-error *ngIf="commentForm.get('text')?.hasError('required')">
-                  Comment text is required
-                </mat-error>
-                <mat-error *ngIf="commentForm.get('text')?.hasError('minlength')">
-                  Comment must be at least 3 characters
-                </mat-error>
+                <textarea 
+                  matInput 
+                  formControlName="text" 
+                  placeholder="Share your experience at this surf spot..."
+                  rows="2">
+                </textarea>
               </mat-form-field>
-
-              <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid">
-                Post Comment
+              
+              <button 
+                mat-raised-button 
+                color="primary" 
+                type="submit" 
+                [disabled]="commentForm.invalid"
+                class="post-button">
+                Post
               </button>
             </form>
-          </mat-card-content>
-        </mat-card>
+          </div>
+          
+          <app-comment-section 
+            [comments]="spot.comments || []" 
+            [currentUser]="user"
+            [spotId]="spotId">
+          </app-comment-section>
+        </div>
       </div>
-
-      <app-comment-section [comments]="spot.comments || []" [currentUser]="user" [spotId]="spotId">
-      </app-comment-section>
     </div>
   </div>
 </div>
+
