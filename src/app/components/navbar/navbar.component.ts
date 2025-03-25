@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
   }
 
   login() {
-    window.location.href = 'https://surfapi2.vercel.app/api/auth/signin/google?callbackUrl=https://surf-frontend.vercel.app';
+    window.location.href = 'https://surfapi2.vercel.app/api/auth/signin/google?callbackUrl=https://surfapp2.vercel.app';
   }
   
 
