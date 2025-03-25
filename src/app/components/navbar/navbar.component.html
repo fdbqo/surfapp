@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+    <span>🏄 SurfSpots</span>
+    <span class="spacer"></span>
+
+    <a mat-button routerLink="/">Home</a>
+    <a *ngIf="user?.role === 'admin'" mat-button routerLink="/create">Create</a>
+
+    <button *ngIf="!user" mat-raised-button (click)="login()">Login</button>
+    <button *ngIf="user" mat-button (click)="logout()">Logout</button>
+</mat-toolbar>

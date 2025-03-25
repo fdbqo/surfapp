@@ -1,0 +1,10 @@
+<h2>🌊 Surf Spots</h2>
+
+<mat-card *ngFor="let spot of spots" class="spot-card">
+  <mat-card-title>{{ spot.name }}</mat-card-title>
+  <mat-card-content>
+    <p>{{ spot.description }}</p>
+    <p><strong>Difficulty:</strong> {{ spot.difficulty || 'Unknown' }}</p>
+    <p><strong>Rating:</strong> {{ spot.rating || 'Not rated' }}</p>
+  </mat-card-content>
+</mat-card>
