@@ -117,8 +117,9 @@ export class CommentSectionComponent implements OnChanges {
     const reply = {
       text: this.replyText,
       parentId: parentComment._id,
-      spotId: this.spotId
-    };
+      spotId: this.spotId, // Include the spotId for replies
+      rating: 0, // Add a default rating for replies to satisfy the API
+    }
 
     this.api.postComment(reply).subscribe({
       next: (response) => {
