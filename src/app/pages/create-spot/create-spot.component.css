@@ -1,13 +1,27 @@
 .create-card {
-  max-width: 600px;
+  max-width: 800px;
   margin: 2rem auto;
-  padding: 1rem;
+  padding: 2rem;
   background-color: #1c1c1c;
   color: #87cefa;
 }
 
-mat-form-field {
-  display: block;
+mat-card-title {
   margin-bottom: 1rem;
-  width: 100%;
+  color: #87cefa;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+}
+
+.row mat-form-field {
+  flex: 1;
 }

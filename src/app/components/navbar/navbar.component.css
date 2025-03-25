@@ -1,15 +1,13 @@
 .navbar {
   background-color: #111;
-  color: #87cefa;
+  color: #87cefa; 
 }
 
-.title {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.spacer {
-  flex: 1 1 auto;
+mat-toolbar a,
+mat-toolbar button,
+mat-toolbar span {
+  color: #87cefa !important;
+  text-decoration: none;
 }
 
 .avatar {
@@ -17,4 +15,8 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
