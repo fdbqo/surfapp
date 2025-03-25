@@ -12,9 +12,13 @@
       </div>
 
       <mat-card-header>
-        <mat-card-title>{{ spot.name }}</mat-card-title>
-        <mat-card-subtitle>{{ spot.region }}, {{ spot.country }}</mat-card-subtitle>
+        <div>
+          <mat-card-title>{{ spot.name }}</mat-card-title>
+          <mat-card-subtitle>{{ spot.region }}, {{ spot.country }}</mat-card-subtitle>
+        </div>
       </mat-card-header>
+      
+      <div class="content-spacer"></div>
 
       <mat-card-content>
         <div class="key-info">
