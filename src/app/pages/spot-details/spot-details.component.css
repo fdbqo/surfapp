@@ -104,13 +104,19 @@
 
 /* Main content layout */
 .main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.top-row {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
 }
 
 @media (min-width: 768px) {
-  .main-content {
+  .top-row {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -286,6 +292,22 @@ form {
 
 .post-button {
   margin-top: 4px;
+}
+
+/* Comments section */
+.comments-section {
+  background-color: #1e1e1e;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.section-title {
+  color: #87cefa;
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(135, 206, 250, 0.2);
+  padding-bottom: 0.5rem;
 }
 
 /* Responsive adjustments */
