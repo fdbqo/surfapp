@@ -1,71 +1,71 @@
 <mat-card class="spot-card" [class.preview-card]="isPreview">
-    <div class="card-image-container">
-      <img mat-card-image [src]="spot.imageUrl || '/assets/placeholder-surf.jpg'" alt="{{ spot.name || 'Surf Spot' }}" />
-      <div class="rating-badge" *ngIf="spot.rating">
-        <span class="rating-value">{{ spot.rating.toFixed(1) }}</span>
-        <span class="rating-stars">{{ getStarRating(spot.rating) }}</span>
-      </div>
-      <div class="preview-badge" *ngIf="isPreview">Preview</div>
+  <div class="card-image-container">
+    <img class="card-image" [src]="spot.imageUrl || '/assets/placeholder-surf.jpg'" alt="{{ spot.name || 'Surf Spot' }}" />
+    <div class="rating-badge" *ngIf="spot.rating">
+      <span class="rating-value">{{ spot.rating.toFixed(1) }}</span>
+      <span class="rating-stars">{{ getStarRating(spot.rating) }}</span>
     </div>
+    <div class="preview-badge" *ngIf="isPreview">Preview</div>
+  </div>
+
+  <mat-card-header>
+    <div>
+      <mat-card-title>{{ spot.name || 'Surf Spot Name' }}</mat-card-title>
+      <mat-card-subtitle *ngIf="spot.region || spot.country">
+        {{ spot.region || 'Region' }}{{ spot.region && spot.country ? ', ' : '' }}{{ spot.country || 'Country' }}
+      </mat-card-subtitle>
+    </div>
+  </mat-card-header>
   
-    <mat-card-header>
-      <div>
-        <mat-card-title>{{ spot.name || 'Surf Spot Name' }}</mat-card-title>
-        <mat-card-subtitle *ngIf="spot.region || spot.country">
-          {{ spot.region || 'Region' }}{{ spot.region && spot.country ? ', ' : '' }}{{ spot.country || 'Country' }}
-        </mat-card-subtitle>
+  <div class="content-spacer"></div>
+
+  <mat-card-content>
+    <div class="key-info">
+      <div class="info-item" *ngIf="spot.difficulty">
+        <span class="info-label">Difficulty:</span>
+        <span class="info-value">{{ spot.difficulty }}</span>
       </div>
-    </mat-card-header>
-    
-    <div class="content-spacer"></div>
-  
-    <mat-card-content>
-      <div class="key-info">
-        <div class="info-item" *ngIf="spot.difficulty">
-          <span class="info-label">Difficulty:</span>
-          <span class="info-value">{{ spot.difficulty }}</span>
-        </div>
-        <div class="info-item" *ngIf="spot.waveType">
-          <span class="info-label">Wave Type:</span>
-          <span class="info-value">{{ spot.waveType }}</span>
-        </div>
-        <div class="info-item" *ngIf="spot.swellDirection">
-          <span class="info-label">Swell:</span>
-          <span class="info-value">{{ spot.swellDirection }}</span>
-        </div>
-        <div class="info-item" *ngIf="spot.windDirection">
-          <span class="info-label">Wind:</span>
-          <span class="info-value">{{ spot.windDirection }}</span>
-        </div>
+      <div class="info-item" *ngIf="spot.waveType">
+        <span class="info-label">Wave Type:</span>
+        <span class="info-value">{{ spot.waveType }}</span>
       </div>
-  
-      <div class="secondary-info">
-        <div class="info-item" *ngIf="spot.tide">
-          <span class="info-label">Tide:</span>
-          <span class="info-value">{{ spot.tide }}</span>
-        </div>
-        <div class="info-item" *ngIf="spot.crowdFactor">
-          <span class="info-label">Crowd:</span>
-          <span class="info-value">{{ spot.crowdFactor }}</span>
-        </div>
+      <div class="info-item" *ngIf="spot.swellDirection">
+        <span class="info-label">Swell:</span>
+        <span class="info-value">{{ spot.swellDirection }}</span>
       </div>
-  
-      <div class="description" *ngIf="spot.description">
-        <p>{{ spot.description }}</p>
+      <div class="info-item" *ngIf="spot.windDirection">
+        <span class="info-label">Wind:</span>
+        <span class="info-value">{{ spot.windDirection }}</span>
       </div>
-  
-      <div class="season-chips" *ngIf="spot.season?.length">
-        <span class="info-label">Season:</span>
-        <div class="chips-container">
-          <span class="season-chip" *ngFor="let season of spot.season">{{ season }}</span>
-        </div>
+    </div>
+
+    <div class="secondary-info">
+      <div class="info-item" *ngIf="spot.tide">
+        <span class="info-label">Tide:</span>
+        <span class="info-value">{{ spot.tide }}</span>
       </div>
-    </mat-card-content>
-  
-    <mat-card-actions *ngIf="!isPreview">
-      <button mat-button [routerLink]="['/spots', spot.id]">VIEW DETAILS</button>
-      <button mat-icon-button>
-        <mat-icon>favorite_border</mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
+      <div class="info-item" *ngIf="spot.crowdFactor">
+        <span class="info-label">Crowd:</span>
+        <span class="info-value">{{ spot.crowdFactor }}</span>
+      </div>
+    </div>
+
+    <div class="description" *ngIf="spot.description">
+      <p>{{ spot.description }}</p>
+    </div>
+
+    <div class="season-chips" *ngIf="spot.season?.length">
+      <span class="info-label">Season:</span>
+      <div class="chips-container">
+        <span class="season-chip" *ngFor="let season of spot.season">{{ season }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions *ngIf="!isPreview">
+    <button mat-button [routerLink]="['/spots', spot.id]">VIEW DETAILS</button>
+    <button mat-icon-button>
+      <mat-icon>favorite_border</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

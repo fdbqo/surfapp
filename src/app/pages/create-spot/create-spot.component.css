@@ -10,14 +10,14 @@
 }
 
 .header h1 {
-  color: #87cefa;
+  color: white;
   font-size: 2.5rem;
   font-weight: 300;
   margin-bottom: 0.5rem;
 }
 
 .header p {
-  color: #6ba5c7;
+  color: #ccc;
   font-size: 1.1rem;
 }
 
@@ -51,13 +51,13 @@
 }
 
 .preview-header h2 {
-  color: #87cefa;
+  color: white;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 .preview-header p {
-  color: #6ba5c7;
+  color: #ccc;
   font-size: 0.9rem;
 }
 
@@ -84,46 +84,54 @@
   height: 18px !important;
 }
 
+/* Tab styling */
 ::ng-deep .mat-mdc-tab-group {
-  --mdc-tab-indicator-active-indicator-color: #87cefa;
-  --mat-tab-header-active-label-text-color: #87cefa;
-  --mat-tab-header-active-ripple-color: rgba(135, 206, 250, 0.1);
-  --mat-tab-header-inactive-label-text-color: #6ba5c7;
-  --mat-tab-header-inactive-ripple-color: rgba(135, 206, 250, 0.05);
-  --mat-tab-header-active-focus-label-text-color: #87cefa;
-  --mat-tab-header-active-hover-label-text-color: #87cefa;
-  --mat-tab-header-active-focus-indicator-color: #87cefa;
-  --mat-tab-header-active-hover-indicator-color: #87cefa;
+  --mdc-tab-indicator-active-indicator-color: white;
+  --mat-tab-header-active-label-text-color: white;
+  --mat-tab-header-active-ripple-color: rgba(255, 255, 255, 0.1);
+  --mat-tab-header-inactive-label-text-color: #ccc;
+  --mat-tab-header-inactive-ripple-color: rgba(255, 255, 255, 0.05);
+  --mat-tab-header-active-focus-label-text-color: white;
+  --mat-tab-header-active-hover-label-text-color: white;
+  --mat-tab-header-active-focus-indicator-color: white;
+  --mat-tab-header-active-hover-indicator-color: white;
 }
 
+/* Form field styling - updated to white text */
 ::ng-deep .mat-mdc-form-field {
   --mdc-filled-text-field-container-color: #2a2a2a;
-  --mdc-filled-text-field-focus-active-indicator-color: #87cefa;
-  --mdc-filled-text-field-focus-label-text-color: #87cefa;
-  --mdc-filled-text-field-label-text-color: #6ba5c7;
-  --mdc-filled-text-field-input-text-color: #87cefa;
-  --mdc-filled-text-field-hover-active-indicator-color: #6ba5c7;
+  --mdc-filled-text-field-focus-active-indicator-color: white;
+  --mdc-filled-text-field-focus-label-text-color: white;
+  --mdc-filled-text-field-label-text-color: #ccc;
+  --mdc-filled-text-field-input-text-color: white;
+  --mdc-filled-text-field-hover-active-indicator-color: #ccc;
   --mdc-filled-text-field-disabled-container-color: rgba(42, 42, 42, 0.5);
-  --mdc-filled-text-field-disabled-label-text-color: rgba(107, 165, 199, 0.5);
-  --mdc-filled-text-field-disabled-input-text-color: rgba(135, 206, 250, 0.5);
-  --mat-form-field-focus-color: #87cefa;
+  --mdc-filled-text-field-disabled-label-text-color: rgba(204, 204, 204, 0.5);
+  --mdc-filled-text-field-disabled-input-text-color: rgba(255, 255, 255, 0.5);
+  --mat-form-field-focus-color: white;
 }
 
 ::ng-deep .mat-mdc-outlined-form-field {
   --mdc-outlined-text-field-outline-color: #3a3a3a;
-  --mdc-outlined-text-field-focus-outline-color: #87cefa;
-  --mdc-outlined-text-field-hover-outline-color: #6ba5c7;
-  --mdc-outlined-text-field-label-text-color: #6ba5c7;
-  --mdc-outlined-text-field-focus-label-text-color: #87cefa;
-  --mdc-outlined-text-field-input-text-color: #87cefa;
+  --mdc-outlined-text-field-focus-outline-color: white;
+  --mdc-outlined-text-field-hover-outline-color: #ccc;
+  --mdc-outlined-text-field-label-text-color: #ccc;
+  --mdc-outlined-text-field-focus-label-text-color: white;
+  --mdc-outlined-text-field-input-text-color: white;
 }
 
+/* Input placeholder color */
+::ng-deep .mat-mdc-input-element::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Select styling */
 ::ng-deep .mat-mdc-select-value-text {
-  color: #87cefa !important;
+  color: white !important;
 }
 
 ::ng-deep .mat-mdc-select-arrow {
-  color: #6ba5c7 !important;
+  color: #ccc !important;
 }
 
 ::ng-deep .mat-mdc-select-panel {
@@ -131,19 +139,28 @@
 }
 
 ::ng-deep .mat-mdc-option {
-  color: #87cefa !important;
+  color: white !important;
 }
 
 ::ng-deep .mat-mdc-option:hover {
-  background-color: rgba(135, 206, 250, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 ::ng-deep .mat-mdc-option.mat-mdc-option-active {
-  background-color: rgba(135, 206, 250, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 ::ng-deep .mat-mdc-form-field-icon-suffix {
-  color: #6ba5c7 !important;
+  color: #ccc !important;
+}
+
+/* Form hints and errors */
+::ng-deep .mat-mdc-form-field-hint {
+  color: #ccc !important;
+}
+
+::ng-deep .mat-mdc-form-field-error {
+  color: #f44336 !important;
 }
 
 .form-actions {
@@ -152,12 +169,12 @@
   gap: 1rem;
   margin-top: 1.5rem;
   padding: 1rem;
-  border-top: 1px solid rgba(135, 206, 250, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .submit-button {
   background-color: #1e4a6d !important;
-  color: #87cefa !important;
+  color: white !important;
 }
 
 .submit-button:hover {
@@ -177,7 +194,7 @@
   border-radius: 8px;
   padding: 3rem;
   margin-top: 1rem;
-  color: #6ba5c7;
+  color: #ccc;
   text-align: center;
 }
 
@@ -191,7 +208,7 @@
 .map-placeholder .hint {
   font-size: 0.8rem;
   margin-top: 0.5rem;
-  color: #5a94b6;
+  color: #aaa;
 }
 
 @media (max-width: 1024px) {
