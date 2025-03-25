@@ -1,10 +1,20 @@
-<mat-toolbar color="primary">
-    <span>🏄 SurfSpots</span>
-    <span class="spacer"></span>
+<mat-toolbar class="navbar">
+    <span class="title">🏄 SurfSpots</span>
 
+    <span class="spacer"></span>
     <a mat-button routerLink="/">Home</a>
     <a *ngIf="user?.role === 'admin'" mat-button routerLink="/create">Create</a>
 
-    <button *ngIf="!user" mat-raised-button (click)="login()">Login</button>
-    <button *ngIf="user" mat-button (click)="logout()">Logout</button>
+    <ng-container *ngIf="user; else loginButton">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <img [src]="user.image" alt="profile" class="avatar" />
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+    </ng-container>
+
+    <ng-template #loginButton>
+        <button mat-button (click)="login()">Login</button>
+    </ng-template>
 </mat-toolbar>

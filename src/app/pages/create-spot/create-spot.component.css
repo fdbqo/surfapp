@@ -1,0 +1,13 @@
+.create-card {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #1c1c1c;
+  color: #87cefa;
+}
+
+mat-form-field {
+  display: block;
+  margin-bottom: 1rem;
+  width: 100%;
+}
