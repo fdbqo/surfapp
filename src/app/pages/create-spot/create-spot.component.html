@@ -1,116 +1,179 @@
-<mat-card class="create-card">
-  <mat-card-title>Create Surf Spot</mat-card-title>
+<div class="create-spot-container">
+  <div class="header">
+    <h1>Create New Surf Spot</h1>
+    <p>Fill in the details below to add a new surf spot to the database</p>
+  </div>
 
-  <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+  <div class="content-layout">
+    <div class="form-section">
+      <mat-card class="form-card">
+        <mat-card-content>
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <mat-tab-group animationDuration="300ms">
+              <mat-tab label="Basic Info">
+                <div class="tab-content">
+                  <div class="form-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Spot Name</mat-label>
+                      <input matInput formControlName="name" required placeholder="e.g., Pipeline" />
+                      <mat-icon matSuffix>surfing</mat-icon>
+                      <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+                    </mat-form-field>
+                  </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name" required />
-    </mat-form-field>
+                  <div class="form-row">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Country</mat-label>
+                      <input matInput formControlName="country" placeholder="e.g., USA" />
+                      <mat-icon matSuffix>public</mat-icon>
+                    </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description"></textarea>
-    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Region</mat-label>
+                      <input matInput formControlName="region" placeholder="e.g., North Shore, Oahu" />
+                      <mat-icon matSuffix>location_on</mat-icon>
+                    </mat-form-field>
+                  </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Country</mat-label>
-      <input matInput formControlName="country" />
-    </mat-form-field>
+                  <div class="form-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Description</mat-label>
+                      <textarea 
+                        matInput 
+                        formControlName="description" 
+                        placeholder="Describe the surf spot, its features, and any notable characteristics"
+                        rows="4">
+                      </textarea>
+                    </mat-form-field>
+                  </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Region</mat-label>
-      <input matInput formControlName="region" />
-    </mat-form-field>
+                  <div class="form-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Image URL</mat-label>
+                      <input matInput formControlName="imageUrl" placeholder="https://example.com/image.jpg" />
+                      <mat-icon matSuffix>image</mat-icon>
+                      <mat-hint>Provide a URL to an image of the surf spot</mat-hint>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Wave Type</mat-label>
-      <mat-select formControlName="waveType">
-        <mat-option value="Reef break">Reef break</mat-option>
-        <mat-option value="Beach break">Beach break</mat-option>
-        <mat-option value="Point break">Point break</mat-option>
-      </mat-select>
-    </mat-form-field>
+              <mat-tab label="Surf Conditions">
+                <div class="tab-content">
+                  <div class="form-row">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Wave Type</mat-label>
+                      <mat-select formControlName="waveType">
+                        <mat-option *ngFor="let type of waveTypes" [value]="type">{{ type }}</mat-option>
+                      </mat-select>
+                      <mat-icon matSuffix>waves</mat-icon>
+                    </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Swell Direction</mat-label>
-      <mat-select formControlName="swellDirection">
-        <mat-option value="N">N</mat-option>
-        <mat-option value="NW">NW</mat-option>
-        <mat-option value="W">W</mat-option>
-        <mat-option value="SW">SW</mat-option>
-        <mat-option value="S">S</mat-option>
-        <mat-option value="SE">SE</mat-option>
-        <mat-option value="E">E</mat-option>
-        <mat-option value="NE">NE</mat-option>
-      </mat-select>
-    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Difficulty</mat-label>
+                      <mat-select formControlName="difficulty">
+                        <mat-option *ngFor="let level of difficulties" [value]="level">{{ level }}</mat-option>
+                      </mat-select>
+                      <mat-icon matSuffix>signal_cellular_alt</mat-icon>
+                    </mat-form-field>
+                  </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Tide</mat-label>
-      <mat-select formControlName="tide">
-        <mat-option value="Low">Low</mat-option>
-        <mat-option value="Mid">Mid</mat-option>
-        <mat-option value="High">High</mat-option>
-      </mat-select>
-    </mat-form-field>
+                  <div class="form-row">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Swell Direction</mat-label>
+                      <mat-select formControlName="swellDirection">
+                        <mat-option *ngFor="let direction of swellDirections" [value]="direction">{{ direction }}</mat-option>
+                      </mat-select>
+                      <mat-icon matSuffix>navigation</mat-icon>
+                    </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Wind Direction</mat-label>
-      <mat-select formControlName="windDirection">
-        <mat-option value="Offshore">Offshore</mat-option>
-        <mat-option value="Onshore">Onshore</mat-option>
-        <mat-option value="Cross-shore">Cross-shore</mat-option>
-      </mat-select>
-    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Wind Direction</mat-label>
+                      <mat-select formControlName="windDirection">
+                        <mat-option *ngFor="let direction of windDirections" [value]="direction">{{ direction }}</mat-option>
+                      </mat-select>
+                      <mat-icon matSuffix>air</mat-icon>
+                    </mat-form-field>
+                  </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Difficulty</mat-label>
-      <mat-select formControlName="difficulty">
-        <mat-option value="Beginner">Beginner</mat-option>
-        <mat-option value="Intermediate">Intermediate</mat-option>
-        <mat-option value="Advanced">Advanced</mat-option>
-      </mat-select>
-    </mat-form-field>
+                  <div class="form-row">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Tide</mat-label>
+                      <mat-select formControlName="tide">
+                        <mat-option *ngFor="let tide of tides" [value]="tide">{{ tide }}</mat-option>
+                      </mat-select>
+                      <mat-icon matSuffix>water</mat-icon>
+                    </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Crowd Factor</mat-label>
-      <mat-select formControlName="crowdFactor">
-        <mat-option value="Low">Low</mat-option>
-        <mat-option value="Medium">Medium</mat-option>
-        <mat-option value="High">High</mat-option>
-      </mat-select>
-    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Crowd Factor</mat-label>
+                      <mat-select formControlName="crowdFactor">
+                        <mat-option *ngFor="let crowd of crowdFactors" [value]="crowd">{{ crowd }}</mat-option>
+                      </mat-select>
+                      <mat-icon matSuffix>groups</mat-icon>
+                    </mat-form-field>
+                  </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Season</mat-label>
-      <mat-select formControlName="season" multiple>
-        <mat-option value="Spring">Spring</mat-option>
-        <mat-option value="Summer">Summer</mat-option>
-        <mat-option value="Fall">Fall</mat-option>
-        <mat-option value="Winter">Winter</mat-option>
-      </mat-select>
-    </mat-form-field>
+                  <div class="form-field">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Best Seasons</mat-label>
+                      <mat-select formControlName="season" multiple>
+                        <mat-option *ngFor="let season of seasons" [value]="season">{{ season }}</mat-option>
+                      </mat-select>
+                      <mat-icon matSuffix>event</mat-icon>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
 
-    <div class="row">
-      <mat-form-field appearance="fill">
-        <mat-label>Latitude</mat-label>
-        <input matInput type="number" formControlName="lat" />
-      </mat-form-field>
+              <mat-tab label="Location">
+                <div class="tab-content">
+                  <div class="form-row">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Latitude</mat-label>
+                      <input matInput type="number" formControlName="lat" placeholder="e.g., 21.6642" />
+                      <mat-icon matSuffix>my_location</mat-icon>
+                    </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Longitude</mat-label>
-        <input matInput type="number" formControlName="lng" />
-      </mat-form-field>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Longitude</mat-label>
+                      <input matInput type="number" formControlName="lng" placeholder="e.g., -158.0531" />
+                      <mat-icon matSuffix>my_location</mat-icon>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="map-placeholder">
+                    <mat-icon>map</mat-icon>
+                    <p>Map integration will be available in a future update</p>
+                    <p class="hint">For now, please enter the coordinates manually</p>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+
+            <div class="form-actions">
+              <button 
+                mat-flat-button 
+                color="primary" 
+                type="submit" 
+                [disabled]="isSubmitting || !form.valid"
+                class="submit-button">
+                <mat-icon>add_circle</mat-icon>
+                Create Surf Spot
+              </button>
+              <button mat-button type="button" routerLink="/">Cancel</button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
     </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Image URL</mat-label>
-      <input matInput formControlName="imageUrl" />
-    </mat-form-field>
-
-    <button mat-raised-button color="primary" type="submit">
-      Create Spot
-    </button>
-  </form>
-</mat-card>
+    <div class="preview-section">
+      <div class="preview-header">
+        <h2>Live Preview</h2>
+        <p>See how your surf spot will appear on the home page</p>
+      </div>
+      <app-surf-spot-card [spot]="previewSpot" [isPreview]="true"></app-surf-spot-card>
+    </div>
+  </div>
+</div>

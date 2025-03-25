@@ -7,7 +7,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { MatCard, MatCardTitle } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
+import { SurfSpotCardComponent } from '@/app/components/surf-spot-card/surf-spot-card.component';
 
 @Component({
   selector: 'app-create-spot',
@@ -19,10 +26,17 @@ import { MatCard, MatCardTitle } from '@angular/material/card';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatCard,
-    MatCardTitle
+    MatCardModule,
+    MatIconModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatStepperModule,
+    MatTooltipModule,
+    MatChipsModule,
+    SurfSpotCardComponent
   ],
   templateUrl: './create-spot.component.html',
+  styleUrls: ['./create-spot.component.css']
 })
 export class CreateSpotComponent {
   form = this.fb.group({
@@ -35,18 +49,48 @@ export class CreateSpotComponent {
     tide: [''],
     windDirection: [''],
     difficulty: ['Intermediate'],
-    season: [[]], // multi-select
+    season: [[]],
     crowdFactor: ['Medium'],
     lat: [0],
     lng: [0],
     imageUrl: [''],
   });
   
+  previewSpot: any = {};
+  isSubmitting = false;
+  
+  waveTypes = ['Reef break', 'Beach break', 'Point break'];
+  swellDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  tides = ['Low', 'Mid', 'High'];
+  windDirections = ['Offshore', 'Onshore', 'Cross-shore'];
+  difficulties = ['Beginner', 'Intermediate', 'Advanced'];
+  crowdFactors = ['Low', 'Medium', 'High'];
+  seasons = ['Spring', 'Summer', 'Fall', 'Winter'];
 
-  constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {}
+  constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {
+    // Initialize preview with form values
+    this.updatePreview();
+    
+    // Subscribe to form value changes to update preview
+    this.form.valueChanges.subscribe(() => {
+      this.updatePreview();
+    });
+  }
+
+  updatePreview() {
+    this.previewSpot = {
+      ...this.form.value,
+      location: {
+        lat: this.form.value.lat,
+        lng: this.form.value.lng,
+      }
+    };
+  }
 
   submit() {
     if (this.form.valid) {
+      this.isSubmitting = true;
+      
       const spot = {
         ...this.form.value,
         location: {
@@ -54,9 +98,23 @@ export class CreateSpotComponent {
           lng: this.form.value.lng,
         }
       };
-      this.api.postSpot(spot).subscribe(() => {
-        alert('Surf spot created!');
-        this.router.navigateByUrl('/');
+      
+      this.api.postSpot(spot).subscribe({
+        next: () => {
+          this.isSubmitting = false;
+          alert('Surf spot created successfully!');
+          this.router.navigateByUrl('/');
+        },
+        error: (error) => {
+          this.isSubmitting = false;
+          console.error('Error creating surf spot:', error);
+          alert('Failed to create surf spot. Please try again.');
+        }
+      });
+    } else {
+      // Mark all fields as touched to show validation errors
+      Object.keys(this.form.controls).forEach(key => {
+        this.form.get(key)?.markAsTouched();
       });
     }
   }

@@ -1,27 +1,217 @@
-.create-card {
-  max-width: 800px;
-  margin: 2rem auto;
+.create-spot-container {
+  max-width: 1400px;
+  margin: 0 auto;
   padding: 2rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  color: #87cefa;
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #6ba5c7;
+  font-size: 1.1rem;
+}
+
+.content-layout {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2rem;
+}
+
+.form-card {
   background-color: #1c1c1c;
-  color: #87cefa;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-mat-card-title {
-  margin-bottom: 1rem;
-  color: #87cefa;
-}
-
-.form-grid {
+.form-section {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
 }
 
-.row {
+.preview-section {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.preview-header {
+  margin-bottom: 1rem;
+}
+
+.preview-header h2 {
+  color: #87cefa;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview-header p {
+  color: #6ba5c7;
+  font-size: 0.9rem;
+}
+
+.tab-content {
+  padding: 1.5rem 0.5rem 0.5rem;
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.form-row {
   display: flex;
   gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.row mat-form-field {
+.form-row mat-form-field {
   flex: 1;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  height: 18px !important;
+}
+
+::ng-deep .mat-mdc-tab-group {
+  --mdc-tab-indicator-active-indicator-color: #87cefa;
+  --mat-tab-header-active-label-text-color: #87cefa;
+  --mat-tab-header-active-ripple-color: rgba(135, 206, 250, 0.1);
+  --mat-tab-header-inactive-label-text-color: #6ba5c7;
+  --mat-tab-header-inactive-ripple-color: rgba(135, 206, 250, 0.05);
+  --mat-tab-header-active-focus-label-text-color: #87cefa;
+  --mat-tab-header-active-hover-label-text-color: #87cefa;
+  --mat-tab-header-active-focus-indicator-color: #87cefa;
+  --mat-tab-header-active-hover-indicator-color: #87cefa;
+}
+
+::ng-deep .mat-mdc-form-field {
+  --mdc-filled-text-field-container-color: #2a2a2a;
+  --mdc-filled-text-field-focus-active-indicator-color: #87cefa;
+  --mdc-filled-text-field-focus-label-text-color: #87cefa;
+  --mdc-filled-text-field-label-text-color: #6ba5c7;
+  --mdc-filled-text-field-input-text-color: #87cefa;
+  --mdc-filled-text-field-hover-active-indicator-color: #6ba5c7;
+  --mdc-filled-text-field-disabled-container-color: rgba(42, 42, 42, 0.5);
+  --mdc-filled-text-field-disabled-label-text-color: rgba(107, 165, 199, 0.5);
+  --mdc-filled-text-field-disabled-input-text-color: rgba(135, 206, 250, 0.5);
+  --mat-form-field-focus-color: #87cefa;
+}
+
+::ng-deep .mat-mdc-outlined-form-field {
+  --mdc-outlined-text-field-outline-color: #3a3a3a;
+  --mdc-outlined-text-field-focus-outline-color: #87cefa;
+  --mdc-outlined-text-field-hover-outline-color: #6ba5c7;
+  --mdc-outlined-text-field-label-text-color: #6ba5c7;
+  --mdc-outlined-text-field-focus-label-text-color: #87cefa;
+  --mdc-outlined-text-field-input-text-color: #87cefa;
+}
+
+::ng-deep .mat-mdc-select-value-text {
+  color: #87cefa !important;
+}
+
+::ng-deep .mat-mdc-select-arrow {
+  color: #6ba5c7 !important;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  background-color: #2a2a2a !important;
+}
+
+::ng-deep .mat-mdc-option {
+  color: #87cefa !important;
+}
+
+::ng-deep .mat-mdc-option:hover {
+  background-color: rgba(135, 206, 250, 0.1) !important;
+}
+
+::ng-deep .mat-mdc-option.mat-mdc-option-active {
+  background-color: rgba(135, 206, 250, 0.2) !important;
+}
+
+::ng-deep .mat-mdc-form-field-icon-suffix {
+  color: #6ba5c7 !important;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-top: 1px solid rgba(135, 206, 250, 0.1);
+}
+
+.submit-button {
+  background-color: #1e4a6d !important;
+  color: #87cefa !important;
+}
+
+.submit-button:hover {
+  background-color: #2a5a7d !important;
+}
+
+.submit-button mat-icon {
+  margin-right: 8px;
+}
+
+.map-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  padding: 3rem;
+  margin-top: 1rem;
+  color: #6ba5c7;
+  text-align: center;
+}
+
+.map-placeholder mat-icon {
+  font-size: 3rem;
+  height: 3rem;
+  width: 3rem;
+  margin-bottom: 1rem;
+}
+
+.map-placeholder .hint {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  color: #5a94b6;
+}
+
+@media (max-width: 1024px) {
+  .content-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .preview-section {
+    position: static;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .create-spot-container {
+    padding: 1rem;
+  }
 }
