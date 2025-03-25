@@ -1,11 +1,21 @@
 <div class="container">
   <h1 class="page-title">Surf Spots</h1>
   
-  <div class="spot-grid">
+  <div *ngIf="loading" class="loading-container">
+    <p>Loading surf spots...</p>
+  </div>
+  
+  <div *ngIf="!loading && spots.length === 0" class="empty-container">
+    <p>No surf spots found.</p>
+  </div>
+  
+  <div *ngIf="!loading && spots.length > 0" class="spot-grid">
     <app-surf-spot-card 
       *ngFor="let spot of spots" 
       [spot]="spot" 
-      [isPreview]="false">
+      [isPreview]="false"
+      [isAdmin]="isAdmin"
+      (deleteSpot)="onDeleteSpot($event)">
     </app-surf-spot-card>
   </div>
 </div>

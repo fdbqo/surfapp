@@ -17,6 +17,15 @@
   gap: 1.5rem;
 }
 
+.loading-container, .empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #6ba5c7;
+  font-size: 1.2rem;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .spot-grid {
@@ -26,4 +35,15 @@
   .container {
     padding: 1rem;
   }
+}
+
+/* Snackbar styles */
+::ng-deep .success-snackbar {
+  background-color: #4CAF50;
+  color: white;
+}
+
+::ng-deep .error-snackbar {
+  background-color: #f44336;
+  color: white;
 }
