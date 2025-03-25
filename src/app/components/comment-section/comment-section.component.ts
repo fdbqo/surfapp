@@ -117,7 +117,8 @@ export class CommentSectionComponent implements OnChanges {
     const reply = {
       text: this.replyText,
       parentId: parentComment._id,
-    }
+      spotId: this.spotId
+    };
 
     this.api.postComment(reply).subscribe({
       next: (response) => {
