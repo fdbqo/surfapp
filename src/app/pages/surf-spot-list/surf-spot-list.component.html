@@ -1,10 +1,22 @@
-<h2>🌊 Surf Spots</h2>
+<div class="spot-grid">
+  <mat-card class="spot-card" *ngFor="let spot of spots">
+    <img mat-card-image [src]="spot.imageUrl" alt="{{ spot.name }}" />
 
-<mat-card *ngFor="let spot of spots" class="spot-card">
-  <mat-card-title>{{ spot.name }}</mat-card-title>
-  <mat-card-content>
-    <p>{{ spot.description }}</p>
-    <p><strong>Difficulty:</strong> {{ spot.difficulty || 'Unknown' }}</p>
-    <p><strong>Rating:</strong> {{ spot.rating || 'Not rated' }}</p>
-  </mat-card-content>
-</mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ spot.name }}</mat-card-title>
+      <mat-card-subtitle>{{ spot.region }}, {{ spot.country }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>{{ spot.description }}</p>
+      <p><strong>Difficulty:</strong> {{ spot.difficulty }}</p>
+      <p><strong>Wave Type:</strong> {{ spot.waveType }}</p>
+      <p><strong>Swell:</strong> {{ spot.swellDirection }}</p>
+      <p><strong>Wind:</strong> {{ spot.windDirection }}</p>
+      <p><strong>Tide:</strong> {{ spot.tide }}</p>
+      <p><strong>Crowd:</strong> {{ spot.crowdFactor }}</p>
+      <p><strong>Season:</strong> {{ spot.season?.join(', ') }}</p>
+      <p *ngIf="spot.rating"><strong>Avg. Rating:</strong> {{ spot.rating.toFixed(1) }}/5</p>
+    </mat-card-content>
+  </mat-card>
+</div>
