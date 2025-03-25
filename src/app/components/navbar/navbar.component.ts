@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 import { RouterModule } from '@angular/router';
 import { ApiService } from '@/app/services/api.service';
 
@@ -17,6 +18,7 @@ import { ApiService } from '@/app/services/api.service';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
+    MatDividerModule,
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
