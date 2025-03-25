@@ -20,15 +20,15 @@
 
 .card-image-container {
   position: relative;
-  height: 220px;
-  width: 100%;
+  height: 200px;
   overflow: hidden;
+  background-color: #121212;
 }
 
 mat-card-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Changed from cover to contain to prevent cropping */
   background-color: #121212;
   transition: transform 0.3s;
 }
@@ -88,10 +88,6 @@ mat-card-subtitle {
   margin-bottom: 20px;
 }
 
-.content-spacer {
-  height: 15px;
-}
-
 mat-card-content {
   padding: 0 16px;
   flex-grow: 1;
@@ -120,16 +116,6 @@ mat-card-content {
 .info-value {
   color: #87cefa;
   font-weight: 500;
-}
-
-.description {
-  margin: 10px 0;
-}
-
-.description p {
-  color: #87cefa;
-  font-size: 0.9rem;
-  line-height: 1.5;
 }
 
 .season-chips {

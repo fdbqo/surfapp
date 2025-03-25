@@ -11,10 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatChipsModule } from '@angular/material/chips';
-import { SurfSpotCardComponent } from '@/app/components/surf-spot-card/surf-spot-card.component';
+import { SurfSpotCardComponent } from '../../components/surf-spot-card/surf-spot-card.component';
 
 @Component({
   selector: 'app-create-spot',
@@ -30,9 +27,6 @@ import { SurfSpotCardComponent } from '@/app/components/surf-spot-card/surf-spot
     MatIconModule,
     MatTabsModule,
     MatDividerModule,
-    MatStepperModule,
-    MatTooltipModule,
-    MatChipsModule,
     SurfSpotCardComponent
   ],
   templateUrl: './create-spot.component.html',

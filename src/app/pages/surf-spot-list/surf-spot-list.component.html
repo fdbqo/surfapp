@@ -2,68 +2,10 @@
   <h1 class="page-title">Surf Spots</h1>
   
   <div class="spot-grid">
-    <mat-card class="spot-card" *ngFor="let spot of spots">
-      <div class="card-image-container">
-        <img mat-card-image [src]="spot.imageUrl || '/assets/placeholder-surf.jpg'" alt="{{ spot.name }}" />
-        <div class="rating-badge" *ngIf="spot.rating">
-          <span class="rating-value">{{ spot.rating.toFixed(1) }}</span>
-          <span class="rating-stars">{{ getStarRating(spot.rating) }}</span>
-        </div>
-      </div>
-
-      <mat-card-header>
-        <div>
-          <mat-card-title>{{ spot.name }}</mat-card-title>
-          <mat-card-subtitle>{{ spot.region }}, {{ spot.country }}</mat-card-subtitle>
-        </div>
-      </mat-card-header>
-      
-      <div class="content-spacer"></div>
-
-      <mat-card-content>
-        <div class="key-info">
-          <div class="info-item">
-            <span class="info-label">Difficulty:</span>
-            <span class="info-value">{{ spot.difficulty }}</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Wave Type:</span>
-            <span class="info-value">{{ spot.waveType }}</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Swell:</span>
-            <span class="info-value">{{ spot.swellDirection }}</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Wind:</span>
-            <span class="info-value">{{ spot.windDirection }}</span>
-          </div>
-        </div>
-
-        <div class="secondary-info">
-          <div class="info-item">
-            <span class="info-label">Tide:</span>
-            <span class="info-value">{{ spot.tide }}</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Crowd:</span>
-            <span class="info-value">{{ spot.crowdFactor }}</span>
-          </div>
-        </div>
-
-        <div class="season-chips" *ngIf="spot.season?.length">
-          <mat-chip-set>
-            <mat-chip *ngFor="let season of spot.season" color="primary" selected>{{ season }}</mat-chip>
-          </mat-chip-set>
-        </div>
-      </mat-card-content>
-
-      <mat-card-actions>
-        <button mat-button [routerLink]="['/spots', spot.id]">VIEW DETAILS</button>
-        <button mat-icon-button matTooltip="Add to favorites">
-          <mat-icon>favorite_border</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
+    <app-surf-spot-card 
+      *ngFor="let spot of spots" 
+      [spot]="spot" 
+      [isPreview]="false">
+    </app-surf-spot-card>
   </div>
 </div>
