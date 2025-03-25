@@ -96,7 +96,7 @@ mat-card-title {
 }
 
 ::ng-deep .mat-mdc-input-element::placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(0, 0, 0, 0.6) !important;
 }
 
 ::ng-deep .mat-mdc-select-value-text {
@@ -108,7 +108,7 @@ mat-card-title {
 }
 
 ::ng-deep textarea.mat-mdc-input-element {
-  color: white !important;
+  color: black !important;
 }
 
 ::ng-deep .mat-mdc-form-field-label {
