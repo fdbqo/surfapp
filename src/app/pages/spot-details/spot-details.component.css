@@ -106,13 +106,13 @@
 .main-content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem; /* Reduced from 1.5rem */
 }
 
 .top-row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 0.75rem; /* Reduced from 1rem */
 }
 
 @media (min-width: 768px) {
@@ -130,7 +130,7 @@
 .main-image-container {
   width: 100%;
   height: 0;
-  padding-bottom: 66.67%; /* 3:2 aspect ratio */
+  padding-bottom: 66.67%;
   position: relative;
   overflow: hidden;
   border-radius: 4px;
@@ -240,8 +240,8 @@
 
 /* Forecast Accordion */
 .forecast-accordion {
-  margin: 1.5rem 0;
-  background-color: rgba(30, 30, 30, 0.7);
+  margin: 1rem 0; /* Reduced from 1.5rem */
+  background-color: #1e1e1e; /* Changed to match info-tabs background */
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -251,14 +251,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1rem; /* Reduced padding */
   cursor: pointer;
   transition: background-color 0.2s;
   border-bottom: 1px solid rgba(135, 206, 250, 0.2);
+  background-color: #1a1a1a; /* Match tab-buttons background */
 }
 
 .accordion-header:hover {
-  background-color: rgba(40, 40, 40, 0.7);
+  background-color: rgba(135, 206, 250, 0.1); /* Match tab-button.active */
 }
 
 .accordion-title {
@@ -274,7 +275,8 @@
   font-weight: 500;
 }
 
-.accordion-title mat-icon {
+.accordion-title mat-icon,
+.toggle-button {
   color: #87cefa;
 }
 
@@ -316,10 +318,6 @@
   color: #6ba5c7;
 }
 
-.toggle-button {
-  color: #87cefa;
-}
-
 .accordion-content {
   max-height: 0;
   overflow: hidden;
@@ -327,7 +325,7 @@
 }
 
 .accordion-content.expanded {
-  max-height: 2000px; /* Large enough to fit content */
+  max-height: 2000px;
   transition: max-height 0.5s ease-in;
 }
 
@@ -410,19 +408,15 @@ form {
     align-items: flex-start;
     gap: 0.25rem;
   }
-
   .info-grid {
     grid-template-columns: 1fr;
   }
-
   form {
     flex-direction: column;
   }
-
   .post-button {
     align-self: flex-end;
   }
-
   .forecast-summary {
     display: none;
   }
