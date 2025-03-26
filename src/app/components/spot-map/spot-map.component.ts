@@ -62,7 +62,7 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
 
     // Create a simple HTML marker instead of using Leaflet's default icon
     const waveIcon = L.divIcon({
-      html: '<div style="font-size: 24px; color: #1e88e5;">🏄</div>',
+      html: '<div style="font-size: 24px; color: #e53935;">📍</div>',
       className: "surf-marker",
       iconSize: [30, 30],
       iconAnchor: [15, 15],
