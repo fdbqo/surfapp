@@ -8,8 +8,7 @@ import {
   ViewChild,
 } from "@angular/core"
 import { CommonModule } from "@angular/common"
-// Import only what we need from Leaflet
-import { Map, TileLayer, Marker, Icon, LatLng } from "leaflet"
+import * as L from "leaflet"
 
 @Component({
   selector: "app-spot-map",
@@ -25,8 +24,8 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
 
   @ViewChild("mapElement") mapElement!: ElementRef
 
-  private map: Map | null = null
-  private marker: Marker | null = null
+  private map: L.Map | null = null
+  private marker: L.Marker | null = null
 
   get hasCoordinates(): boolean {
     return (
@@ -53,19 +52,26 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
   private initMap(): void {
     if (!this.hasCoordinates) return
 
-    // Fix for Leaflet icon issue
-    this.fixLeafletIconPath()
-
     // Create map instance
-    this.map = new Map(this.mapElement.nativeElement).setView([Number(this.latitude), Number(this.longitude)], 13)
+    this.map = L.map(this.mapElement.nativeElement).setView([Number(this.latitude), Number(this.longitude)], 13)
 
     // Add OpenStreetMap tiles
-    new TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map)
 
-    // Add marker for the surf spot
-    this.marker = new Marker(new LatLng(Number(this.latitude), Number(this.longitude)))
+    // Create a simple HTML marker instead of using Leaflet's default icon
+    const waveIcon = L.divIcon({
+      html: '<div style="font-size: 24px; color: #1e88e5;">🏄</div>',
+      className: "surf-marker",
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+    })
+
+    // Add marker for the surf spot with custom icon
+    this.marker = L.marker([Number(this.latitude), Number(this.longitude)], {
+      icon: waveIcon,
+    })
       .addTo(this.map)
       .bindPopup(this.spotName)
       .openPopup()
@@ -79,28 +85,24 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
 
     // Update or create marker
     if (this.marker) {
-      this.marker.setLatLng(new LatLng(Number(this.latitude), Number(this.longitude)))
+      this.marker.setLatLng([Number(this.latitude), Number(this.longitude)])
       this.marker.bindPopup(this.spotName)
     } else {
-      this.marker = new Marker(new LatLng(Number(this.latitude), Number(this.longitude)))
+      // Create a simple HTML marker
+      const waveIcon = L.divIcon({
+        html: '<div style="font-size: 24px; color: #1e88e5;">🏄</div>',
+        className: "surf-marker",
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+      })
+
+      this.marker = L.marker([Number(this.latitude), Number(this.longitude)], {
+        icon: waveIcon,
+      })
         .addTo(this.map)
         .bindPopup(this.spotName)
         .openPopup()
     }
-  }
-
-  private fixLeafletIconPath(): void {
-    // Fix for Leaflet icon paths issue
-    const iconRetinaUrl = "assets/marker-icon-2x.png"
-    const iconUrl = "assets/marker-icon.png"
-    const shadowUrl = "assets/marker-shadow.png"
-
-    // Set default icon options
-    Icon.Default.mergeOptions({
-      iconRetinaUrl,
-      iconUrl,
-      shadowUrl,
-    })
   }
 }
 
