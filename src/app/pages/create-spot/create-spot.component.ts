@@ -11,10 +11,19 @@ import { MatChipsModule } from "@angular/material/chips"
 import { MatIconModule } from "@angular/material/icon"
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTabsModule } from "@angular/material/tabs"
-import { MatSpinner } from "@angular/material/progress-spinner"
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatDividerModule } from "@angular/material/divider"
-import { SurfSpotCardComponent } from "../../components/surf-spot-card/surf-spot-card.component"
-import { ApiService } from "../../services/api.service"
+import { SurfSpotCardComponent } from "@/app/components/surf-spot-card/surf-spot-card.component"
+import { ApiService } from "@/app/services/api.service"
+
+// Define user interface to fix the 'role' property error
+interface User {
+  _id: string
+  name: string
+  email: string
+  image?: string
+  role: string
+}
 
 @Component({
   selector: "app-create-spot",
@@ -33,8 +42,8 @@ import { ApiService } from "../../services/api.service"
     MatSnackBarModule,
     MatTabsModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
     SurfSpotCardComponent,
-    MatSpinner
   ],
   templateUrl: "./create-spot.component.html",
   styleUrls: ["./create-spot.component.css"],
@@ -86,9 +95,12 @@ export class CreateSpotComponent implements OnInit {
   ngOnInit(): void {
     // Check if user is authenticated
     this.api.getUser().subscribe({
-      next: (user) => {
+      next: (user: any) => {
+        // Type assertion to fix the 'role' property error
+        const typedUser = user as User
+
         // Check if user is admin for edit mode
-        if (user.role !== "admin") {
+        if (typedUser.role !== "admin") {
           this.snackBar.open("Only admins can edit surf spots", "Close", {
             duration: 5000,
             panelClass: "error-snackbar",
@@ -149,7 +161,7 @@ export class CreateSpotComponent implements OnInit {
         // Update preview
         this.updatePreview()
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error("Error loading surf spot:", err)
         this.snackBar.open("Failed to load surf spot data", "Close", {
           duration: 5000,
@@ -198,10 +210,10 @@ export class CreateSpotComponent implements OnInit {
     }
 
     // Different API call based on whether we're creating or editing
-    const apiCall = this.isEditMode ? this.api.updateSpot(this.spotId, spotData) : this.api.createSpot(spotData)
+    const apiCall = this.isEditMode ? this.api.updateSpot(this.spotId, spotData) : this.api.postSpot(spotData) // Changed from createSpot to postSpot to match your API service
 
     apiCall.subscribe({
-      next: (response) => {
+      next: (response: any) => {
         this.isSubmitting = false
         const message = this.isEditMode ? "Surf spot updated successfully!" : "Surf spot created successfully!"
 
@@ -211,7 +223,7 @@ export class CreateSpotComponent implements OnInit {
         })
         this.router.navigate(["/spots", response._id])
       },
-      error: (err) => {
+      error: (err: any) => {
         this.isSubmitting = false
         console.error(this.isEditMode ? "Error updating surf spot:" : "Error creating surf spot:", err)
         this.snackBar.open(
