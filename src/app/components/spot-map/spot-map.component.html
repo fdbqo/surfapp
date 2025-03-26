@@ -1,1 +1,8 @@
-<p>spot-map works!</p>
+<div class="map-container">
+    <div #mapElement class="map-element"></div>
+    <div *ngIf="!hasCoordinates" class="no-location">
+      <p>No location data available for this spot.</p>
+    </div>
+  </div>
+  
+  
