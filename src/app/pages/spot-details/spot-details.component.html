@@ -71,6 +71,13 @@
               <mat-icon>place</mat-icon>
               <span>Location</span>
             </button>
+            <button 
+              [class.active]="activeTab === 3" 
+              (click)="setActiveTab(3)" 
+              class="tab-button">
+              <mat-icon>cloud</mat-icon>
+              <span>Forecast</span>
+            </button>
           </div>
 
           <!-- Conditions Tab -->
@@ -122,6 +129,14 @@
               [longitude]="spot.location?.lng"
               [spotName]="spot.name">
             </app-spot-map>
+          </div>
+          
+          <!-- Forecast Tab -->
+          <div class="tab-content" *ngIf="activeTab === 3">
+            <app-forecast-display 
+              [forecastData]="spot.forecast" 
+              [lastUpdated]="spot.forecast?.lastFetched">
+            </app-forecast-display>
           </div>
         </div>
       </div>
