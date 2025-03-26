@@ -53,8 +53,16 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
   private initMap(): void {
     if (!this.hasCoordinates) return
 
-    // Fix for Leaflet icon issue
-    this.fixLeafletIconPath()
+    // Create a custom icon
+    const customIcon = new Icon({
+      iconUrl: "assets/marker-icon.png",
+      iconRetinaUrl: "assets/marker-icon-2x.png",
+      shadowUrl: "assets/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+    })
 
     // Create map instance
     this.map = new Map(this.mapElement.nativeElement).setView([Number(this.latitude), Number(this.longitude)], 13)
@@ -64,8 +72,10 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map)
 
-    // Add marker for the surf spot
-    this.marker = new Marker(new LatLng(Number(this.latitude), Number(this.longitude)))
+    // Add marker for the surf spot with custom icon
+    this.marker = new Marker(new LatLng(Number(this.latitude), Number(this.longitude)), {
+      icon: customIcon,
+    })
       .addTo(this.map)
       .bindPopup(this.spotName)
       .openPopup()
@@ -82,25 +92,24 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
       this.marker.setLatLng(new LatLng(Number(this.latitude), Number(this.longitude)))
       this.marker.bindPopup(this.spotName)
     } else {
-      this.marker = new Marker(new LatLng(Number(this.latitude), Number(this.longitude)))
+      // Create a custom icon
+      const customIcon = new Icon({
+        iconUrl: "assets/marker-icon.png",
+        iconRetinaUrl: "assets/marker-icon-2x.png",
+        shadowUrl: "assets/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      })
+
+      this.marker = new Marker(new LatLng(Number(this.latitude), Number(this.longitude)), {
+        icon: customIcon,
+      })
         .addTo(this.map)
         .bindPopup(this.spotName)
         .openPopup()
     }
-  }
-
-  private fixLeafletIconPath(): void {
-    // Fix for Leaflet icon paths issue
-    const iconRetinaUrl = "assets/marker-icon-2x.png"
-    const iconUrl = "assets/marker-icon.png"
-    const shadowUrl = "assets/marker-shadow.png"
-
-    // Set default icon options
-    Icon.Default.mergeOptions({
-      iconRetinaUrl,
-      iconUrl,
-      shadowUrl,
-    })
   }
 }
 
