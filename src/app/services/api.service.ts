@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core"
-import { HttpClient } from "@angular/common/http"
+import { HttpClient, HttpParams } from "@angular/common/http"
 import type { Observable } from "rxjs"
 
 @Injectable({ providedIn: "root" })
@@ -20,8 +20,17 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/spots`, data, { withCredentials: true })
   }
 
-  updateSpot(id: string, data: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/spots/${id}`, data, { withCredentials: true })
+  updateSpot(id: string, data: any, skipForecastUpdate = false): Observable<any> {
+    // Add skipForecastUpdate as a query parameter
+    let params = new HttpParams()
+    if (skipForecastUpdate) {
+      params = params.set("skipForecastUpdate", "true")
+    }
+
+    return this.http.put<any>(`${this.baseUrl}/spots/${id}`, data, {
+      withCredentials: true,
+      params: params,
+    })
   }
 
   deleteSpot(id: string): Observable<any> {
@@ -48,3 +57,4 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/auth/signout`, {}, { withCredentials: true })
   }
 }
+

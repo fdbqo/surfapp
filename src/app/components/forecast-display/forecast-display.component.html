@@ -1,0 +1,81 @@
+<div class="forecast-container" *ngIf="processedForecast">
+    <div class="forecast-header">
+      <h3>Surf Forecast</h3>
+      <div class="last-updated">
+        Last updated: {{ stormglassService.getLastUpdatedText(lastUpdated) }}
+      </div>
+    </div>
+    
+    <!-- Day selector tabs -->
+    <div class="day-tabs">
+      <div 
+        *ngFor="let day of processedForecast.days; let i = index" 
+        [class.active]="selectedDayIndex === i"
+        (click)="selectDay(i)"
+        class="day-tab">
+        <div class="day-name">{{ day.dayOfWeek }}</div>
+        <div class="day-date">{{ day.date | date:'MMM d' }}</div>
+      </div>
+    </div>
+    
+    <!-- Forecast for selected day -->
+    <div class="day-forecast" *ngIf="processedForecast.days[selectedDayIndex]">
+      <div class="forecast-hours">
+        <div 
+          *ngFor="let hour of processedForecast.days[selectedDayIndex].hours" 
+          class="forecast-hour"
+          [ngClass]="stormglassService.getConditionClass(hour.waveHeight)">
+          
+          <div class="hour-time">{{ hour.time }}</div>
+          
+          <div class="forecast-data">
+            <div class="data-row">
+              <div class="data-item">
+                <div class="data-label">Wave</div>
+                <div class="data-value">{{ hour.waveHeight | number:'1.1-1' }}m</div>
+              </div>
+              
+              <div class="data-item">
+                <div class="data-label">Period</div>
+                <div class="data-value">{{ hour.wavePeriod | number:'1.0-0' }}s</div>
+              </div>
+            </div>
+            
+            <div class="data-row">
+              <div class="data-item">
+                <div class="data-label">Wind</div>
+                <div class="data-value wind-value">
+                  {{ hour.windSpeed | number:'1.0-0' }}kn
+                  <mat-icon 
+                    class="wind-icon" 
+                    [ngStyle]="getWindDirectionStyle(hour.windDirection)">
+                    navigation
+                  </mat-icon>
+                </div>
+              </div>
+              
+              <div class="data-item">
+                <div class="data-label">Water</div>
+                <div class="data-value">{{ hour.waterTemperature | number:'1.0-0' }}°C</div>
+              </div>
+            </div>
+            
+            <div class="condition-indicator">
+              {{ stormglassService.getConditionDescription(hour.waveHeight) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="forecast-disclaimer">
+      <p>Forecast data provided by Stormglass.io. This forecast is for informational purposes only.</p>
+    </div>
+  </div>
+  
+  <div class="no-forecast" *ngIf="!processedForecast">
+    <p>Forecast data is not available for this spot.</p>
+    <p>This could be because the spot doesn't have location coordinates or the forecast hasn't been fetched yet.</p>
+  </div>
+  
+  

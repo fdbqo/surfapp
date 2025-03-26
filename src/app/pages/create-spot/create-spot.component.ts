@@ -12,9 +12,10 @@ import { MatIconModule } from "@angular/material/icon"
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTabsModule } from "@angular/material/tabs"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
+import { MatCheckboxModule } from "@angular/material/checkbox" // Add this import
 import { MatDividerModule } from "@angular/material/divider"
-import { SurfSpotCardComponent } from "@/app/components/surf-spot-card/surf-spot-card.component"
-import { ApiService } from "@/app/services/api.service"
+import { SurfSpotCardComponent } from "../../components/surf-spot-card/surf-spot-card.component"
+import { ApiService } from "../../services/api.service"
 
 // Define user interface to fix the 'role' property error
 interface User {
@@ -43,6 +44,7 @@ interface User {
     MatTabsModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    MatCheckboxModule, // Add this import
     SurfSpotCardComponent,
   ],
   templateUrl: "./create-spot.component.html",
@@ -58,6 +60,7 @@ export class CreateSpotComponent implements OnInit {
   submitButtonText = "Create Spot"
   previewSpot: any = {}
   isSubmitting = false
+  skipForecastUpdate = false // Add this property
 
   waveTypes = ["Beach break", "Reef break", "Point break", "River mouth"]
   swellDirections = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
@@ -89,6 +92,7 @@ export class CreateSpotComponent implements OnInit {
         lat: [null],
         lng: [null],
       }),
+      skipForecastUpdate: [false], // Add this form control
     })
   }
 
@@ -153,6 +157,7 @@ export class CreateSpotComponent implements OnInit {
             lat: spot.location?.lat || null,
             lng: spot.location?.lng || null,
           },
+          skipForecastUpdate: false, // Default to false when loading
         })
 
         // Set selected seasons
@@ -204,13 +209,24 @@ export class CreateSpotComponent implements OnInit {
     }
 
     this.isSubmitting = true
+
+    // Get form values
     const spotData = {
       ...this.spotForm.value,
       season: this.selectedSeasons,
     }
 
-    // Different API call based on whether we're creating or editing
-    const apiCall = this.isEditMode ? this.api.updateSpot(this.spotId, spotData) : this.api.postSpot(spotData) // Changed from createSpot to postSpot to match your API service
+    // Extract skipForecastUpdate and remove it from the data sent to the API
+    this.skipForecastUpdate = spotData.skipForecastUpdate || false
+    delete spotData.skipForecastUpdate
+
+    // Add skipForecastUpdate as a query parameter for PUT requests
+    let apiCall
+    if (this.isEditMode) {
+      apiCall = this.api.updateSpot(this.spotId, spotData, this.skipForecastUpdate)
+    } else {
+      apiCall = this.api.postSpot(spotData)
+    }
 
     apiCall.subscribe({
       next: (response: any) => {

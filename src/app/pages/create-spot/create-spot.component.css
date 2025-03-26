@@ -169,3 +169,27 @@
   margin-right: 0.5rem;
 }
 
+.admin-options {
+  background-color: rgba(30, 30, 30, 0.7);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid #87cefa;
+}
+
+.option-description {
+  color: #6ba5c7;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+}
+
+::ng-deep .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+  background-color: #87cefa !important;
+  border-color: #87cefa !important;
+}
+
+::ng-deep .mat-mdc-checkbox .mdc-form-field {
+  color: white !important;
+}
+
