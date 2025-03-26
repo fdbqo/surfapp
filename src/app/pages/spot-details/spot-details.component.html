@@ -71,13 +71,6 @@
               <mat-icon>place</mat-icon>
               <span>Location</span>
             </button>
-            <button 
-              [class.active]="activeTab === 3" 
-              (click)="setActiveTab(3)" 
-              class="tab-button">
-              <mat-icon>cloud</mat-icon>
-              <span>Forecast</span>
-            </button>
           </div>
 
           <!-- Conditions Tab -->
@@ -130,14 +123,34 @@
               [spotName]="spot.name">
             </app-spot-map>
           </div>
-          
-          <!-- Forecast Tab -->
-          <div class="tab-content" *ngIf="activeTab === 3">
-            <app-forecast-display 
-              [forecastData]="spot.forecast" 
-              [lastUpdated]="spot.forecast?.lastFetched">
-            </app-forecast-display>
+        </div>
+      </div>
+
+      <!-- Forecast Accordion Section -->
+      <div class="forecast-accordion" *ngIf="spot.forecast">
+        <div class="accordion-header" (click)="toggleForecast()">
+          <div class="accordion-title">
+            <mat-icon>cloud</mat-icon>
+            <h2>Surf Forecast</h2>
           </div>
+          <div class="forecast-summary" *ngIf="!forecastExpanded">
+            <span class="forecast-condition" [ngClass]="getCurrentConditionClass()">
+              {{ getCurrentConditionText() }}
+            </span>
+            <span class="forecast-updated">
+              Updated: {{ getLastUpdatedText() }}
+            </span>
+          </div>
+          <button mat-icon-button class="toggle-button">
+            <mat-icon>{{ forecastExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+          </button>
+        </div>
+        
+        <div class="accordion-content" [ngClass]="{'expanded': forecastExpanded}">
+          <app-forecast-display 
+            [forecastData]="spot.forecast" 
+            [lastUpdated]="spot.forecast?.lastFetched">
+          </app-forecast-display>
         </div>
       </div>
 

@@ -18,6 +18,28 @@ import { SpotMapComponent } from "../../components/spot-map/spot-map.component"
 import { ForecastDisplayComponent } from "../../components/forecast-display/forecast-display.component"
 import { StormglassService } from "../../services/stormglass.service"
 
+// Define interfaces for better type safety
+interface DayForecast {
+  date: string
+  dayOfWeek: string
+  hours: HourForecast[]
+}
+
+interface HourForecast {
+  time: string
+  waveHeight?: number
+  wavePeriod?: number
+  windSpeed?: number
+  windDirection?: number
+  swellDirection?: number
+  waterTemperature?: number
+}
+
+interface ProcessedForecast {
+  days: DayForecast[]
+  lastUpdated: Date | string
+}
+
 @Component({
   selector: "app-spot-details",
   standalone: true,
@@ -51,7 +73,8 @@ export class SpotDetailsComponent implements OnInit {
   isAdmin = false
   commentForm: FormGroup
   activeTab = 0
-  forecastData: any = null
+  forecastData: ProcessedForecast | null = null
+  forecastExpanded = false // Add this property for accordion state
 
   constructor(
     private route: ActivatedRoute,
@@ -187,6 +210,11 @@ export class SpotDetailsComponent implements OnInit {
     this.activeTab = index
   }
 
+  // Toggle forecast accordion
+  toggleForecast(): void {
+    this.forecastExpanded = !this.forecastExpanded
+  }
+
   // Forecast-related methods
   processForecastData(): void {
     if (this.spot && this.spot.forecast && this.spot.forecast.data) {
@@ -194,14 +222,14 @@ export class SpotDetailsComponent implements OnInit {
     }
   }
 
-  formatForecastData(rawData: any): any {
+  formatForecastData(rawData: any): ProcessedForecast | null {
     if (!rawData || !rawData.hours) {
       return null
     }
 
     // Group data by day
-    const dailyForecasts: Array<{ date: string; dayOfWeek: string; hours: Array<{ time: string; waveHeight?: number; wavePeriod?: number; windSpeed?: number; windDirection?: number; swellDirection?: number; waterTemperature?: number }> }> = []
-    const days = new Map()
+    const dailyForecasts: DayForecast[] = []
+    const days = new Map<string, DayForecast>()
 
     rawData.hours.forEach((hour: any) => {
       const date = new Date(hour.time)
@@ -215,7 +243,7 @@ export class SpotDetailsComponent implements OnInit {
         })
       }
 
-      const hourData = {
+      const hourData: HourForecast = {
         time: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         waveHeight: hour.waveHeight?.noaa,
         wavePeriod: hour.wavePeriod?.noaa,
@@ -225,7 +253,10 @@ export class SpotDetailsComponent implements OnInit {
         waterTemperature: hour.waterTemperature?.noaa,
       }
 
-      days.get(dayKey).hours.push(hourData)
+      const dayData = days.get(dayKey)
+      if (dayData) {
+        dayData.hours.push(hourData)
+      }
     })
 
     // Convert map to array and sort by date
@@ -258,6 +289,41 @@ export class SpotDetailsComponent implements OnInit {
     } else {
       return `${diffDays} days ago`
     }
+  }
+
+  // Get current wave height from forecast data
+  getCurrentWaveHeight(): number | null {
+    if (!this.spot?.forecast?.data?.hours || this.spot.forecast.data.hours.length === 0) {
+      return null
+    }
+
+    // Find the hour closest to current time
+    const now = new Date()
+    const currentHour = this.spot.forecast.data.hours.reduce((closest: any, hour: any) => {
+      const hourTime = new Date(hour.time)
+      const closestTime = new Date(closest.time)
+      return Math.abs(hourTime.getTime() - now.getTime()) < Math.abs(closestTime.getTime() - now.getTime())
+        ? hour
+        : closest
+    })
+
+    return currentHour.waveHeight?.noaa || null
+  }
+
+  // Get condition class based on current wave height
+  getCurrentConditionClass(): string {
+    const waveHeight = this.getCurrentWaveHeight()
+    if (waveHeight === null) return ""
+
+    return this.stormglassService.getConditionClass(waveHeight)
+  }
+
+  // Get condition text based on current wave height
+  getCurrentConditionText(): string {
+    const waveHeight = this.getCurrentWaveHeight()
+    if (waveHeight === null) return "No data"
+
+    return `${waveHeight.toFixed(1)}m - ${this.stormglassService.getConditionDescription(waveHeight)}`
   }
 }
 
