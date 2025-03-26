@@ -1,17 +1,20 @@
-import { Component } from "@angular/core"
+import { Component, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
-import { ApiService } from "../../services/api.service"
-import { Router } from "@angular/router"
-import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms"
+import { FormBuilder, type FormGroup, ReactiveFormsModule, Validators } from "@angular/forms"
+import { Router, RouterModule, ActivatedRoute } from "@angular/router"
+import { MatCardModule } from "@angular/material/card"
 import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatInputModule } from "@angular/material/input"
-import { MatButtonModule } from "@angular/material/button"
 import { MatSelectModule } from "@angular/material/select"
-import { MatCardModule } from "@angular/material/card"
+import { MatButtonModule } from "@angular/material/button"
+import { MatChipsModule } from "@angular/material/chips"
 import { MatIconModule } from "@angular/material/icon"
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTabsModule } from "@angular/material/tabs"
+import { MatSpinner } from "@angular/material/progress-spinner"
 import { MatDividerModule } from "@angular/material/divider"
 import { SurfSpotCardComponent } from "../../components/surf-spot-card/surf-spot-card.component"
+import { ApiService } from "../../services/api.service"
 
 @Component({
   selector: "app-create-spot",
@@ -19,106 +22,208 @@ import { SurfSpotCardComponent } from "../../components/surf-spot-card/surf-spot
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
+    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatSelectModule,
-    MatCardModule,
+    MatButtonModule,
+    MatChipsModule,
     MatIconModule,
+    MatSnackBarModule,
     MatTabsModule,
     MatDividerModule,
     SurfSpotCardComponent,
+    MatSpinner
   ],
   templateUrl: "./create-spot.component.html",
   styleUrls: ["./create-spot.component.css"],
 })
-export class CreateSpotComponent {
-  form = this.fb.group({
-    name: ["", Validators.required],
-    description: [""],
-    country: [""],
-    region: [""],
-    waveType: [""],
-    swellDirection: [""],
-    tide: [""],
-    windDirection: [""],
-    difficulty: ["Intermediate"],
-    season: [[]],
-    crowdFactor: ["Medium"],
-    lat: [0],
-    lng: [0],
-    imageUrl: [""],
-  })
-
+export class CreateSpotComponent implements OnInit {
+  spotForm: FormGroup
+  seasons: string[] = ["Spring", "Summer", "Fall", "Winter"]
+  selectedSeasons: string[] = []
+  isEditMode = false
+  spotId = ""
+  pageTitle = "Create New Surf Spot"
+  submitButtonText = "Create Spot"
   previewSpot: any = {}
   isSubmitting = false
 
-  waveTypes = ["Reef break", "Beach break", "Point break"]
+  waveTypes = ["Beach break", "Reef break", "Point break", "River mouth"]
   swellDirections = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
-  tides = ["Low", "Mid", "High"]
+  tides = ["Low", "Mid", "High", "All"]
   windDirections = ["Offshore", "Onshore", "Cross-shore"]
-  difficulties = ["Beginner", "Intermediate", "Advanced"]
+  difficulties = ["Beginner", "Intermediate", "Advanced", "Expert"]
   crowdFactors = ["Low", "Medium", "High"]
-  seasons = ["Spring", "Summer", "Fall", "Winter"]
 
   constructor(
     private fb: FormBuilder,
     private api: ApiService,
     private router: Router,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
   ) {
-    // Initialize preview with form values
-    this.updatePreview()
+    this.spotForm = this.fb.group({
+      name: ["", [Validators.required, Validators.minLength(3)]],
+      description: [""],
+      imageUrl: [""],
+      region: ["", Validators.required],
+      country: ["", Validators.required],
+      difficulty: ["Intermediate"],
+      waveType: ["Beach break"],
+      swellDirection: [""],
+      windDirection: [""],
+      tide: ["All"],
+      crowdFactor: ["Medium"],
+      location: this.fb.group({
+        lat: [null],
+        lng: [null],
+      }),
+    })
+  }
+
+  ngOnInit(): void {
+    // Check if user is authenticated
+    this.api.getUser().subscribe({
+      next: (user) => {
+        // Check if user is admin for edit mode
+        if (user.role !== "admin") {
+          this.snackBar.open("Only admins can edit surf spots", "Close", {
+            duration: 5000,
+            panelClass: "error-snackbar",
+          })
+          this.router.navigate(["/"])
+        }
+      },
+      error: () => {
+        // Redirect to login if not authenticated
+        this.router.navigate(["/login"], {
+          queryParams: { returnUrl: this.isEditMode ? `/edit/${this.spotId}` : "/create-spot" },
+        })
+      },
+    })
+
+    // Check if we're in edit mode by looking for an ID in the route
+    this.route.params.subscribe((params) => {
+      if (params["id"]) {
+        this.isEditMode = true
+        this.spotId = params["id"]
+        this.pageTitle = "Edit Surf Spot"
+        this.submitButtonText = "Update Spot"
+        this.loadSpotData()
+      }
+    })
 
     // Subscribe to form value changes to update preview
-    this.form.valueChanges.subscribe(() => {
+    this.spotForm.valueChanges.subscribe(() => {
       this.updatePreview()
     })
   }
 
-  updatePreview() {
-    this.previewSpot = {
-      ...this.form.value,
-      location: {
-        lat: this.form.value.lat,
-        lng: this.form.value.lng,
+  loadSpotData(): void {
+    this.api.getSpot(this.spotId).subscribe({
+      next: (spot) => {
+        // Populate the form with the spot data
+        this.spotForm.patchValue({
+          name: spot.name,
+          description: spot.description || "",
+          imageUrl: spot.imageUrl || "",
+          region: spot.region,
+          country: spot.country,
+          difficulty: spot.difficulty,
+          waveType: spot.waveType,
+          swellDirection: spot.swellDirection || "",
+          windDirection: spot.windDirection || "",
+          tide: spot.tide,
+          crowdFactor: spot.crowdFactor,
+          location: {
+            lat: spot.location?.lat || null,
+            lng: spot.location?.lng || null,
+          },
+        })
+
+        // Set selected seasons
+        this.selectedSeasons = spot.season || []
+
+        // Update preview
+        this.updatePreview()
       },
+      error: (err) => {
+        console.error("Error loading surf spot:", err)
+        this.snackBar.open("Failed to load surf spot data", "Close", {
+          duration: 5000,
+          panelClass: "error-snackbar",
+        })
+        this.router.navigate(["/"])
+      },
+    })
+  }
+
+  toggleSeason(season: string): void {
+    const index = this.selectedSeasons.indexOf(season)
+    if (index === -1) {
+      this.selectedSeasons.push(season)
+    } else {
+      this.selectedSeasons.splice(index, 1)
+    }
+    this.updatePreview()
+  }
+
+  isSeasonSelected(season: string): boolean {
+    return this.selectedSeasons.includes(season)
+  }
+
+  updatePreview(): void {
+    this.previewSpot = {
+      ...this.spotForm.value,
+      season: this.selectedSeasons,
     }
   }
 
-  submit() {
-    if (this.form.valid) {
-      this.isSubmitting = true
-
-      const spot = {
-        ...this.form.value,
-        location: {
-          lat: this.form.value.lat,
-          lng: this.form.value.lng,
-        },
-      }
-
-      // Log the data being sent to help with debugging
-      console.log("Submitting spot data:", spot)
-
-      this.api.postSpot(spot).subscribe({
-        next: (response) => {
-          this.isSubmitting = false
-          console.log("Spot created successfully:", response)
-          alert("Surf spot created successfully!")
-          this.router.navigateByUrl("/")
-        },
-        error: (error) => {
-          this.isSubmitting = false
-          console.error("Error creating surf spot:", error)
-          alert(`Failed to create surf spot: ${error.error?.error || "Unknown error"}`)
-        },
-      })
-    } else {
+  onSubmit(): void {
+    if (this.spotForm.invalid) {
       // Mark all fields as touched to show validation errors
-      Object.keys(this.form.controls).forEach((key) => {
-        this.form.get(key)?.markAsTouched()
+      Object.keys(this.spotForm.controls).forEach((key) => {
+        const control = this.spotForm.get(key)
+        control?.markAsTouched()
       })
+      return
     }
+
+    this.isSubmitting = true
+    const spotData = {
+      ...this.spotForm.value,
+      season: this.selectedSeasons,
+    }
+
+    // Different API call based on whether we're creating or editing
+    const apiCall = this.isEditMode ? this.api.updateSpot(this.spotId, spotData) : this.api.createSpot(spotData)
+
+    apiCall.subscribe({
+      next: (response) => {
+        this.isSubmitting = false
+        const message = this.isEditMode ? "Surf spot updated successfully!" : "Surf spot created successfully!"
+
+        this.snackBar.open(message, "Close", {
+          duration: 3000,
+          panelClass: "success-snackbar",
+        })
+        this.router.navigate(["/spots", response._id])
+      },
+      error: (err) => {
+        this.isSubmitting = false
+        console.error(this.isEditMode ? "Error updating surf spot:" : "Error creating surf spot:", err)
+        this.snackBar.open(
+          err.error?.error || `Failed to ${this.isEditMode ? "update" : "create"} surf spot. Please try again.`,
+          "Close",
+          {
+            duration: 5000,
+            panelClass: "error-snackbar",
+          },
+        )
+      },
+    })
   }
 }
 
