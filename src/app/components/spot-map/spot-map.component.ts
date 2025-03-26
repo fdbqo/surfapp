@@ -8,7 +8,8 @@ import {
   ViewChild,
 } from "@angular/core"
 import { CommonModule } from "@angular/common"
-import * as L from "leaflet"
+// Import only what we need from Leaflet
+import { Map, TileLayer, Marker, Icon, LatLng } from "leaflet"
 
 @Component({
   selector: "app-spot-map",
@@ -24,8 +25,8 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
 
   @ViewChild("mapElement") mapElement!: ElementRef
 
-  private map: L.Map | null = null
-  private marker: L.Marker | null = null
+  private map: Map | null = null
+  private marker: Marker | null = null
 
   get hasCoordinates(): boolean {
     return (
@@ -56,15 +57,15 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
     this.fixLeafletIconPath()
 
     // Create map instance
-    this.map = L.map(this.mapElement.nativeElement).setView([Number(this.latitude), Number(this.longitude)], 13)
+    this.map = new Map(this.mapElement.nativeElement).setView([Number(this.latitude), Number(this.longitude)], 13)
 
     // Add OpenStreetMap tiles
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    new TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map)
 
     // Add marker for the surf spot
-    this.marker = L.marker([Number(this.latitude), Number(this.longitude)])
+    this.marker = new Marker(new LatLng(Number(this.latitude), Number(this.longitude)))
       .addTo(this.map)
       .bindPopup(this.spotName)
       .openPopup()
@@ -78,10 +79,10 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
 
     // Update or create marker
     if (this.marker) {
-      this.marker.setLatLng([Number(this.latitude), Number(this.longitude)])
+      this.marker.setLatLng(new LatLng(Number(this.latitude), Number(this.longitude)))
       this.marker.bindPopup(this.spotName)
     } else {
-      this.marker = L.marker([Number(this.latitude), Number(this.longitude)])
+      this.marker = new Marker(new LatLng(Number(this.latitude), Number(this.longitude)))
         .addTo(this.map)
         .bindPopup(this.spotName)
         .openPopup()
@@ -94,10 +95,8 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
     const iconUrl = "assets/marker-icon.png"
     const shadowUrl = "assets/marker-shadow.png"
 
-    // @ts-ignore - TS doesn't know about L.Icon.Default.prototype
-    delete L.Icon.Default.prototype._getIconUrl
-
-    L.Icon.Default.mergeOptions({
+    // Set default icon options
+    Icon.Default.mergeOptions({
       iconRetinaUrl,
       iconUrl,
       shadowUrl,
