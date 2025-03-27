@@ -5,6 +5,7 @@
   
   <div *ngIf="displayedComments.length > 0" class="comments-list">
     <div *ngFor="let comment of displayedComments" class="comment-thread">
+      <!-- Main comment -->
       <div class="comment-card">
         <div class="comment-header">
           <div class="user-info">
@@ -60,6 +61,7 @@
             </div>
           </div>
           
+          <!-- Normal view -->
           <p *ngIf="editingComment !== comment._id" class="comment-text">{{ comment.text }}</p>
         </div>
         
@@ -75,6 +77,7 @@
           </button>
         </div>
         
+        <!-- Reply form -->
         <div *ngIf="replyingTo === comment._id" class="reply-form">
           <textarea 
             [(ngModel)]="replyText" 
@@ -95,6 +98,7 @@
         </div>
       </div>
       
+      <!-- Replies -->
       <div *ngIf="comment.replies && comment.replies.length > 0" class="replies-container">
         <div *ngFor="let reply of comment.replies" class="reply-item">
           <div class="comment-card reply-card">
@@ -128,6 +132,7 @@
             </div>
             
             <div class="comment-content">
+              <!-- Edit mode -->
               <div *ngIf="editingComment === reply._id" class="edit-form">
                 <textarea 
                   [(ngModel)]="editText" 
@@ -147,6 +152,7 @@
                 </div>
               </div>
               
+              <!-- Normal view -->
               <p *ngIf="editingComment !== reply._id" class="comment-text">{{ reply.text }}</p>
             </div>
           </div>
