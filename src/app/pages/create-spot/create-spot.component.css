@@ -81,6 +81,7 @@
   width: 100%;
 }
 
+/* Override Angular Material styles for dark theme */
 ::ng-deep .mat-mdc-form-field-label {
   color: #6ba5c7 !important;
 }
@@ -105,6 +106,50 @@
   color: white !important;
 }
 
+/* Add these additional overrides for input text */
+::ng-deep .mat-mdc-input-element {
+  color: white !important;
+}
+
+::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: #6ba5c7 !important;
+}
+
+::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: white !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-select-arrow {
+  color: #87cefa !important;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  background-color: #2a2a2a !important;
+}
+
+::ng-deep .mat-mdc-option {
+  color: white !important;
+}
+
+::ng-deep .mat-mdc-option:hover:not(.mdc-list-item--disabled),
+::ng-deep .mat-mdc-option.mat-mdc-option-active {
+  background-color: rgba(135, 206, 250, 0.1) !important;
+}
+
+::ng-deep .mdc-menu-surface {
+  background-color: #2a2a2a !important;
+}
+
+::ng-deep .mat-mdc-form-field-type-mat-select .mat-mdc-form-field-infix {
+  color: white !important;
+}
+
+/* Fix textarea text color */
+::ng-deep textarea.mat-mdc-input-element {
+  color: white !important;
+}
+
+/* Seasons chips */
 .seasons-container {
   display: flex;
   flex-wrap: wrap;
@@ -131,6 +176,7 @@
   background-color: #333;
 }
 
+/* Form actions */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -138,6 +184,7 @@
   margin-top: 1rem;
 }
 
+/* Preview section */
 .preview-section {
   background-color: #1e1e1e;
   border-radius: 8px;
@@ -159,6 +206,7 @@
   font-size: 0.9rem;
 }
 
+/* Loading spinner */
 .spinner {
   display: inline-block;
   margin-right: 0.5rem;
@@ -179,6 +227,7 @@
   margin-left: 1.5rem;
 }
 
+/* Override Angular Material checkbox styles for dark theme */
 ::ng-deep .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
   background-color: #87cefa !important;
   border-color: #87cefa !important;
@@ -188,6 +237,7 @@
   color: white !important;
 }
 
+/* Add button styling to match other components */
 ::ng-deep .mat-button {
   color: white !important;
 }
@@ -208,7 +258,7 @@
   color: white !important;
 }
 
-
+/* Ensure all inputs have white text */
 input,
 textarea {
   color: white !important;
