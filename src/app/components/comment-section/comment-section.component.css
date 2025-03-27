@@ -139,6 +139,7 @@
 
 .cancel-button {
   color: white !important;
+  background-color: rgba(60, 60, 60, 0.5) !important;
 }
 
 .post-button, .save-button {
@@ -281,4 +282,162 @@
 
 .action-button mat-icon {
   font-size: 16px;
-  height: 16
+  height: 16px;
+  width: 16px;
+  color: #87cefa !important;
+}
+
+/* Reply section with better visual hierarchy */
+.replies-container {
+  margin-left: 2.5rem;
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+  padding-left: 1rem;
+  border-left: 3px solid rgba(135, 206, 250, 0.3);
+}
+
+.reply-card {
+  background-color: rgba(26, 26, 26, 0.7) !important;
+  border-left: 2px solid #1e4a6d;
+}
+
+/* Improved reply form styling to match main comment input */
+.reply-form {
+  background-color: rgba(37, 37, 37, 0.7);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-top: 0.75rem;
+  border: 1px solid rgba(135, 206, 250, 0.2);
+}
+
+.reply-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  color: #87cefa;
+}
+
+.reply-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  margin-right: 0.5rem;
+}
+
+.reply-label {
+  font-size: 0.9rem;
+}
+
+.reply-textarea,
+.edit-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid rgba(135, 206, 250, 0.3);
+  background-color: rgba(30, 30, 30, 0.7);
+  color: white !important;
+  resize: vertical;
+  font-family: inherit;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  caret-color: #87cefa;
+}
+
+.reply-textarea::placeholder,
+.edit-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.reply-actions,
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Also update the edit form to match */
+.edit-form {
+  background-color: rgba(37, 37, 37, 0.7);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  border: 1px solid rgba(135, 206, 250, 0.2);
+}
+
+/* Updated comments disclaimer */
+.comments-disclaimer {
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: white;
+  text-align: center;
+  border-top: 1px solid rgba(135, 206, 250, 0.1);
+  background-color: rgba(26, 26, 26, 0.7);
+}
+
+.comments-disclaimer p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .user-info {
+    flex-direction: column;
+  }
+
+  .user-avatar {
+    margin-bottom: 0.25rem;
+  }
+
+  .comment-header {
+    flex-direction: column;
+  }
+
+  .comment-actions {
+    align-self: flex-end;
+    margin-top: -1.5rem;
+  }
+
+  .replies-container {
+    margin-left: 1.5rem;
+    padding-left: 0.5rem;
+  }
+}
+
+/* Angular Material overrides */
+::ng-deep .mat-menu-panel {
+  background-color: #1e1e1e !important;
+}
+
+::ng-deep .mat-menu-item {
+  color: white !important;
+}
+
+::ng-deep .mat-menu-item .mat-icon {
+  color: #87cefa !important;
+}
+
+::ng-deep .mat-menu-item:hover {
+  background-color: rgba(135, 206, 250, 0.1) !important;
+}
+
+/* Button overrides */
+::ng-deep .mat-button.mat-primary {
+  color: #87cefa !important;
+}
+
+::ng-deep .mat-raised-button.mat-primary {
+  background-color: #1e4a6d !important;
+  color: white !important;
+}
+
+::ng-deep .mat-button {
+  color: white !important;
+}
+
+::ng-deep .mat-raised-button:not([class*="mat-elevation-z"]) {
+  color: white !important;
+}

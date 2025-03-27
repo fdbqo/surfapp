@@ -14,7 +14,7 @@
       <mat-icon>{{ commentsExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
     </button>
   </div>
-  
+
   <!-- Accordion Content -->
   <div class="accordion-content" [ngClass]="{'expanded': commentsExpanded}">
     <!-- Comment Form -->
@@ -22,50 +22,36 @@
       <div class="comment-form-header">
         <img [src]="currentUser.image || '/assets/default-avatar.png'" alt="Your avatar" class="comment-avatar">
         <div class="rating-input" *ngIf="!replyingTo">
-          <button 
-            type="button" 
-            *ngFor="let star of [1, 2, 3, 4, 5]" 
-            (click)="setRating(star)"
-            [class.active]="newCommentRating >= star"
-            class="star-button">
+          <button type="button" *ngFor="let star of [1, 2, 3, 4, 5]" (click)="setRating(star)"
+            [class.active]="newCommentRating >= star" class="star-button">
             ★
           </button>
         </div>
       </div>
-      
+
       <div class="comment-input-container">
-        <textarea 
-          [(ngModel)]="newCommentText" 
-          placeholder="{{ replyingTo ? 'Write your reply...' : 'Share your experience at this surf spot...' }}"
-          rows="2"
+        <textarea [(ngModel)]="newCommentText"
+          placeholder="{{ replyingTo ? 'Write your reply...' : 'Share your experience at this surf spot...' }}" rows="2"
           class="comment-textarea">
         </textarea>
-        
+
         <div class="comment-actions">
-          <button 
-            mat-button 
-            *ngIf="replyingTo" 
-            (click)="cancelReply()"
-            class="cancel-button">
+          <button mat-button *ngIf="replyingTo" (click)="cancelReply()" class="cancel-button">
             Cancel
           </button>
-          <button 
-            mat-raised-button 
-            color="primary" 
-            [disabled]="!newCommentText.trim()" 
-            (click)="submitComment()"
+          <button mat-raised-button color="primary" [disabled]="!newCommentText.trim()" (click)="submitComment()"
             class="post-button">
             {{ replyingTo ? 'Reply' : 'Post Review' }}
           </button>
         </div>
       </div>
     </div>
-    
+
     <!-- No Comments State -->
     <div *ngIf="displayedComments.length === 0" class="no-comments">
       <p>No comments yet. Be the first to share your experience!</p>
     </div>
-    
+
     <!-- Comments List -->
     <div *ngIf="displayedComments.length > 0" class="comments-list">
       <div *ngFor="let comment of displayedComments" class="comment-thread">
@@ -87,7 +73,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="comment-actions" *ngIf="canModify(comment)">
               <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Comment actions" class="action-button">
                 <mat-icon>more_vert</mat-icon>
@@ -104,67 +90,51 @@
               </mat-menu>
             </div>
           </div>
-          
+
           <div class="comment-content">
             <!-- Edit mode -->
             <div *ngIf="editingComment === comment._id" class="edit-form">
-              <textarea 
-                [(ngModel)]="editText" 
-                placeholder="Edit your comment..." 
-                rows="2"
-                class="edit-textarea">
+              <textarea [(ngModel)]="editText" placeholder="Edit your comment..." rows="2" class="edit-textarea">
               </textarea>
               <div class="edit-actions">
                 <button mat-button (click)="cancelEdit()" class="cancel-button">Cancel</button>
-                <button 
-                  mat-raised-button 
-                  color="primary" 
-                  [disabled]="!editText.trim()" 
-                  (click)="submitEdit(comment)"
+                <button mat-raised-button color="primary" [disabled]="!editText.trim()" (click)="submitEdit(comment)"
                   class="save-button">
                   Save
                 </button>
               </div>
             </div>
-            
+
             <!-- Normal view -->
             <p *ngIf="editingComment !== comment._id" class="comment-text">{{ comment.text }}</p>
           </div>
-          
+
           <div class="comment-footer">
-            <button 
-              mat-button 
-              color="primary" 
-              (click)="startReply(comment._id)"
-              *ngIf="currentUser && editingComment !== comment._id"
-              class="reply-button">
+            <button mat-button color="primary" (click)="startReply(comment._id)"
+              *ngIf="currentUser && editingComment !== comment._id" class="reply-button">
               <mat-icon>reply</mat-icon>
               Reply
             </button>
           </div>
-          
+
           <!-- Reply form -->
           <div *ngIf="replyingTo === comment._id" class="reply-form">
-            <textarea 
-              [(ngModel)]="replyText" 
-              placeholder="Write your reply..." 
-              rows="2"
-              class="reply-textarea">
+            <div class="reply-header">
+              <mat-icon class="reply-icon">reply</mat-icon>
+              <span class="reply-label">Reply to {{ comment.user?.username || 'Anonymous' }}</span>
+            </div>
+            <textarea [(ngModel)]="replyText" placeholder="Write your reply..." rows="2" class="reply-textarea">
             </textarea>
             <div class="reply-actions">
               <button mat-button (click)="cancelReply()" class="cancel-button">Cancel</button>
-              <button 
-                mat-raised-button 
-                color="primary" 
-                [disabled]="!replyText.trim()" 
-                (click)="submitReply(comment)"
+              <button mat-raised-button color="primary" [disabled]="!replyText.trim()" (click)="submitReply(comment)"
                 class="post-button">
                 Post
               </button>
             </div>
           </div>
         </div>
-        
+
         <!-- Replies -->
         <div *ngIf="comment.replies && comment.replies.length > 0" class="replies-container">
           <div *ngFor="let reply of comment.replies" class="reply-item">
@@ -180,9 +150,10 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="comment-actions" *ngIf="canModify(reply)">
-                  <button mat-icon-button [matMenuTriggerFor]="replyMenu" aria-label="Reply actions" class="action-button">
+                  <button mat-icon-button [matMenuTriggerFor]="replyMenu" aria-label="Reply actions"
+                    class="action-button">
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #replyMenu="matMenu">
@@ -197,29 +168,21 @@
                   </mat-menu>
                 </div>
               </div>
-              
+
               <div class="comment-content">
                 <!-- Edit mode -->
                 <div *ngIf="editingComment === reply._id" class="edit-form">
-                  <textarea 
-                    [(ngModel)]="editText" 
-                    placeholder="Edit your reply..." 
-                    rows="2"
-                    class="edit-textarea">
+                  <textarea [(ngModel)]="editText" placeholder="Edit your reply..." rows="2" class="edit-textarea">
                   </textarea>
                   <div class="edit-actions">
                     <button mat-button (click)="cancelEdit()" class="cancel-button">Cancel</button>
-                    <button 
-                      mat-raised-button 
-                      color="primary" 
-                      [disabled]="!editText.trim()" 
-                      (click)="submitEdit(reply)"
+                    <button mat-raised-button color="primary" [disabled]="!editText.trim()" (click)="submitEdit(reply)"
                       class="save-button">
                       Save
                     </button>
                   </div>
                 </div>
-                
+
                 <!-- Normal view -->
                 <p *ngIf="editingComment !== reply._id" class="comment-text">{{ reply.text }}</p>
               </div>
@@ -228,7 +191,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="comments-disclaimer">
       <p>All reviews are from verified users. Please be respectful when posting.</p>
     </div>
