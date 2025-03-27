@@ -1,159 +1,161 @@
-<div class="comments-container">
-  <div *ngIf="displayedComments.length === 0" class="no-comments">
-    <p>No comments yet. Be the first to share your experience!</p>
-  </div>
-  
-  <div *ngIf="displayedComments.length > 0" class="comments-list">
-    <div *ngFor="let comment of displayedComments" class="comment-thread">
-      <!-- Main comment -->
-      <div class="comment-card">
-        <div class="comment-header">
-          <div class="user-info">
-            <img [src]="comment.user?.image || '/assets/default-avatar.png'" alt="User avatar" class="user-avatar">
-            <div class="user-details">
-              <div class="name-rating">
-                <span class="user-name">{{ comment.user?.username || 'Anonymous' }}</span>
-                <span class="comment-rating" *ngIf="comment.rating">
-                  <span class="rating-stars">{{ getStarRating(comment.rating) }}</span>
-                </span>
-              </div>
-              <div class="comment-meta">
-                <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
-                <span *ngIf="comment.edited" class="edited-badge">· edited</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="comment-actions" *ngIf="canModify(comment)">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Comment actions" class="action-button">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="startEdit(comment)">
-                <mat-icon>edit</mat-icon>
-                <span>Edit</span>
-              </button>
-              <button mat-menu-item (click)="deleteComment(comment)">
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-              </button>
-            </mat-menu>
-          </div>
-        </div>
-        
-        <div class="comment-content">
-          <div *ngIf="editingComment === comment._id" class="edit-form">
-            <textarea 
-              [(ngModel)]="editText" 
-              placeholder="Edit your comment..." 
-              rows="2"
-              class="edit-textarea">
-            </textarea>
-            <div class="edit-actions">
-              <button mat-button (click)="cancelEdit()">Cancel</button>
-              <button 
-                mat-raised-button 
-                color="primary" 
-                [disabled]="!editText.trim()" 
-                (click)="submitEdit(comment)">
-                Save
-              </button>
-            </div>
-          </div>
-          
-          <!-- Normal view -->
-          <p *ngIf="editingComment !== comment._id" class="comment-text">{{ comment.text }}</p>
-        </div>
-        
-        <div class="comment-footer">
-          <button 
-            mat-button 
-            color="primary" 
-            (click)="startReply(comment._id)"
-            *ngIf="currentUser && editingComment !== comment._id"
-            class="reply-button">
-            <mat-icon>reply</mat-icon>
-            Reply
-          </button>
-        </div>
-        
-        <!-- Reply form -->
-        <div *ngIf="replyingTo === comment._id" class="reply-form">
-          <textarea 
-            [(ngModel)]="replyText" 
-            placeholder="Write your reply..." 
-            rows="2"
-            class="reply-textarea">
-          </textarea>
-          <div class="reply-actions">
-            <button mat-button (click)="cancelReply()">Cancel</button>
-            <button 
-              mat-raised-button 
-              color="primary" 
-              [disabled]="!replyText.trim()" 
-              (click)="submitReply(comment)">
-              Post
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Replies -->
-      <div *ngIf="comment.replies && comment.replies.length > 0" class="replies-container">
-        <div *ngFor="let reply of comment.replies" class="reply-item">
-          <div class="comment-card reply-card">
-            <div class="comment-header">
-              <div class="user-info">
-                <img [src]="reply.user?.image || '/assets/default-avatar.png'" alt="User avatar" class="user-avatar">
-                <div class="user-details">
-                  <span class="user-name">{{ reply.user?.username || 'Anonymous' }}</span>
-                  <div class="comment-meta">
-                    <span class="comment-date">{{ formatDate(reply.createdAt) }}</span>
-                    <span *ngIf="reply.edited" class="edited-badge">· edited</span>
-                  </div>
+<div class="comments-theme">
+  <div class="comments-container">
+    <div *ngIf="displayedComments.length === 0" class="no-comments">
+      <p>No comments yet. Be the first to share your experience!</p>
+    </div>
+    
+    <div *ngIf="displayedComments.length > 0" class="comments-list">
+      <div *ngFor="let comment of displayedComments" class="comment-thread">
+        <!-- Main comment -->
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="user-info">
+              <img [src]="comment.user?.image || '/assets/default-avatar.png'" alt="User avatar" class="user-avatar">
+              <div class="user-details">
+                <div class="name-rating">
+                  <span class="user-name">{{ comment.user?.username || 'Anonymous' }}</span>
+                  <span class="comment-rating" *ngIf="comment.rating">
+                    <span class="rating-stars">{{ getStarRating(comment.rating) }}</span>
+                  </span>
                 </div>
-              </div>
-              
-              <div class="comment-actions" *ngIf="canModify(reply)">
-                <button mat-icon-button [matMenuTriggerFor]="replyMenu" aria-label="Reply actions" class="action-button">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #replyMenu="matMenu">
-                  <button mat-menu-item (click)="startEdit(reply)">
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit</span>
-                  </button>
-                  <button mat-menu-item (click)="deleteComment(reply, comment)">
-                    <mat-icon>delete</mat-icon>
-                    <span>Delete</span>
-                  </button>
-                </mat-menu>
+                <div class="comment-meta">
+                  <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
+                  <span *ngIf="comment.edited" class="edited-badge">· edited</span>
+                </div>
               </div>
             </div>
             
-            <div class="comment-content">
-              <!-- Edit mode -->
-              <div *ngIf="editingComment === reply._id" class="edit-form">
-                <textarea 
-                  [(ngModel)]="editText" 
-                  placeholder="Edit your reply..." 
-                  rows="2"
-                  class="edit-textarea">
-                </textarea>
-                <div class="edit-actions">
-                  <button mat-button (click)="cancelEdit()">Cancel</button>
-                  <button 
-                    mat-raised-button 
-                    color="primary" 
-                    [disabled]="!editText.trim()" 
-                    (click)="submitEdit(reply)">
-                    Save
+            <div class="comment-actions" *ngIf="canModify(comment)">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Comment actions" class="action-button">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="startEdit(comment)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item (click)="deleteComment(comment)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+          
+          <div class="comment-content">
+            <div *ngIf="editingComment === comment._id" class="edit-form">
+              <textarea 
+                [(ngModel)]="editText" 
+                placeholder="Edit your comment..." 
+                rows="2"
+                class="edit-textarea">
+              </textarea>
+              <div class="edit-actions">
+                <button mat-button (click)="cancelEdit()">Cancel</button>
+                <button 
+                  mat-raised-button 
+                  color="primary" 
+                  [disabled]="!editText.trim()" 
+                  (click)="submitEdit(comment)">
+                  Save
+                </button>
+              </div>
+            </div>
+            
+            <!-- Normal view -->
+            <p *ngIf="editingComment !== comment._id" class="comment-text">{{ comment.text }}</p>
+          </div>
+          
+          <div class="comment-footer">
+            <button 
+              mat-button 
+              color="primary" 
+              (click)="startReply(comment._id)"
+              *ngIf="currentUser && editingComment !== comment._id"
+              class="reply-button">
+              <mat-icon>reply</mat-icon>
+              Reply
+            </button>
+          </div>
+          
+          <!-- Reply form -->
+          <div *ngIf="replyingTo === comment._id" class="reply-form">
+            <textarea 
+              [(ngModel)]="replyText" 
+              placeholder="Write your reply..." 
+              rows="2"
+              class="reply-textarea">
+            </textarea>
+            <div class="reply-actions">
+              <button mat-button (click)="cancelReply()">Cancel</button>
+              <button 
+                mat-raised-button 
+                color="primary" 
+                [disabled]="!replyText.trim()" 
+                (click)="submitReply(comment)">
+                Post
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Replies -->
+        <div *ngIf="comment.replies && comment.replies.length > 0" class="replies-container">
+          <div *ngFor="let reply of comment.replies" class="reply-item">
+            <div class="comment-card reply-card">
+              <div class="comment-header">
+                <div class="user-info">
+                  <img [src]="reply.user?.image || '/assets/default-avatar.png'" alt="User avatar" class="user-avatar">
+                  <div class="user-details">
+                    <span class="user-name">{{ reply.user?.username || 'Anonymous' }}</span>
+                    <div class="comment-meta">
+                      <span class="comment-date">{{ formatDate(reply.createdAt) }}</span>
+                      <span *ngIf="reply.edited" class="edited-badge">· edited</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="comment-actions" *ngIf="canModify(reply)">
+                  <button mat-icon-button [matMenuTriggerFor]="replyMenu" aria-label="Reply actions" class="action-button">
+                    <mat-icon>more_vert</mat-icon>
                   </button>
+                  <mat-menu #replyMenu="matMenu">
+                    <button mat-menu-item (click)="startEdit(reply)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteComment(reply, comment)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Delete</span>
+                    </button>
+                  </mat-menu>
                 </div>
               </div>
               
-              <!-- Normal view -->
-              <p *ngIf="editingComment !== reply._id" class="comment-text">{{ reply.text }}</p>
+              <div class="comment-content">
+                <!-- Edit mode -->
+                <div *ngIf="editingComment === reply._id" class="edit-form">
+                  <textarea 
+                    [(ngModel)]="editText" 
+                    placeholder="Edit your reply..." 
+                    rows="2"
+                    class="edit-textarea">
+                  </textarea>
+                  <div class="edit-actions">
+                    <button mat-button (click)="cancelEdit()">Cancel</button>
+                    <button 
+                      mat-raised-button 
+                      color="primary" 
+                      [disabled]="!editText.trim()" 
+                      (click)="submitEdit(reply)">
+                      Save
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Normal view -->
+                <p *ngIf="editingComment !== reply._id" class="comment-text">{{ reply.text }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -161,4 +163,3 @@
     </div>
   </div>
 </div>
-
