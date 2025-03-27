@@ -159,11 +159,12 @@
   background-color: #1a1a1a;
 }
 
+/* Update tab button styles to use blue color */
 .tab-button {
   flex: 1;
   background: none;
   border: none;
-  color: #6ba5c7;
+  color: #87cefa; /* Change from #6ba5c7 to #87cefa for consistency */
   padding: 0.75rem 0.5rem;
   display: flex;
   flex-direction: column;
@@ -178,6 +179,7 @@
   height: 1.2rem;
   width: 1.2rem;
   margin-bottom: 0.25rem;
+  color: #87cefa; /* Ensure icon is also blue */
 }
 
 .tab-button.active {
@@ -207,6 +209,7 @@
   margin-bottom: 0.25rem;
 }
 
+/* Make sure all info values are blue */
 .info-value {
   color: #87cefa;
   font-weight: 500;
@@ -231,8 +234,9 @@
   font-size: 0.8rem;
 }
 
+/* Ensure spot description is white for better readability */
 .spot-description {
-  color: #87cefa;
+  color: white;
   line-height: 1.5;
   white-space: pre-line;
   margin: 0;
@@ -491,9 +495,11 @@ textarea::placeholder {
   color: rgba(255, 255, 255, 0.5) !important;
 }
 
-/* Ensure all inputs have white text */
-input {
+/* Ensure text in all inputs is white */
+input,
+textarea {
   color: white !important;
+  background-color: rgba(30, 30, 30, 0.7) !important;
 }
 
 input::placeholder {
@@ -520,6 +526,14 @@ button {
   color: white !important;
 }
 
+::ng-deep .mat-icon-button.mat-primary {
+  color: #87cefa !important;
+}
+
+::ng-deep .mat-icon-button.mat-warn {
+  color: #f44336 !important;
+}
+
 ::ng-deep .mat-raised-button:not([class*="mat-elevation-z"]) {
   color: white !important;
 }
@@ -532,6 +546,7 @@ button {
 input,
 textarea {
   color: white !important;
+  background-color: rgba(30, 30, 30, 0.7) !important;
 }
 
 input::placeholder,
@@ -566,8 +581,21 @@ button[color="primary"] {
   color: #87cefa !important;
 }
 
+button[color="primary"] mat-icon {
+  color: #87cefa !important;
+}
+
 button[mat-raised-button][color="primary"] {
   background-color: #1e4a6d !important;
   color: #87cefa !important;
+}
+
+/* Ensure delete button has the correct color */
+button[color="warn"] {
+  color: #f44336 !important; /* Use red for warning/delete buttons */
+}
+
+button[color="warn"] mat-icon {
+  color: #f44336 !important;
 }
 
