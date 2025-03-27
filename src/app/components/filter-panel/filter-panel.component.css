@@ -1,4 +1,7 @@
-.filter-panel-container {
+/************************************
+ * Panel Container & General Layout *
+ ************************************/
+ .filter-panel-container {
   background-color: #1e1e1e;
   border-radius: 8px;
   margin-bottom: 1rem;
@@ -7,18 +10,20 @@
 }
 
 /*
-  Make the search container a flex row 
-  that stretches its children to fill the vertical space.
+  .search-container: 
+  A flex row with "stretch" alignment 
+  so that each child (the mat-form-field & filter button) 
+  matches in height automatically.
 */
 .search-container {
   display: flex;
-  align-items: stretch; /* forces children (search + button) to same height */
+  align-items: stretch; /* crucial for matching heights */
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  margin: 0; /* remove any default margin if present */
+  margin: 0;
 }
 
-/* Let the mat-form-field expand naturally. */
+/* Let the mat-form-field (search bar) expand to fill leftover space. */
 .search-field {
   flex: 1;
   margin: 0;
@@ -29,12 +34,13 @@
   margin: 0 !important;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* so label & input are centered vertically */
+  justify-content: center; /* ensures label/input are centered vertically */
 }
 
-/* 
-  Filter button: let it stretch to match the mat-form-field's height 
-  (usually ~56px in Angular Material).
+/*
+  Filter button:
+  No fixed/min height, so it stretches 
+  to match the mat-form-field's height.
 */
 .filter-toggle-button {
   align-self: stretch;
@@ -47,12 +53,16 @@
   color: #87cefa;
   border-radius: 4px;
   position: relative;
+  text-transform: none; /* If you want to avoid uppercase text */
+  font-weight: 500;     /* Slightly bolder text for the button */
 }
 
+/* A little margin for the icon to not sit flush with the label. */
 .filter-text {
   margin-left: 0.25rem;
 }
 
+/* Filter badge for count */
 .filter-badge {
   position: absolute;
   top: 4px;
@@ -68,14 +78,16 @@
   justify-content: center;
 }
 
-/* The mat-icon-button in the search: no fixed height, just a margin. */
+/* The search suffix icon button: no forced height, a little margin for breathing room. */
 ::ng-deep .search-container .mat-mdc-icon-button {
   margin-right: 4px;
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
 }
 
-/* Expandable filter panel styles (unchanged) */
+/************************
+ * Expandable Panel CSS *
+ ************************/
 .filter-panel {
   max-height: 0;
   overflow: hidden;
@@ -84,7 +96,7 @@
 }
 
 .filter-panel.expanded {
-  max-height: 1000px;
+  max-height: 1000px; /* large enough so the panel fully expands */
   transition: max-height 0.5s ease-in;
 }
 
@@ -125,18 +137,23 @@
   width: 100%;
 }
 
-/* Make form fields more compact if desired */
+/***************************
+ * Compact Form Field Tweaks
+ ***************************/
 ::ng-deep .mat-mdc-form-field-infix {
-  padding: 0.5em 0 !important; /* optional */
+  padding: 0.5em 0 !important; /* optional, for a slimmer infix */
   min-height: auto !important;
 }
 
-/* The rest of your Angular Material overrides */
+/***************************
+ * Angular Material Overrides
+ ***************************/
 ::ng-deep .mat-mdc-text-field-wrapper {
   background-color: #2a2a2a !important;
 }
 
-::ng-deep .mat-mdc-form-field-label {
+::ng-deep .mat-mdc-form-field-label,
+::ng-deep .mdc-floating-label {
   color: #6ba5c7 !important;
 }
 
@@ -159,47 +176,13 @@
   color: white !important;
 }
 
-::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
-  color: #6ba5c7 !important;
-}
-
 ::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
   color: white !important;
 }
 
+::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: #6ba5c7 !important;
+}
+
 ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-select-arrow {
-  color: #87cefa !important;
-}
-
-::ng-deep .mat-mdc-select-panel {
-  background-color: #2a2a2a !important;
-}
-
-::ng-deep .mat-mdc-option {
-  color: white !important;
-}
-
-::ng-deep .mat-mdc-option:hover:not(.mdc-list-item--disabled),
-::ng-deep .mat-mdc-option.mat-mdc-option-active {
-  background-color: rgba(135, 206, 250, 0.1) !important;
-}
-
-::ng-deep .mdc-menu-surface {
-  background-color: #2a2a2a !important;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .filter-panel-content {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .filter-panel-content {
-    grid-template-columns: 1fr;
-  }
-  .filter-text {
-    display: none;
-  }
-}
+  color: #
