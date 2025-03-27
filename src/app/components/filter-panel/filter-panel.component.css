@@ -6,45 +6,47 @@
   border: 1px solid rgba(135, 206, 250, 0.1);
 }
 
+/* 
+  Use a flex layout for the search container
+  so items align nicely on the same row.
+*/
 .search-container {
-  /* Flex layout to align items horizontally */
   display: flex;
-  align-items: center; /* Ensures button & field share the same vertical center */
+  align-items: center; /* keeps them on the same vertical center line */
   gap: 0.5rem;
   padding: 0.5rem 1rem;
 }
 
-/* 
-  Let the mat-form-field (search bar) size itself naturally.
-  Remove any forced height or margin.
-*/
+/* Let the mat-form-field grow naturally (no forced height). */
 .search-field {
   flex: 1;
-  margin: 0; /* remove default margin if any */
+  margin: 0; /* remove default margin if present */
 }
 
 /* 
-  Remove default margin from Angular Material form field so 
-  it doesn't push the search bar up or down.
+  Remove margin from the mat-form-field to avoid it pushing 
+  the field up/down relative to the button.
 */
 ::ng-deep .search-field .mat-mdc-form-field {
   margin: 0 !important;
 }
 
 /* 
-  Set the filter button to match the typical ~56px height
-  of an outlined mat-form-field.
+  Match the filter button's height to the typical 
+  outlined form-field height (~56px). Adjust if your 
+  computed mat-form-field height differs.
 */
 .filter-toggle-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 56px; /* match typical outline field height */
+  height: 56px; /* match the mat-form-field's computed height */
   padding: 0 16px;
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
   border-radius: 4px;
   position: relative;
+  margin: 0; /* ensure no extra vertical margin */
 }
 
 .filter-text {
@@ -67,16 +69,18 @@
 }
 
 /* 
-  The search icon button can just be auto-height, 
-  so it lines up with the mat-form-field suffix area.
+  For the search icon button, do not force a height. 
+  It will naturally fit inside the mat-form-field suffix area. 
+  Just give it a little margin for breathing room.
 */
 ::ng-deep .search-container .mat-mdc-icon-button {
-  margin-right: 4px; /* tiny offset for breathing room */
+  margin-right: 4px;
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
+  /* no forced height; let Angular Material size it */
 }
 
-/* Filter panel styling (unchanged) */
+/* Filter panel styles remain the same */
 .filter-panel {
   max-height: 0;
   overflow: hidden;
@@ -126,7 +130,7 @@
   width: 100%;
 }
 
-/* Optional form-field theming/tweaks */
+/* Optional styling for the form field and select menus */
 ::ng-deep .mat-mdc-text-field-wrapper {
   background-color: #2a2a2a !important;
 }
@@ -157,6 +161,10 @@
 
 ::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
   color: white !important;
+}
+
+::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: #6ba5c7 !important;
 }
 
 ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-select-arrow {
