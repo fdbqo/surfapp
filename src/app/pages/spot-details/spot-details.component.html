@@ -26,7 +26,7 @@
           <span>{{ spot.region }}, {{ spot.country }}</span>
         </div>
       </div>
-      
+
       <div class="header-actions" *ngIf="isAdmin">
         <button mat-icon-button color="primary" [routerLink]="['/edit', spot._id]" matTooltip="Edit">
           <mat-icon>edit</mat-icon>
@@ -47,24 +47,15 @@
 
         <div class="info-tabs">
           <div class="tab-buttons">
-            <button 
-              [class.active]="activeTab === 0" 
-              (click)="setActiveTab(0)" 
-              class="tab-button">
+            <button [class.active]="activeTab === 0" (click)="setActiveTab(0)" class="tab-button">
               <mat-icon>waves</mat-icon>
               <span>Conditions</span>
             </button>
-            <button 
-              [class.active]="activeTab === 1" 
-              (click)="setActiveTab(1)" 
-              class="tab-button">
+            <button [class.active]="activeTab === 1" (click)="setActiveTab(1)" class="tab-button">
               <mat-icon>info</mat-icon>
               <span>About</span>
             </button>
-            <button 
-              [class.active]="activeTab === 2" 
-              (click)="setActiveTab(2)" 
-              class="tab-button">
+            <button [class.active]="activeTab === 2" (click)="setActiveTab(2)" class="tab-button">
               <mat-icon>place</mat-icon>
               <span>Location</span>
             </button>
@@ -97,7 +88,7 @@
                 <span class="info-value">{{ spot.crowdFactor || 'N/A' }}</span>
               </div>
             </div>
-            
+
             <div class="seasons-section" *ngIf="spot.season?.length">
               <span class="info-label">Best Seasons</span>
               <div class="seasons-chips">
@@ -111,10 +102,7 @@
           </div>
 
           <div class="tab-content" *ngIf="activeTab === 2">
-            <app-spot-map 
-              [latitude]="spot.location?.lat" 
-              [longitude]="spot.location?.lng"
-              [spotName]="spot.name">
+            <app-spot-map [latitude]="spot.location?.lat" [longitude]="spot.location?.lng" [spotName]="spot.name">
             </app-spot-map>
           </div>
         </div>
@@ -138,61 +126,19 @@
             <mat-icon>{{ forecastExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
           </button>
         </div>
-        
+
         <div class="accordion-content" [ngClass]="{'expanded': forecastExpanded}">
-          <app-forecast-display 
-            [forecastData]="spot.forecast" 
-            [lastUpdated]="spot.forecast?.lastFetched">
+          <app-forecast-display [forecastData]="spot.forecast" [lastUpdated]="spot.forecast?.lastFetched">
           </app-forecast-display>
         </div>
       </div>
 
       <div class="comments-section">
-        <h2 class="section-title">Reviews & Comments</h2>
-        
-        <div class="comment-form-container" *ngIf="user">
-          <div class="comment-form-header">
-            <img [src]="user.image || '/assets/default-avatar.png'" alt="Your avatar" class="comment-avatar">
-            <div class="rating-input">
-              <button 
-                type="button" 
-                *ngFor="let star of [1, 2, 3, 4, 5]" 
-                (click)="commentForm.get('rating')?.setValue(star)"
-                [class.active]="commentForm.get('rating')?.value >= star"
-                class="star-button">
-                ★
-              </button>
-            </div>
-          </div>
-          
-          <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
-            <mat-form-field appearance="outline" class="comment-input">
-              <textarea 
-                matInput 
-                formControlName="text" 
-                placeholder="Share your experience at this surf spot..."
-                rows="2">
-              </textarea>
-            </mat-form-field>
-            
-            <button 
-              mat-raised-button 
-              color="primary" 
-              type="submit" 
-              [disabled]="commentForm.invalid"
-              class="post-button">
-              Post
-            </button>
-          </form>
-        </div>
-        
-        <app-comment-section 
-          [comments]="spot.comments || []" 
-          [currentUser]="user"
-          [spotId]="spotId">
+      
+
+        <app-comment-section [comments]="spot.comments || []" [currentUser]="user" [spotId]="spotId">
         </app-comment-section>
       </div>
     </div>
   </div>
 </div>
-
