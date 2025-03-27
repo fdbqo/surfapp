@@ -81,7 +81,6 @@
   width: 100%;
 }
 
-/* Override Angular Material styles for dark theme */
 ::ng-deep .mat-mdc-form-field-label {
   color: #6ba5c7 !important;
 }
@@ -106,7 +105,6 @@
   color: white !important;
 }
 
-/* Add these additional overrides for input text */
 ::ng-deep .mat-mdc-input-element {
   color: white !important;
 }
@@ -144,12 +142,10 @@
   color: white !important;
 }
 
-/* Fix textarea text color */
 ::ng-deep textarea.mat-mdc-input-element {
   color: white !important;
 }
 
-/* Seasons chips */
 .seasons-container {
   display: flex;
   flex-wrap: wrap;
@@ -176,7 +172,6 @@
   background-color: #333;
 }
 
-/* Form actions */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -184,7 +179,6 @@
   margin-top: 1rem;
 }
 
-/* Preview section */
 .preview-section {
   background-color: #1e1e1e;
   border-radius: 8px;
@@ -206,7 +200,6 @@
   font-size: 0.9rem;
 }
 
-/* Loading spinner */
 .spinner {
   display: inline-block;
   margin-right: 0.5rem;
@@ -265,7 +258,6 @@
   background-color: #2a5a7d !important;
 }
 
-/* Regular button styling */
 ::ng-deep .mat-mdc-button:not(.mat-primary) {
   background-color: #333 !important;
 }
@@ -274,7 +266,6 @@
   background-color: #444 !important;
 }
 
-/* Ensure all inputs have white text */
 input,
 textarea {
   color: white !important;

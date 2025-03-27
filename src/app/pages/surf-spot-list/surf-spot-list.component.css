@@ -1,30 +1,75 @@
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
+  color: white;
+}
+
+.header-section {
+  position: relative;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .page-title {
   color: #87cefa;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   font-size: 2.5rem;
   font-weight: 300;
 }
 
-/* Updated grid layout for exactly 3 cards per row */
+.subtitle {
+  color: #6ba5c7;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.refresh-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #1e4a6d !important;
+}
+
+/* Loading and empty states */
+.loading-container,
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+  color: #6ba5c7;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.loading-container p,
+.empty-container p {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+.empty-container mat-icon {
+  font-size: 2.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  color: #6ba5c7;
+}
+
+.empty-container button {
+  margin-top: 1rem;
+}
+
+/* Spots grid */
 .spot-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-}
-
-.loading-container, .empty-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  color: #6ba5c7;
-  font-size: 1.2rem;
+  margin-top: 1.5rem;
 }
 
 /* Responsive adjustments */
@@ -38,15 +83,19 @@
   .spot-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .container {
     padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
   }
 }
 
 /* Snackbar styles */
 ::ng-deep .success-snackbar {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -54,3 +103,20 @@
   background-color: #f44336;
   color: white;
 }
+
+/* Override Angular Material button styles */
+::ng-deep .mat-mdc-button,
+::ng-deep .mat-mdc-raised-button,
+::ng-deep .mat-mdc-outlined-button,
+::ng-deep .mat-mdc-unelevated-button {
+  color: white !important;
+}
+
+::ng-deep .mat-primary.mat-mdc-raised-button {
+  background-color: #1e4a6d !important;
+}
+
+::ng-deep .mat-primary.mat-mdc-raised-button:hover {
+  background-color: #2a5a7d !important;
+}
+

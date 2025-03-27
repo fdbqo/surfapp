@@ -18,7 +18,6 @@ import { SpotMapComponent } from "../../components/spot-map/spot-map.component"
 import { ForecastDisplayComponent } from "../../components/forecast-display/forecast-display.component"
 import { StormglassService } from "../../services/stormglass.service"
 
-// Define interfaces for better type safety
 interface DayForecast {
   date: string
   dayOfWeek: string
@@ -74,7 +73,7 @@ export class SpotDetailsComponent implements OnInit {
   commentForm: FormGroup
   activeTab = 0
   forecastData: ProcessedForecast | null = null
-  forecastExpanded = false // Add this property for accordion state
+  forecastExpanded = false 
 
   constructor(
     private route: ActivatedRoute,
@@ -111,7 +110,6 @@ export class SpotDetailsComponent implements OnInit {
       error: () => {
         this.user = null
         this.isAdmin = false
-        // Redirect to login if not authenticated
         this.router.navigate(["/login"], {
           queryParams: { returnUrl: `/spots/${this.spotId}` },
         })
@@ -149,7 +147,6 @@ export class SpotDetailsComponent implements OnInit {
 
     this.api.postComment(comment).subscribe({
       next: (response) => {
-        // Add the new comment to the spot's comments array
         if (!this.spot.comments) {
           this.spot.comments = []
         }
@@ -160,7 +157,6 @@ export class SpotDetailsComponent implements OnInit {
           createdAt: new Date().toISOString(),
         })
 
-        // Reset the form
         this.commentForm.reset({
           text: "",
           rating: 5,
@@ -210,12 +206,10 @@ export class SpotDetailsComponent implements OnInit {
     this.activeTab = index
   }
 
-  // Toggle forecast accordion
   toggleForecast(): void {
     this.forecastExpanded = !this.forecastExpanded
   }
 
-  // Forecast-related methods
   processForecastData(): void {
     if (this.spot && this.spot.forecast && this.spot.forecast.data) {
       this.forecastData = this.formatForecastData(this.spot.forecast.data)
@@ -227,7 +221,6 @@ export class SpotDetailsComponent implements OnInit {
       return null
     }
 
-    // Group data by day
     const dailyForecasts: DayForecast[] = []
     const days = new Map<string, DayForecast>()
 
@@ -259,7 +252,6 @@ export class SpotDetailsComponent implements OnInit {
       }
     })
 
-    // Convert map to array and sort by date
     days.forEach((day) => {
       dailyForecasts.push(day)
     })
@@ -291,13 +283,11 @@ export class SpotDetailsComponent implements OnInit {
     }
   }
 
-  // Get current wave height from forecast data
   getCurrentWaveHeight(): number | null {
     if (!this.spot?.forecast?.data?.hours || this.spot.forecast.data.hours.length === 0) {
       return null
     }
 
-    // Find the hour closest to current time
     const now = new Date()
     const currentHour = this.spot.forecast.data.hours.reduce((closest: any, hour: any) => {
       const hourTime = new Date(hour.time)
@@ -310,7 +300,6 @@ export class SpotDetailsComponent implements OnInit {
     return currentHour.waveHeight?.noaa || null
   }
 
-  // Get condition class based on current wave height
   getCurrentConditionClass(): string {
     const waveHeight = this.getCurrentWaveHeight()
     if (waveHeight === null) return ""
@@ -318,7 +307,6 @@ export class SpotDetailsComponent implements OnInit {
     return this.stormglassService.getConditionClass(waveHeight)
   }
 
-  // Get condition text based on current wave height
   getCurrentConditionText(): string {
     const waveHeight = this.getCurrentWaveHeight()
     if (waveHeight === null) return "No data"

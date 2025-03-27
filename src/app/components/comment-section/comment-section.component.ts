@@ -45,22 +45,18 @@ export class CommentSectionComponent implements OnChanges {
   }
 
   processComments(): void {
-    // Sort comments by date (newest first)
     this.displayedComments = [...this.comments].sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
 
-    // Process replies and threading
     const commentMap = new Map()
     const rootComments: any[] = []
 
-    // First pass: create a map of all comments
     this.displayedComments.forEach((comment) => {
       comment.replies = []
       commentMap.set(comment._id, comment)
     })
 
-    // Second pass: organize into threads
     this.displayedComments.forEach((comment) => {
       if (comment.parentId && commentMap.has(comment.parentId)) {
         commentMap.get(comment.parentId).replies.push(comment)
@@ -117,13 +113,12 @@ export class CommentSectionComponent implements OnChanges {
     const reply = {
       text: this.replyText,
       parentId: parentComment._id,
-      spotId: this.spotId, // Include the spotId for replies
-      rating: 0, // Add a default rating for replies to satisfy the API
+      spotId: this.spotId, 
+      rating: 0, 
     }
 
     this.api.postComment(reply).subscribe({
       next: (response) => {
-        // Add the reply to the parent comment's replies
         parentComment.replies.unshift({
           ...response,
           user: this.currentUser,
@@ -177,13 +172,11 @@ export class CommentSectionComponent implements OnChanges {
       this.api.deleteComment(comment._id).subscribe({
         next: () => {
           if (parentComment) {
-            // Remove from parent's replies
             const index = parentComment.replies.findIndex((c: any) => c._id === comment._id)
             if (index !== -1) {
               parentComment.replies.splice(index, 1)
             }
           } else {
-            // Remove from root comments
             const index = this.displayedComments.findIndex((c) => c._id === comment._id)
             if (index !== -1) {
               this.displayedComments.splice(index, 1)

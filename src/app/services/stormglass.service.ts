@@ -8,9 +8,9 @@ export class StormglassService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Process raw forecast data into a more usable format
-   * @param rawData Raw forecast data from Stormglass API
-   * @returns Processed forecast data
+   * process raw forecast data into a more usable format
+   * @param rawData raw forecast data from Stormglass API
+   * @returns processed forecast data
    */
   processForecaseData(rawData: any): any {
     if (!rawData || !rawData.hours) {
@@ -45,7 +45,6 @@ export class StormglassService {
       days.get(dayKey).hours.push(hourData)
     })
 
-    // Convert map to array and sort by date
     days.forEach((day) => {
       dailyForecasts.push(day)
     })
@@ -59,8 +58,8 @@ export class StormglassService {
 
   /**
    * Get a human-readable description of when forecast data was last updated
-   * @param lastFetchedDate Date when forecast was last fetched
-   * @returns Human-readable string
+   * @param lastFetchedDate date when forecast was last fetched
+   * @returns human-readable string
    */
   getLastUpdatedText(lastFetchedDate: Date | string | null): string {
     if (!lastFetchedDate) {
@@ -85,7 +84,7 @@ export class StormglassService {
   }
 
   /**
-   * Get a color class based on wave conditions
+   * get a color class based on wave conditions
    * @param waveHeight Wave height in meters
    * @returns CSS class name
    */
@@ -99,8 +98,8 @@ export class StormglassService {
   }
 
   /**
-   * Get a human-readable description of wave conditions
-   * @param waveHeight Wave height in meters
+   * get a human-readable description of wave conditions
+   * @param waveHeight wave height in meters
    * @returns Description string
    */
   getConditionDescription(waveHeight: number): string {
@@ -113,9 +112,9 @@ export class StormglassService {
   }
 
   /**
-   * Convert wind direction in degrees to cardinal direction
-   * @param degrees Wind direction in degrees
-   * @returns Cardinal direction (N, NE, E, etc.)
+   * convert wind direction in degrees to cardinal direction
+   * @param degrees wind direction in degrees
+   * @returns cardinal direction (N, NE, E, etc.)
    */
   degreesToCardinal(degrees: number): string {
     if (degrees === undefined || degrees === null) return "Unknown"

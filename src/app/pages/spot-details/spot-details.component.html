@@ -1,18 +1,15 @@
 <div class="details-container">
-  <!-- Loading state -->
   <div *ngIf="loading" class="loading-container">
     <mat-spinner diameter="40"></mat-spinner>
     <p>Loading spot details...</p>
   </div>
 
-  <!-- Error state -->
   <div *ngIf="error" class="error-container">
     <mat-icon>error</mat-icon>
     <p>{{ error }}</p>
     <button mat-raised-button color="primary" routerLink="/">Go Back Home</button>
   </div>
 
-  <!-- Content when loaded -->
   <div *ngIf="!loading && !error && spot" class="spot-content">
     <div class="header-section">
       <div class="header-content">
@@ -73,7 +70,6 @@
             </button>
           </div>
 
-          <!-- Conditions Tab -->
           <div class="tab-content" *ngIf="activeTab === 0">
             <div class="info-grid">
               <div class="info-item">
@@ -110,12 +106,10 @@
             </div>
           </div>
 
-          <!-- About Tab -->
           <div class="tab-content" *ngIf="activeTab === 1">
             <p class="spot-description">{{ spot.description || 'No description available.' }}</p>
           </div>
 
-          <!-- Location Tab -->
           <div class="tab-content" *ngIf="activeTab === 2">
             <app-spot-map 
               [latitude]="spot.location?.lat" 
@@ -126,7 +120,6 @@
         </div>
       </div>
 
-      <!-- Forecast Accordion Section -->
       <div class="forecast-accordion" *ngIf="spot.forecast">
         <div class="accordion-header" (click)="toggleForecast()">
           <div class="accordion-title">
@@ -154,7 +147,6 @@
         </div>
       </div>
 
-      <!-- Comments Section (Always Visible) -->
       <div class="comments-section">
         <h2 class="section-title">Reviews & Comments</h2>
         

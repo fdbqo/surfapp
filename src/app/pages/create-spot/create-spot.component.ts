@@ -12,12 +12,11 @@ import { MatIconModule } from "@angular/material/icon"
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTabsModule } from "@angular/material/tabs"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
-import { MatCheckboxModule } from "@angular/material/checkbox" // Add this import
+import { MatCheckboxModule } from "@angular/material/checkbox" 
 import { MatDividerModule } from "@angular/material/divider"
 import { SurfSpotCardComponent } from "../../components/surf-spot-card/surf-spot-card.component"
 import { ApiService } from "../../services/api.service"
 
-// Define user interface to fix the 'role' property error
 interface User {
   _id: string
   name: string
@@ -44,7 +43,7 @@ interface User {
     MatTabsModule,
     MatDividerModule,
     MatProgressSpinnerModule,
-    MatCheckboxModule, // Add this import
+    MatCheckboxModule, 
     SurfSpotCardComponent,
   ],
   templateUrl: "./create-spot.component.html",
@@ -60,7 +59,7 @@ export class CreateSpotComponent implements OnInit {
   submitButtonText = "Create Spot"
   previewSpot: any = {}
   isSubmitting = false
-  skipForecastUpdate = false // Add this property
+  skipForecastUpdate = false 
 
   waveTypes = ["Beach break", "Reef break", "Point break", "River mouth"]
   swellDirections = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
@@ -92,18 +91,15 @@ export class CreateSpotComponent implements OnInit {
         lat: [null],
         lng: [null],
       }),
-      skipForecastUpdate: [false], // Add this form control
+      skipForecastUpdate: [false], 
     })
   }
 
   ngOnInit(): void {
-    // Check if user is authenticated
     this.api.getUser().subscribe({
       next: (user: any) => {
-        // Type assertion to fix the 'role' property error
         const typedUser = user as User
 
-        // Check if user is admin for edit mode
         if (typedUser.role !== "admin") {
           this.snackBar.open("Only admins can edit surf spots", "Close", {
             duration: 5000,
@@ -113,14 +109,12 @@ export class CreateSpotComponent implements OnInit {
         }
       },
       error: () => {
-        // Redirect to login if not authenticated
         this.router.navigate(["/login"], {
           queryParams: { returnUrl: this.isEditMode ? `/edit/${this.spotId}` : "/create-spot" },
         })
       },
     })
 
-    // Check if we're in edit mode by looking for an ID in the route
     this.route.params.subscribe((params) => {
       if (params["id"]) {
         this.isEditMode = true
@@ -131,7 +125,6 @@ export class CreateSpotComponent implements OnInit {
       }
     })
 
-    // Subscribe to form value changes to update preview
     this.spotForm.valueChanges.subscribe(() => {
       this.updatePreview()
     })
@@ -157,13 +150,11 @@ export class CreateSpotComponent implements OnInit {
             lat: spot.location?.lat || null,
             lng: spot.location?.lng || null,
           },
-          skipForecastUpdate: false, // Default to false when loading
+          skipForecastUpdate: false, 
         })
 
-        // Set selected seasons
         this.selectedSeasons = spot.season || []
 
-        // Update preview
         this.updatePreview()
       },
       error: (err: any) => {
@@ -200,7 +191,6 @@ export class CreateSpotComponent implements OnInit {
 
   onSubmit(): void {
     if (this.spotForm.invalid) {
-      // Mark all fields as touched to show validation errors
       Object.keys(this.spotForm.controls).forEach((key) => {
         const control = this.spotForm.get(key)
         control?.markAsTouched()
@@ -210,17 +200,14 @@ export class CreateSpotComponent implements OnInit {
 
     this.isSubmitting = true
 
-    // Get form values
     const spotData = {
       ...this.spotForm.value,
       season: this.selectedSeasons,
     }
 
-    // Extract skipForecastUpdate and remove it from the data sent to the API
     this.skipForecastUpdate = spotData.skipForecastUpdate || false
     delete spotData.skipForecastUpdate
 
-    // Add skipForecastUpdate as a query parameter for PUT requests
     let apiCall
     if (this.isEditMode) {
       apiCall = this.api.updateSpot(this.spotId, spotData, this.skipForecastUpdate)

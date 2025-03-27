@@ -43,7 +43,6 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // If coordinates change and map already exists, update the map
     if ((changes["latitude"] || changes["longitude"]) && this.map && this.hasCoordinates) {
       this.updateMapPosition()
     }
@@ -52,15 +51,13 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
   private initMap(): void {
     if (!this.hasCoordinates) return
 
-    // Create map instance
     this.map = L.map(this.mapElement.nativeElement).setView([Number(this.latitude), Number(this.longitude)], 13)
 
-    // Add OpenStreetMap tiles
+
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map)
 
-    // Create a simple HTML marker instead of using Leaflet's default icon
     const waveIcon = L.divIcon({
       html: '<div style="font-size: 24px; color: #e53935;">📍</div>',
       className: "surf-marker",
@@ -68,7 +65,6 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
       iconAnchor: [15, 15],
     })
 
-    // Add marker for the surf spot with custom icon
     this.marker = L.marker([Number(this.latitude), Number(this.longitude)], {
       icon: waveIcon,
     })
@@ -80,15 +76,12 @@ export class SpotMapComponent implements AfterViewInit, OnChanges {
   private updateMapPosition(): void {
     if (!this.map || !this.hasCoordinates) return
 
-    // Update map view
     this.map.setView([Number(this.latitude), Number(this.longitude)], 13)
 
-    // Update or create marker
     if (this.marker) {
       this.marker.setLatLng([Number(this.latitude), Number(this.longitude)])
       this.marker.bindPopup(this.spotName)
     } else {
-      // Create a simple HTML marker
       const waveIcon = L.divIcon({
         html: '<div style="font-size: 24px; color: #1e88e5;">🏄</div>',
         className: "surf-marker",

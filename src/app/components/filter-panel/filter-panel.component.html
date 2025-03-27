@@ -1,0 +1,120 @@
+<div class="filter-panel-container">
+    <!-- Search bar (always visible) -->
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search surf spots</mat-label>
+        <input matInput [formControl]="searchTermControl" placeholder="Search by name, description...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      
+      <button 
+        mat-button 
+        class="filter-toggle-button" 
+        (click)="toggleFilterPanel()"
+        [matTooltip]="activeFilterCount > 0 ? 'Filters active' : 'Show filters'">
+        <mat-icon>filter_list</mat-icon>
+        <span class="filter-text">Filters</span>
+        <span *ngIf="activeFilterCount > 0" class="filter-badge">{{ activeFilterCount }}</span>
+      </button>
+    </div>
+    
+    <!-- Expandable filter panel -->
+    <div class="filter-panel" [class.expanded]="panelOpenState">
+      <div class="filter-panel-header">
+        <h3>Filter Surf Spots</h3>
+        <button mat-button color="primary" (click)="clearFilters()" [disabled]="activeFilterCount === 0">
+          <mat-icon>clear_all</mat-icon>
+          Clear All
+        </button>
+      </div>
+      
+      <div class="filter-panel-content">
+        <!-- Difficulty -->
+        <div class="filter-section">
+          <h4>Difficulty</h4>
+          <div class="checkbox-group" [formGroup]="difficultyGroup">
+            <mat-checkbox *ngFor="let level of difficulties" [formControlName]="level">
+              {{ level }}
+            </mat-checkbox>
+          </div>
+        </div>
+        
+        <!-- Wave Type -->
+        <div class="filter-section">
+          <h4>Wave Type</h4>
+          <div class="checkbox-group" [formGroup]="waveTypeGroup">
+            <mat-checkbox *ngFor="let type of waveTypes" [formControlName]="type">
+              {{ type }}
+            </mat-checkbox>
+          </div>
+        </div>
+        
+        <!-- Region & Country -->
+        <div class="filter-section location-filters">
+          <div class="region-filter">
+            <h4>Region</h4>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select regions</mat-label>
+              <mat-select [formControl]="regionControl" multiple>
+                <mat-option *ngFor="let region of allRegions" [value]="region">{{ region }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          
+          <div class="country-filter">
+            <h4>Country</h4>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select countries</mat-label>
+              <mat-select [formControl]="countryControl" multiple>
+                <mat-option *ngFor="let country of allCountries" [value]="country">{{ country }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        
+        <!-- Rating -->
+        <div class="filter-section">
+          <h4>Minimum Rating</h4>
+          <div class="rating-slider">
+            <mat-slider
+              min="0"
+              max="5"
+              step="0.5"
+              discrete
+              [displayWith]="formatRatingLabel"
+              class="full-width">
+              <input matSliderThumb [formControl]="minRatingControl">
+            </mat-slider>
+            <div class="rating-value">
+              <span *ngIf="minRatingControl.value === 0">Any rating</span>
+              <span *ngIf="(minRatingControl?.value ?? 0) > 0">
+                {{ minRatingControl.value }} ★ or higher
+              </span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Season -->
+        <div class="filter-section">
+          <h4>Best Season</h4>
+          <div class="checkbox-group" [formGroup]="seasonGroup">
+            <mat-checkbox *ngFor="let season of seasons" [formControlName]="season">
+              {{ season }}
+            </mat-checkbox>
+          </div>
+        </div>
+        
+        <!-- Crowd Factor -->
+        <div class="filter-section">
+          <h4>Crowd Factor</h4>
+          <div class="checkbox-group" [formGroup]="crowdFactorGroup">
+            <mat-checkbox *ngFor="let factor of crowdFactors" [formControlName]="factor">
+              {{ factor }}
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

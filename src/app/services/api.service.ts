@@ -21,7 +21,7 @@ export class ApiService {
   }
 
   updateSpot(id: string, data: any, skipForecastUpdate = false): Observable<any> {
-    // Add skipForecastUpdate as a query parameter
+    // skipForecastUpdate as a query parameter
     let params = new HttpParams()
     if (skipForecastUpdate) {
       params = params.set("skipForecastUpdate", "true")

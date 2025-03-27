@@ -6,7 +6,6 @@
       </div>
     </div>
     
-    <!-- Day selector tabs -->
     <div class="day-tabs">
       <div 
         *ngFor="let day of processedForecast.days; let i = index" 
@@ -18,7 +17,6 @@
       </div>
     </div>
     
-    <!-- Forecast for selected day -->
     <div class="day-forecast" *ngIf="processedForecast.days[selectedDayIndex]">
       <div class="forecast-hours">
         <div 

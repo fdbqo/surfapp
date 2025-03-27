@@ -66,7 +66,6 @@
   justify-content: center;
 }
 
-/* New profile badge styling */
 .profile-badge {
   min-width: 0;
   padding: 0;
@@ -125,7 +124,6 @@
   margin-right: 8px;
 }
 
-/* Menu styling */
 ::ng-deep .profile-menu {
   min-width: 250px !important;
   max-width: 300px !important;
@@ -199,7 +197,6 @@
   border-top-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .nav-links a {
     padding: 0 8px;
