@@ -433,3 +433,53 @@ form {
   color: white;
 }
 
+/* Angular Material form field overrides */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgba(135, 206, 250, 0.3);
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #87cefa;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0;
+}
+
+::ng-deep .mat-form-field-label {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: #87cefa !important;
+}
+
+::ng-deep .mat-input-element {
+  color: white !important;
+  caret-color: #87cefa;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+  padding: 0 0.5em;
+}
+
+/* Fix for textarea text color */
+textarea {
+  color: white !important;
+  background-color: rgba(30, 30, 30, 0.7);
+  border: 1px solid rgba(135, 206, 250, 0.3);
+}
+
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Ensure all inputs have white text */
+input {
+  color: white !important;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
