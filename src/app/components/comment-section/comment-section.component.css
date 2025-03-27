@@ -103,6 +103,7 @@
   justify-content: flex-start;
 }
 
+/* Ensure consistent styling for buttons */
 .reply-button {
   font-size: 0.8rem;
   padding: 0 8px;
@@ -132,6 +133,7 @@
   color: #87cefa !important;
 }
 
+/* Reply section */
 .replies-container {
   margin-left: 1.5rem;
   margin-top: 0.25rem;
@@ -155,6 +157,7 @@
   background-color: rgba(26, 26, 26, 0.5);
 }
 
+/* Forms */
 .reply-form,
 .edit-form {
   background-color: rgba(37, 37, 37, 0.5);
@@ -190,6 +193,7 @@
   gap: 0.5rem;
 }
 
+/* Responsive adjustments */
 @media (max-width: 600px) {
   .user-info {
     flex-direction: column;
@@ -213,6 +217,7 @@
   }
 }
 
+/* Style for menu items */
 ::ng-deep .mat-menu-item {
   color: white !important;
 }
@@ -225,23 +230,27 @@
   background-color: rgba(135, 206, 250, 0.1) !important;
 }
 
+/* Style for Cancel buttons */
 .reply-actions button:first-child,
 .edit-actions button:first-child {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 
+/* Style for Post/Save buttons */
 .reply-actions button:last-child,
 .edit-actions button:last-child {
   background-color: #1e4a6d !important;
   color: #87cefa !important;
 }
 
+/* Ensure text in all inputs is white */
 .reply-textarea,
 .edit-textarea {
   color: white !important;
   background-color: rgba(30, 30, 30, 0.7) !important;
 }
 
+/* Override Angular Material button styles for consistency */
 ::ng-deep .mat-button.mat-primary {
   color: #87cefa !important;
 }
@@ -251,6 +260,7 @@
   color: #87cefa !important;
 }
 
+/* Override Angular Material button styles */
 ::ng-deep .mat-button {
   color: white !important;
 }
@@ -259,6 +269,7 @@
   color: white !important;
 }
 
+/* Ensure text in all inputs is white */
 input,
 textarea {
   color: white !important;
