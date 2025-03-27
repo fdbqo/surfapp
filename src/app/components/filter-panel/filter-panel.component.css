@@ -8,9 +8,10 @@
 
 .search-container {
   display: flex;
-  align-items: stretch; /* Changed from center to stretch */
-  padding: 0.5rem 1rem;
+  align-items: center; /* Back to center for better alignment */
+  padding: 0.25rem 0.75rem; /* Reduced padding to make container smaller */
   gap: 0.5rem;
+  height: 48px; /* Fixed height for the container */
 }
 
 .search-field {
@@ -18,15 +19,47 @@
   margin: 0 !important;
 }
 
-/* Remove height constraints on the form field */
+/* Completely override Angular Material's form field styling */
 ::ng-deep .search-container .mat-mdc-form-field {
+  display: flex;
+  align-items: center;
+  height: 40px !important; /* Fixed height for the form field */
   margin: 0 !important;
 }
 
-/* Make the filter button match the search field */
+::ng-deep .search-container .mat-mdc-text-field-wrapper {
+  height: 40px !important;
+  padding: 0 12px !important;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .search-container .mat-mdc-form-field-flex {
+  height: 40px !important;
+  align-items: center !important;
+  padding: 0 !important;
+}
+
+::ng-deep .search-container .mat-mdc-form-field-infix {
+  padding: 0 !important;
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+}
+
+/* Center the input text vertically */
+::ng-deep .search-container .mat-mdc-input-element {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  height: 24px !important;
+  line-height: 24px !important;
+}
+
+/* Make the filter button match exactly */
 .filter-toggle-button {
-  align-self: stretch;
-  margin: 0;
+  height: 40px !important;
+  min-width: 40px;
+  padding: 0 12px;
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
   border-radius: 4px;
@@ -34,22 +67,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
 }
 
 /* Override Angular Material's default button styles */
 ::ng-deep .filter-toggle-button .mat-mdc-button-touch-target {
-  height: 100% !important;
-}
-
-/* Fix the search field's internal layout */
-::ng-deep .search-container .mat-mdc-text-field-wrapper {
-  height: auto !important;
-  padding: 0 !important;
-}
-
-::ng-deep .search-container .mat-mdc-form-field-flex {
-  height: 100%;
-  min-height: unset !important;
+  height: 40px !important;
 }
 
 .filter-text {
@@ -58,8 +81,8 @@
 
 .filter-badge {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 2px;
+  right: 2px;
   background-color: #1e4a6d;
   color: white;
   border-radius: 50%;
@@ -87,7 +110,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem; /* Reduced padding */
   background-color: rgba(30, 30, 30, 0.5);
 }
 
@@ -99,7 +122,7 @@
 }
 
 .filter-panel-content {
-  padding: 0.5rem 1rem 0.75rem 1rem;
+  padding: 0.5rem 0.75rem; /* Reduced padding */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
@@ -120,19 +143,30 @@
   width: 100%;
 }
 
-/* Make form fields more compact */
+/* Make form fields more compact and center text */
 ::ng-deep .mat-mdc-form-field-infix {
-  padding: 0.5em 0 !important;
-  min-height: 40px !important;
+  padding: 0.25em 0 !important;
+  min-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 ::ng-deep .mat-mdc-text-field-wrapper {
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
 }
 
 ::ng-deep .mat-mdc-form-field {
   margin-bottom: 0.5rem;
+}
+
+/* Center text in all inputs and selects */
+::ng-deep .mat-mdc-input-element,
+::ng-deep .mat-mdc-select-value-text {
+  display: flex !important;
+  align-items: center !important;
+  height: 24px !important;
+  line-height: 24px !important;
 }
 
 ::ng-deep .mat-mdc-form-field-label {
