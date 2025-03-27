@@ -127,11 +127,6 @@ export class SurfSpotListComponent implements OnInit {
       result = result.filter((spot) => spot.country && filters.country?.includes(spot.country))
     }
 
-    // Apply minimum rating filter
-    if (filters.minRating !== undefined && filters.minRating > 0) {
-      result = result.filter((spot) => spot.rating && spot.rating >= (filters.minRating ?? 0))
-    }
-
     // Apply season filter
     if (filters.season && filters.season.length > 0) {
       result = result.filter((spot) => spot.season && spot.season.some((s: string) => filters.season?.includes(s)))
