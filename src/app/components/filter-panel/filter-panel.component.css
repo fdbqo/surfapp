@@ -7,38 +7,46 @@
 }
 
 .search-container {
+  /* Flex layout to align items horizontally */
   display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
+  align-items: center; /* Ensures button & field share the same vertical center */
   gap: 0.5rem;
+  padding: 0.5rem 1rem;
 }
 
 /* 
   Let the mat-form-field (search bar) size itself naturally.
-  Remove any forced height. 
+  Remove any forced height or margin.
 */
 .search-field {
   flex: 1;
-  margin-bottom: 0;
+  margin: 0; /* remove default margin if any */
 }
 
 /* 
-  Style the filter button so it visually matches the default
-  outlined mat-form-field height (about 56px). 
+  Remove default margin from Angular Material form field so 
+  it doesn't push the search bar up or down.
+*/
+::ng-deep .search-field .mat-mdc-form-field {
+  margin: 0 !important;
+}
+
+/* 
+  Set the filter button to match the typical ~56px height
+  of an outlined mat-form-field.
 */
 .filter-toggle-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 56px; /* match default outline field height */
-  padding: 0 16px;  /* give it some horizontal padding */
+  height: 56px; /* match typical outline field height */
+  padding: 0 16px;
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
   border-radius: 4px;
   position: relative;
 }
 
-/* Slight adjustments for the filter text/badge */
 .filter-text {
   margin-left: 0.25rem;
 }
@@ -59,16 +67,16 @@
 }
 
 /* 
-  Style the search icon button but DON'T force a height. 
-  Let it size to match the mat-form-field's suffix area. 
+  The search icon button can just be auto-height, 
+  so it lines up with the mat-form-field suffix area.
 */
 ::ng-deep .search-container .mat-mdc-icon-button {
+  margin-right: 4px; /* tiny offset for breathing room */
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
-  margin-right: 4px; /* tiny offset for breathing room */
 }
 
-/* Panel styling remains the same */
+/* Filter panel styling (unchanged) */
 .filter-panel {
   max-height: 0;
   overflow: hidden;
@@ -118,16 +126,13 @@
   width: 100%;
 }
 
-/* Optional compacting of form fields */
-::ng-deep .mat-mdc-form-field {
-  margin-bottom: 0.5rem;
-}
-
+/* Optional form-field theming/tweaks */
 ::ng-deep .mat-mdc-text-field-wrapper {
   background-color: #2a2a2a !important;
 }
 
-::ng-deep .mat-mdc-form-field-label {
+::ng-deep .mat-mdc-form-field-label,
+::ng-deep .mdc-floating-label {
   color: #6ba5c7 !important;
 }
 
@@ -150,8 +155,8 @@
   color: white !important;
 }
 
-::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
-  color: #6ba5c7 !important;
+::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: white !important;
 }
 
 ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-select-arrow {
