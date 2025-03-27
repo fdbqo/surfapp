@@ -1,4 +1,4 @@
-/* Accordion style for comments section */
+
 .comments-accordion {
   margin: 1rem 0;
   background-color: #1e1e1e;
@@ -113,22 +113,28 @@
   flex-direction: column;
 }
 
-.comment-textarea {
+/* Fix for text area background */
+.comment-textarea,
+.reply-textarea,
+.edit-textarea {
   width: 100%;
   padding: 0.75rem;
   border-radius: 4px;
   border: 1px solid rgba(135, 206, 250, 0.3);
-  background-color: rgba(30, 30, 30, 0.7);
-  color: white;
+  background-color: #2a2a2a !important; /* Darker, solid background */
+  color: white !important;
   resize: vertical;
   font-family: inherit;
   margin-bottom: 0.75rem;
   font-size: 0.9rem;
   caret-color: #87cefa;
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
-.comment-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+.comment-textarea::placeholder,
+.reply-textarea::placeholder,
+.edit-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .comment-actions {
@@ -163,15 +169,17 @@
   padding: 1rem;
 }
 
+/* Fix for double separators in replies */
 .comment-thread {
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(135, 206, 250, 0.1);
   padding-bottom: 1.5rem;
+  /* Remove the border-bottom that was causing the double line */
+  border-bottom: none;
 }
 
-.comment-thread:last-child {
-  margin-bottom: 0;
-  border-bottom: none;
+/* Add a separator only between top-level comments */
+.comments-list > .comment-thread:not(:last-child) {
+  border-bottom: 1px solid rgba(135, 206, 250, 0.1);
 }
 
 .comment-card {
@@ -299,18 +307,22 @@
   border-left: 3px solid rgba(135, 206, 250, 0.3);
 }
 
+/* Make reply cards more distinct */
 .reply-card {
   background-color: rgba(26, 26, 26, 0.7) !important;
-  border-left: 2px solid #1e4a6d;
+  /* Remove the left border that was causing the double line */
+  border-left: none;
 }
 
 /* Improved reply form styling to match main comment input */
 .reply-form {
-  background-color: rgba(37, 37, 37, 0.7);
+  background-color: #2a2a2a;
   padding: 0.75rem;
   border-radius: 4px;
   margin-top: 0.75rem;
   border: 1px solid rgba(135, 206, 250, 0.2);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .reply-header {
@@ -331,26 +343,6 @@
   font-size: 0.9rem;
 }
 
-.reply-textarea,
-.edit-textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border-radius: 4px;
-  border: 1px solid rgba(135, 206, 250, 0.3);
-  background-color: rgba(30, 30, 30, 0.7);
-  color: white !important;
-  resize: vertical;
-  font-family: inherit;
-  margin-bottom: 0.75rem;
-  font-size: 0.9rem;
-  caret-color: #87cefa;
-}
-
-.reply-textarea::placeholder,
-.edit-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
 .reply-actions,
 .edit-actions {
   display: flex;
@@ -360,11 +352,13 @@
 
 /* Also update the edit form to match */
 .edit-form {
-  background-color: rgba(37, 37, 37, 0.7);
+  background-color: #2a2a2a;
   padding: 0.75rem;
   border-radius: 4px;
   margin-top: 0.5rem;
   border: 1px solid rgba(135, 206, 250, 0.2);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Updated comments disclaimer */
