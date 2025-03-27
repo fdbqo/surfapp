@@ -8,38 +8,25 @@
 
 .search-container {
   display: flex;
-  align-items: center;
+  align-items: stretch; /* Changed from center to stretch */
   padding: 0.5rem 1rem;
   gap: 0.5rem;
 }
 
 .search-field {
   flex: 1;
-  margin-bottom: 0;
+  margin: 0 !important;
 }
 
-/* Reduce the height of the form field */
-::ng-deep .search-container .mat-mdc-text-field-wrapper {
-  height: 48px !important;
-  min-height: 48px !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  display: flex;
-  align-items: center;
+/* Remove height constraints on the form field */
+::ng-deep .search-container .mat-mdc-form-field {
+  margin: 0 !important;
 }
 
-::ng-deep .search-container .mat-mdc-form-field-infix {
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
-  min-height: unset !important;
-}
-
-/* Make the filter button match the exact height of the search field */
+/* Make the filter button match the search field */
 .filter-toggle-button {
-  height: 48px !important;
-  line-height: 48px !important;
-  min-width: 48px;
-  padding: 0 16px;
+  align-self: stretch;
+  margin: 0;
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
   border-radius: 4px;
@@ -47,6 +34,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Override Angular Material's default button styles */
+::ng-deep .filter-toggle-button .mat-mdc-button-touch-target {
+  height: 100% !important;
+}
+
+/* Fix the search field's internal layout */
+::ng-deep .search-container .mat-mdc-text-field-wrapper {
+  height: auto !important;
+  padding: 0 !important;
+}
+
+::ng-deep .search-container .mat-mdc-form-field-flex {
+  height: 100%;
+  min-height: unset !important;
 }
 
 .filter-text {
