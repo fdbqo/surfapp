@@ -1,501 +1,246 @@
-.details-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
+.comments-container {
+  margin-top: 0.5rem;
 }
 
-/* Loading and error states */
-.loading-container,
-.error-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 200px;
+.no-comments {
   text-align: center;
-  color: #6ba5c7;
-}
-
-.loading-container p,
-.error-container p {
-  margin-top: 0.5rem;
-  font-size: 1rem;
-}
-
-.error-container mat-icon {
-  font-size: 2rem;
-  height: 2rem;
-  width: 2rem;
-  color: #f44336;
-  margin-bottom: 0.5rem;
-}
-
-.error-container button {
-  margin-top: 0.5rem;
-}
-
-/* Header section */
-.header-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(135, 206, 250, 0.2);
-}
-
-.header-content {
-  flex: 1;
-}
-
-.title-rating {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.25rem;
-}
-
-.spot-name {
-  font-size: 1.8rem;
-  color: #87cefa;
-  margin: 0;
-  font-weight: 500;
-}
-
-.spot-rating {
-  display: flex;
-  align-items: center;
-  color: #87cefa;
-}
-
-.rating-stars {
-  color: #ffc107;
-  letter-spacing: 1px;
-  margin-right: 0.25rem;
-}
-
-.rating-value {
-  font-weight: bold;
-  margin-right: 0.25rem;
-}
-
-.rating-count {
-  color: #6ba5c7;
-  font-size: 0.8rem;
-}
-
-.spot-location {
-  display: flex;
-  align-items: center;
-  color: #6ba5c7;
-}
-
-.spot-location mat-icon {
-  margin-right: 0.25rem;
-  font-size: 1rem;
-  height: 1rem;
-  width: 1rem;
-}
-
-.header-actions {
-  display: flex;
-  gap: 0.5rem;
-}
-
-/* Main content layout */
-.main-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem; /* Reduced from 1.5rem */
-}
-
-.top-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem; /* Reduced from 1rem */
-}
-
-@media (min-width: 768px) {
-  .top-row {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* Media section */
-.media-section {
-  display: flex;
-  flex-direction: column;
-}
-
-.main-image-container {
-  width: 100%;
-  height: 0;
-  padding-bottom: 66.67%;
-  position: relative;
-  overflow: hidden;
-  border-radius: 4px;
-  background-color: #121212;
-}
-
-.main-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Info tabs */
-.info-tabs {
-  background-color: #1e1e1e;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.tab-buttons {
-  display: flex;
-  border-bottom: 1px solid rgba(135, 206, 250, 0.2);
-  background-color: #1a1a1a;
-}
-
-.tab-button {
-  flex: 1;
-  background: none;
-  border: none;
-  color: #6ba5c7;
-  padding: 0.75rem 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.8rem;
-}
-
-.tab-button mat-icon {
-  font-size: 1.2rem;
-  height: 1.2rem;
-  width: 1.2rem;
-  margin-bottom: 0.25rem;
-}
-
-.tab-button.active {
-  color: #87cefa;
-  background-color: rgba(135, 206, 250, 0.1);
-}
-
-.tab-content {
   padding: 1rem;
+  color: #6ba5c7;
+  background-color: rgba(30, 30, 30, 0.5);
+  border-radius: 4px;
 }
 
-/* Info grid */
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.info-item {
+.comment-thread {
   display: flex;
   flex-direction: column;
 }
 
-.info-label {
-  color: #6ba5c7;
-  font-size: 0.8rem;
-  margin-bottom: 0.25rem;
-}
-
-.info-value {
-  color: #87cefa;
-  font-weight: 500;
-}
-
-.seasons-section {
-  margin-top: 1rem;
-}
-
-.seasons-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
-}
-
-.season-chip {
-  background-color: #1e4a6d;
-  color: #87cefa;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-}
-
-.spot-description {
-  color: #87cefa;
-  line-height: 1.5;
-  white-space: pre-line;
-  margin: 0;
-}
-
-/* Forecast Accordion */
-.forecast-accordion {
-  margin: 1rem 0; /* Reduced from 1.5rem */
-  background-color: #1e1e1e; /* Changed to match info-tabs background */
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.accordion-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1rem; /* Reduced padding */
-  cursor: pointer;
-  transition: background-color 0.2s;
-  border-bottom: 1px solid rgba(135, 206, 250, 0.2);
-  background-color: #1a1a1a; /* Match tab-buttons background */
-}
-
-.accordion-header:hover {
-  background-color: rgba(135, 206, 250, 0.1); /* Match tab-button.active */
-}
-
-.accordion-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.accordion-title h2 {
-  margin: 0;
-  font-size: 1.2rem;
-  color: #87cefa;
-  font-weight: 500;
-}
-
-.accordion-title mat-icon,
-.toggle-button {
-  color: #87cefa;
-}
-
-.forecast-summary {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.forecast-condition {
-  font-weight: 500;
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.9rem;
-}
-
-.condition-poor {
-  background-color: rgba(244, 67, 54, 0.2);
-  color: #f44336;
-}
-
-.condition-fair {
-  background-color: rgba(255, 152, 0, 0.2);
-  color: #ff9800;
-}
-
-.condition-good {
-  background-color: rgba(76, 175, 80, 0.2);
-  color: #4caf50;
-}
-
-.condition-excellent {
-  background-color: rgba(33, 150, 243, 0.2);
-  color: #2196f3;
-}
-
-.forecast-updated {
-  font-size: 0.8rem;
-  color: #6ba5c7;
-}
-
-.accordion-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-}
-
-.accordion-content.expanded {
-  max-height: 2000px;
-  transition: max-height 0.5s ease-in;
-}
-
-/* Comment form */
-.comment-form-container {
-  margin-bottom: 1rem;
+.comment-card {
   background-color: rgba(30, 30, 30, 0.5);
   border-radius: 4px;
   padding: 0.75rem;
 }
 
-.comment-form-header {
+.comment-header {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   margin-bottom: 0.5rem;
 }
 
-.comment-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  margin-right: 0.75rem;
-  object-fit: cover;
-}
-
-.rating-input {
+.user-info {
   display: flex;
-}
-
-.star-button {
-  background: none;
-  border: none;
-  color: #444;
-  font-size: 1.25rem;
-  cursor: pointer;
-  padding: 0;
-  margin: 0 2px;
-  transition: color 0.2s;
-}
-
-.star-button.active {
-  color: #ffc107;
-}
-
-.comment-input {
-  width: 100%;
-  margin-bottom: 0;
-}
-
-form {
-  display: flex;
-  gap: 0.5rem;
   align-items: flex-start;
 }
 
-.post-button {
-  margin-top: 4px;
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  object-fit: cover;
 }
 
-/* Comments section */
-.comments-section {
-  background-color: #1e1e1e;
-  border-radius: 4px;
-  padding: 1rem;
+.user-details {
+  display: flex;
+  flex-direction: column;
 }
 
-.section-title {
-  color: #87cefa;
-  font-size: 1.2rem;
-  margin: 0 0 1rem 0;
+.name-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-name {
   font-weight: 500;
-  border-bottom: 1px solid rgba(135, 206, 250, 0.2);
-  padding-bottom: 0.5rem;
+  color: #87cefa;
+  font-size: 0.9rem;
+}
+
+.comment-rating {
+  display: flex;
+  align-items: center;
+}
+
+.rating-stars {
+  color: #ffc107;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #6ba5c7;
+}
+
+.edited-badge {
+  color: #6ba5c7;
+}
+
+.comment-content {
+  margin-bottom: 0.5rem;
+}
+
+.comment-text {
+  color: white;
+  line-height: 1.4;
+  white-space: pre-line;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.comment-footer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.reply-button {
+  font-size: 0.8rem;
+  padding: 0 8px;
+  min-width: auto;
+  line-height: 28px;
+  color: #87cefa !important;
+}
+
+.reply-button mat-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
+}
+
+.action-button {
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+}
+
+.action-button mat-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+}
+
+/* Reply section */
+.replies-container {
+  margin-left: 1.5rem;
+  margin-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.replies-container::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: rgba(135, 206, 250, 0.2);
+}
+
+.reply-card {
+  background-color: rgba(26, 26, 26, 0.5);
+}
+
+/* Forms */
+.reply-form,
+.edit-form {
+  background-color: rgba(37, 37, 37, 0.5);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+.reply-textarea,
+.edit-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(135, 206, 250, 0.3);
+  background-color: #333;
+  color: white !important;
+  resize: vertical;
+  font-family: inherit;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  caret-color: #87cefa;
+}
+
+.reply-textarea::placeholder,
+.edit-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.reply-actions,
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
 }
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
-  .title-rating {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
-  form {
+  .user-info {
     flex-direction: column;
   }
-  .post-button {
+
+  .user-avatar {
+    margin-bottom: 0.25rem;
+  }
+
+  .comment-header {
+    flex-direction: column;
+  }
+
+  .comment-actions {
     align-self: flex-end;
+    margin-top: -1.5rem;
   }
-  .forecast-summary {
-    display: none;
+
+  .replies-container {
+    margin-left: 1rem;
   }
 }
 
-/* Snackbar styles */
-::ng-deep .success-snackbar {
-  background-color: #4caf50;
-  color: white;
+/* Add these styles to fix the reply buttons and text */
+.reply-actions button,
+.edit-actions button {
+  color: white !important;
 }
 
-::ng-deep .error-snackbar {
-  background-color: #f44336;
-  color: white;
+/* Style for Cancel buttons */
+.reply-actions button:first-child,
+.edit-actions button:first-child {
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
-/* Angular Material form field overrides */
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: rgba(135, 206, 250, 0.3);
-}
-
-::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: #87cefa;
-}
-
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-  padding: 0.5em 0;
-}
-
-::ng-deep .mat-form-field-label {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-
-::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+/* Style for Post/Save buttons */
+.reply-actions button:last-child,
+.edit-actions button:last-child {
+  background-color: #1e4a6d !important;
   color: #87cefa !important;
 }
 
-::ng-deep .mat-input-element {
-  color: white !important;
-  caret-color: #87cefa;
+/* Override Angular Material button styles for consistency */
+::ng-deep .mat-button.mat-primary {
+  color: #87cefa !important;
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
-  padding: 0 0.5em;
-}
-
-/* Fix for textarea text color */
-textarea {
-  color: white !important;
-  background-color: rgba(30, 30, 30, 0.7);
-  border: 1px solid rgba(135, 206, 250, 0.3);
-}
-
-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Ensure all inputs have white text */
-input {
-  color: white !important;
-}
-
-input::placeholder {
-  color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Add these styles to fix button text color */
-button {
-  color: white !important;
-}
-
-.mat-button,
-.mat-raised-button,
-.mat-icon-button,
-.mat-stroked-button,
-.mat-flat-button,
-.mat-fab,
-.mat-mini-fab {
-  color: white !important;
+::ng-deep .mat-raised-button.mat-primary {
+  background-color: #1e4a6d !important;
+  color: #87cefa !important;
 }
 
 /* Override Angular Material button styles */
@@ -507,18 +252,9 @@ button {
   color: white !important;
 }
 
-::ng-deep .mat-button-wrapper {
-  color: white !important;
-}
-
-/* Ensure all inputs have white text */
+/* Ensure text in all inputs is white */
 input,
 textarea {
   color: white !important;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5) !important;
 }
 

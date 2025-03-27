@@ -483,3 +483,74 @@ input::placeholder {
   color: rgba(255, 255, 255, 0.5) !important;
 }
 
+/* Add these styles to fix button text color */
+button {
+  color: white !important;
+}
+
+.mat-button,
+.mat-raised-button,
+.mat-icon-button,
+.mat-stroked-button,
+.mat-flat-button,
+.mat-fab,
+.mat-mini-fab {
+  color: white !important;
+}
+
+/* Override Angular Material button styles */
+::ng-deep .mat-button {
+  color: white !important;
+}
+
+::ng-deep .mat-raised-button:not([class*="mat-elevation-z"]) {
+  color: white !important;
+}
+
+::ng-deep .mat-button-wrapper {
+  color: white !important;
+}
+
+/* Ensure all inputs have white text */
+input,
+textarea {
+  color: white !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Style for Cancel button */
+form button:first-of-type {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Style for Post button */
+.post-button,
+form button[type="submit"] {
+  background-color: #1e4a6d !important;
+  color: #87cefa !important;
+}
+
+/* Override Angular Material button styles for consistency */
+::ng-deep .mat-button.mat-primary {
+  color: #87cefa !important;
+}
+
+::ng-deep .mat-raised-button.mat-primary {
+  background-color: #1e4a6d !important;
+  color: #87cefa !important;
+}
+
+/* Ensure primary buttons have consistent styling */
+button[color="primary"] {
+  color: #87cefa !important;
+}
+
+button[mat-raised-button][color="primary"] {
+  background-color: #1e4a6d !important;
+  color: #87cefa !important;
+}
+
