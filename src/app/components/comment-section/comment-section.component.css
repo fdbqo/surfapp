@@ -63,11 +63,10 @@
 }
 
 .accordion-content.expanded {
-  max-height: 5000px; /* Large enough to accommodate all content */
+  max-height: 5000px; 
   transition: max-height 0.5s ease-in;
 }
 
-/* Comment form */
 .comment-form-container {
   padding: 1rem;
   border-bottom: 1px solid rgba(135, 206, 250, 0.1);
@@ -113,7 +112,6 @@
   flex-direction: column;
 }
 
-/* Fix for text area background */
 .comment-textarea,
 .reply-textarea,
 .edit-textarea {
@@ -121,14 +119,14 @@
   padding: 0.75rem;
   border-radius: 4px;
   border: 1px solid rgba(135, 206, 250, 0.3);
-  background-color: #2a2a2a !important; /* Darker, solid background */
+  background-color: #2a2a2a !important;
   color: white !important;
   resize: vertical;
   font-family: inherit;
   margin-bottom: 0.75rem;
   font-size: 0.9rem;
   caret-color: #87cefa;
-  box-sizing: border-box; /* Ensure padding is included in width */
+  box-sizing: border-box;
 }
 
 .comment-textarea::placeholder,
@@ -157,27 +155,22 @@
   background-color: #2a5a7d !important;
 }
 
-/* No comments state */
 .no-comments {
   text-align: center;
   padding: 2rem 1rem;
   color: #6ba5c7;
 }
 
-/* Comments list */
 .comments-list {
   padding: 1rem;
 }
 
-/* Fix for double separators in replies */
 .comment-thread {
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  /* Remove the border-bottom that was causing the double line */
   border-bottom: none;
 }
 
-/* Add a separator only between top-level comments */
 .comments-list > .comment-thread:not(:last-child) {
   border-bottom: 1px solid rgba(135, 206, 250, 0.1);
 }
@@ -295,7 +288,6 @@
   color: #87cefa !important;
 }
 
-/* Reply section with better visual hierarchy */
 .replies-container {
   margin-left: 2.5rem;
   margin-top: 0.75rem;
@@ -307,14 +299,11 @@
   border-left: 3px solid rgba(135, 206, 250, 0.3);
 }
 
-/* Make reply cards more distinct */
 .reply-card {
   background-color: rgba(26, 26, 26, 0.7) !important;
-  /* Remove the left border that was causing the double line */
   border-left: none;
 }
 
-/* Improved reply form styling to match main comment input */
 .reply-form {
   background-color: #2a2a2a;
   padding: 0.75rem;
@@ -350,7 +339,6 @@
   gap: 0.75rem;
 }
 
-/* Also update the edit form to match */
 .edit-form {
   background-color: #2a2a2a;
   padding: 0.75rem;
@@ -361,7 +349,6 @@
   box-sizing: border-box;
 }
 
-/* Updated comments disclaimer */
 .comments-disclaimer {
   padding: 1rem;
   font-size: 0.8rem;
@@ -376,7 +363,6 @@
   opacity: 0.8;
 }
 
-/* Responsive adjustments */
 @media (max-width: 600px) {
   .user-info {
     flex-direction: column;
@@ -418,7 +404,6 @@
   background-color: rgba(135, 206, 250, 0.1) !important;
 }
 
-/* Button overrides */
 ::ng-deep .mat-button.mat-primary {
   color: #87cefa !important;
 }

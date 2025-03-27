@@ -5,7 +5,6 @@ import { MatExpansionModule } from "@angular/material/expansion"
 import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatInputModule } from "@angular/material/input"
 import { MatSelectModule } from "@angular/material/select"
-import { MatSliderModule } from "@angular/material/slider"
 import { MatCheckboxModule } from "@angular/material/checkbox"
 import { MatChipsModule } from "@angular/material/chips"
 import { MatButtonModule } from "@angular/material/button"
@@ -19,7 +18,6 @@ export interface FilterOptions {
   waveType?: string[]
   region?: string[]
   country?: string[]
-  minRating?: number
   season?: string[]
   crowdFactor?: string[]
 }
@@ -35,7 +33,6 @@ export interface FilterOptions {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatSliderModule,
     MatCheckboxModule,
     MatChipsModule,
     MatButtonModule,
@@ -64,7 +61,6 @@ export class FilterPanelComponent implements OnInit {
   searchTermControl = new FormControl("")
   regionControl = new FormControl<string[]>([])
   countryControl = new FormControl<string[]>([])
-  minRatingControl = new FormControl(0)
 
   // Form groups for checkbox groups
   difficultyGroup: FormGroup
@@ -108,7 +104,6 @@ export class FilterPanelComponent implements OnInit {
       waveType: this.waveTypeGroup,
       region: this.regionControl,
       country: this.countryControl,
-      minRating: this.minRatingControl,
       season: this.seasonGroup,
       crowdFactor: this.crowdFactorGroup,
     })
@@ -136,7 +131,6 @@ export class FilterPanelComponent implements OnInit {
       waveType: waveTypeValues.length > 0 ? waveTypeValues : undefined,
       region: formValues.region?.length > 0 ? formValues.region : undefined,
       country: formValues.country?.length > 0 ? formValues.country : undefined,
-      minRating: formValues.minRating && formValues.minRating > 0 ? formValues.minRating : undefined,
       season: seasonValues.length > 0 ? seasonValues : undefined,
       crowdFactor: crowdFactorValues.length > 0 ? crowdFactorValues : undefined,
     }
@@ -159,7 +153,6 @@ export class FilterPanelComponent implements OnInit {
     this.searchTermControl.setValue("")
     this.regionControl.setValue([])
     this.countryControl.setValue([])
-    this.minRatingControl.setValue(0)
 
     // Reset all checkbox groups
     this.difficulties.forEach((level) => {
@@ -184,9 +177,4 @@ export class FilterPanelComponent implements OnInit {
   toggleFilterPanel(): void {
     this.panelOpenState = !this.panelOpenState
   }
-
-  formatRatingLabel(value: number): string {
-    return value.toString()
-  }
 }
-
