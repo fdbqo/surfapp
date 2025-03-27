@@ -4,7 +4,9 @@
     <mat-form-field appearance="outline" class="search-field">
       <mat-label>Search surf spots</mat-label>
       <input matInput [formControl]="searchTermControl" placeholder="Search by name, description...">
-      <mat-icon matSuffix>search</mat-icon>
+      <button mat-icon-button matSuffix aria-label="Search">
+        <mat-icon>search</mat-icon>
+      </button>
     </mat-form-field>
     
     <button 

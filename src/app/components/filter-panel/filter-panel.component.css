@@ -19,11 +19,26 @@
 }
 
 .filter-toggle-button {
-  height: 56px;
+  height: 40px;
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
   border-radius: 4px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add styles for the search button to match filter button */
+::ng-deep .search-container .mat-mdc-icon-button {
+  height: 40px;
+  width: 40px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(135, 206, 250, 0.1);
+  color: #87cefa;
 }
 
 .filter-text {
@@ -32,14 +47,14 @@
 
 .filter-badge {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 4px;
+  right: 4px;
   background-color: #1e4a6d;
   color: white;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
