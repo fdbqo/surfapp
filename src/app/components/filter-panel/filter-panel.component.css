@@ -18,18 +18,28 @@
   margin-bottom: 0;
 }
 
-/* Fix the height of the form field to match the button */
-::ng-deep .search-container .mat-mdc-form-field {
-  margin-bottom: 0;
+/* Reduce the height of the form field */
+::ng-deep .search-container .mat-mdc-text-field-wrapper {
+  height: 48px !important;
+  min-height: 48px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   display: flex;
   align-items: center;
 }
 
-/* Adjust the filter button to match the search field height */
+::ng-deep .search-container .mat-mdc-form-field-infix {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  min-height: unset !important;
+}
+
+/* Make the filter button match the exact height of the search field */
 .filter-toggle-button {
-  height: 36px;
-  min-width: 36px;
-  padding: 0 8px;
+  height: 48px !important;
+  line-height: 48px !important;
+  min-width: 48px;
+  padding: 0 16px;
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
   border-radius: 4px;
@@ -39,32 +49,14 @@
   justify-content: center;
 }
 
-/* Ensure the search icon button has consistent styling */
-::ng-deep .search-container .mat-mdc-icon-button {
-  color: #87cefa;
-}
-
-/* Add styles for the search button to match filter button */
-::ng-deep .search-container .mat-mdc-icon-button {
-  height: 40px;
-  width: 40px;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(135, 206, 250, 0.1);
-  color: #87cefa;
-}
-
 .filter-text {
   margin-left: 0.25rem;
 }
 
-/* Adjust the filter badge position */
 .filter-badge {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 4px;
+  right: 4px;
   background-color: #1e4a6d;
   color: white;
   border-radius: 50%;
