@@ -36,7 +36,12 @@ export class CommentSectionComponent implements OnChanges {
   editingComment: string | null = null
   editText = ""
 
-  constructor(private api: ApiService) {}
+  // New properties for accordion style
+  commentsExpanded = true
+  newCommentText = ""
+  newCommentRating = 5
+
+  constructor(private api: ApiService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["comments"]) {
@@ -113,8 +118,8 @@ export class CommentSectionComponent implements OnChanges {
     const reply = {
       text: this.replyText,
       parentId: parentComment._id,
-      spotId: this.spotId, 
-      rating: 0, 
+      spotId: this.spotId,
+      rating: 0,
     }
 
     this.api.postComment(reply).subscribe({
@@ -195,5 +200,95 @@ export class CommentSectionComponent implements OnChanges {
     if (!this.currentUser) return false
     return this.currentUser._id === comment.user._id || this.currentUser.role === "admin"
   }
-}
 
+  // New methods for accordion style
+  toggleComments(): void {
+    this.commentsExpanded = !this.commentsExpanded
+  }
+
+  setRating(rating: number): void {
+    this.newCommentRating = rating
+  }
+
+  submitComment(): void {
+    if (!this.newCommentText.trim()) return
+
+    const commentData: any = {
+      text: this.newCommentText,
+      spotId: this.spotId
+    }
+
+    if (this.replyingTo) {
+      commentData.parentId = this.replyingTo
+
+      // Find the parent comment
+      const parentComment = this.findCommentById(this.replyingTo)
+
+      if (parentComment) {
+        this.api.postComment(commentData).subscribe({
+          next: (response) => {
+            const newReply = {
+              ...response,
+              user: this.currentUser,
+              createdAt: new Date().toISOString(),
+              replies: []
+            }
+
+            if (!parentComment.replies) {
+              parentComment.replies = []
+            }
+
+            parentComment.replies.unshift(newReply)
+
+            this.newCommentText = ""
+            this.replyingTo = null
+          },
+          error: (err) => {
+            console.error("Error posting reply:", err)
+            alert("Failed to post reply. Please try again.")
+          }
+        })
+      }
+    } else {
+      commentData.rating = this.newCommentRating
+
+      this.api.postComment(commentData).subscribe({
+        next: (response) => {
+          const newComment = {
+            ...response,
+            user: this.currentUser,
+            createdAt: new Date().toISOString(),
+            replies: []
+          }
+
+          this.displayedComments.unshift(newComment)
+
+          this.newCommentText = ""
+          this.newCommentRating = 5
+        },
+        error: (err) => {
+          console.error("Error posting comment:", err)
+          alert("Failed to post comment. Please try again.")
+        }
+      })
+    }
+  }
+
+  findCommentById(commentId: string): any {
+    for (const comment of this.displayedComments) {
+      if (comment._id === commentId) {
+        return comment
+      }
+
+      if (comment.replies) {
+        for (const reply of comment.replies) {
+          if (reply._id === commentId) {
+            return reply
+          }
+        }
+      }
+    }
+
+    return null
+  }
+}

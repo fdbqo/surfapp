@@ -1,9 +1,72 @@
-<div class="comments-theme">
-  <div class="comments-container">
+<div class="comments-accordion">
+  <!-- Accordion Header -->
+  <div class="accordion-header" (click)="toggleComments()">
+    <div class="accordion-title">
+      <mat-icon>comment</mat-icon>
+      <h2>Reviews & Comments</h2>
+    </div>
+    <div class="comments-summary" *ngIf="!commentsExpanded">
+      <span class="comments-count">
+        {{ displayedComments.length }} {{ displayedComments.length === 1 ? 'review' : 'reviews' }}
+      </span>
+    </div>
+    <button mat-icon-button class="toggle-button">
+      <mat-icon>{{ commentsExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+    </button>
+  </div>
+  
+  <!-- Accordion Content -->
+  <div class="accordion-content" [ngClass]="{'expanded': commentsExpanded}">
+    <!-- Comment Form -->
+    <div class="comment-form-container" *ngIf="currentUser">
+      <div class="comment-form-header">
+        <img [src]="currentUser.image || '/assets/default-avatar.png'" alt="Your avatar" class="comment-avatar">
+        <div class="rating-input" *ngIf="!replyingTo">
+          <button 
+            type="button" 
+            *ngFor="let star of [1, 2, 3, 4, 5]" 
+            (click)="setRating(star)"
+            [class.active]="newCommentRating >= star"
+            class="star-button">
+            ★
+          </button>
+        </div>
+      </div>
+      
+      <div class="comment-input-container">
+        <textarea 
+          [(ngModel)]="newCommentText" 
+          placeholder="{{ replyingTo ? 'Write your reply...' : 'Share your experience at this surf spot...' }}"
+          rows="2"
+          class="comment-textarea">
+        </textarea>
+        
+        <div class="comment-actions">
+          <button 
+            mat-button 
+            *ngIf="replyingTo" 
+            (click)="cancelReply()"
+            class="cancel-button">
+            Cancel
+          </button>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            [disabled]="!newCommentText.trim()" 
+            (click)="submitComment()"
+            class="post-button">
+            {{ replyingTo ? 'Reply' : 'Post Review' }}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- No Comments State -->
     <div *ngIf="displayedComments.length === 0" class="no-comments">
       <p>No comments yet. Be the first to share your experience!</p>
     </div>
     
+    <!-- Comments List -->
     <div *ngIf="displayedComments.length > 0" class="comments-list">
       <div *ngFor="let comment of displayedComments" class="comment-thread">
         <!-- Main comment -->
@@ -43,6 +106,7 @@
           </div>
           
           <div class="comment-content">
+            <!-- Edit mode -->
             <div *ngIf="editingComment === comment._id" class="edit-form">
               <textarea 
                 [(ngModel)]="editText" 
@@ -51,12 +115,13 @@
                 class="edit-textarea">
               </textarea>
               <div class="edit-actions">
-                <button mat-button (click)="cancelEdit()">Cancel</button>
+                <button mat-button (click)="cancelEdit()" class="cancel-button">Cancel</button>
                 <button 
                   mat-raised-button 
                   color="primary" 
                   [disabled]="!editText.trim()" 
-                  (click)="submitEdit(comment)">
+                  (click)="submitEdit(comment)"
+                  class="save-button">
                   Save
                 </button>
               </div>
@@ -87,12 +152,13 @@
               class="reply-textarea">
             </textarea>
             <div class="reply-actions">
-              <button mat-button (click)="cancelReply()">Cancel</button>
+              <button mat-button (click)="cancelReply()" class="cancel-button">Cancel</button>
               <button 
                 mat-raised-button 
                 color="primary" 
                 [disabled]="!replyText.trim()" 
-                (click)="submitReply(comment)">
+                (click)="submitReply(comment)"
+                class="post-button">
                 Post
               </button>
             </div>
@@ -142,12 +208,13 @@
                     class="edit-textarea">
                   </textarea>
                   <div class="edit-actions">
-                    <button mat-button (click)="cancelEdit()">Cancel</button>
+                    <button mat-button (click)="cancelEdit()" class="cancel-button">Cancel</button>
                     <button 
                       mat-raised-button 
                       color="primary" 
                       [disabled]="!editText.trim()" 
-                      (click)="submitEdit(reply)">
+                      (click)="submitEdit(reply)"
+                      class="save-button">
                       Save
                     </button>
                   </div>
@@ -160,6 +227,10 @@
           </div>
         </div>
       </div>
+    </div>
+    
+    <div class="comments-disclaimer">
+      <p>All reviews are from verified users. Please be respectful when posting.</p>
     </div>
   </div>
 </div>
