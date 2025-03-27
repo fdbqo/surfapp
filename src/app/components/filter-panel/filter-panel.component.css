@@ -181,6 +181,58 @@
   background-color: #2a2a2a !important;
 }
 
+.search-field {
+  flex: 1;
+  margin-bottom: 0;
+  height: 40px; /* forces mat-form-field to 40px */
+}
+
+/* Force the mat-form-field wrapper to fill the parent and center items */
+::ng-deep .search-field .mat-mdc-form-field-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center; 
+}
+
+/* Also ensure the infix (where the input and suffix icon sit) is fully stretched */
+::ng-deep .search-field .mat-mdc-form-field-infix {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  /* remove extra padding so the outline doesn't look too tall */
+  padding: 0 !important; 
+}
+
+/* Ensure the outline itself doesn't push things up/down */
+::ng-deep .search-field .mdc-notched-outline {
+  top: 0 !important;
+}
+
+/* The filter button should match the same height (40px) */
+.filter-toggle-button {
+  height: 40px;
+  background-color: rgba(135, 206, 250, 0.1);
+  color: #87cefa;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style the icon button inside the search to match and offset the icon a bit */
+::ng-deep .search-container .mat-mdc-icon-button {
+  height: 40px;
+  width: 40px;
+  padding: 8px;
+  margin-right: 4px; /* offset to give the icon a bit of breathing room */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(135, 206, 250, 0.1);
+  color: #87cefa;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .filter-panel-content {
