@@ -14,8 +14,8 @@
 }
 
 /* 
-  Make the search field a fixed height of 40px.
-  This ensures the mat-form-field is the same height as the filter button.
+  Force the mat-form-field to 40px tall so it matches the filter button.
+  We'll handle internal label scaling to prevent cutoffs.
 */
 .search-field {
   flex: 1;
@@ -23,7 +23,9 @@
   height: 40px; /* forces mat-form-field to 40px */
 }
 
-/* The filter toggle button should match the same 40px height */
+/* 
+  Make the filter toggle button 40px tall as well, matching the search field.
+*/
 .filter-toggle-button {
   height: 40px;
   background-color: rgba(135, 206, 250, 0.1);
@@ -35,7 +37,10 @@
   justify-content: center;
 }
 
-/* Style the search icon button to match the filter button and offset the icon a bit */
+/* 
+  Style the search icon button to match the 40px height,
+  with a slight margin-right for visual spacing.
+*/
 ::ng-deep .search-container .mat-mdc-icon-button {
   height: 40px;
   width: 40px;
@@ -117,8 +122,7 @@
 }
 
 /* 
-  Force the mat-form-field wrapper to fill the parent and center items vertically.
-  This ensures the input and icon are centered in a 40px field.
+  Let the mat-form-field wrapper fill the 40px and center items vertically.
 */
 ::ng-deep .search-field .mat-mdc-form-field-wrapper {
   height: 100%;
@@ -126,8 +130,8 @@
   align-items: center;
 }
 
-/*
-  Also ensure the infix (where the input and suffix icon sit) is fully stretched
+/* 
+  Also ensure the infix (where the input & suffix icon sit) is fully stretched,
   and remove extra padding so the outline doesn't look too tall.
 */
 ::ng-deep .search-field .mat-mdc-form-field-infix {
@@ -138,15 +142,23 @@
   min-height: 40px !important;
 }
 
-/* Ensure the outline itself doesn't push things up/down */
-::ng-deep .search-field .mdc-notched-outline {
-  top: 0 !important;
+/* 
+  Scale the floating label slightly smaller so it fits neatly within 40px.
+  Adjust the scale or translate values if you need more or less space.
+*/
+::ng-deep .search-field .mdc-floating-label {
+  transform: scale(0.9) translateY(-2px);
+  transform-origin: left center;
 }
 
-/* Make form fields more compact overall */
+/* 
+  Do NOT force .mdc-notched-outline top: 0 here. 
+  Let Angular Material position the outline so it doesn't cut off the label.
+*/
+
+/* Make form fields a bit more compact overall */
 ::ng-deep .mat-mdc-form-field-infix {
-  padding: 0.5em 0 !important; /* You can remove or adjust this if needed */
-  min-height: 40px !important;
+  padding: 0.5em 0 !important;
 }
 
 ::ng-deep .mat-mdc-text-field-wrapper {
