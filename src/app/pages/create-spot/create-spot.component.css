@@ -227,7 +227,7 @@
   margin-left: 1.5rem;
 }
 
-/* Override Angular Material checkbox styles for dark theme */
+
 ::ng-deep .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
   background-color: #87cefa !important;
   border-color: #87cefa !important;
@@ -237,25 +237,41 @@
   color: white !important;
 }
 
-/* Add button styling to match other components */
-::ng-deep .mat-button {
+// making sure buttons are consistent
+::ng-deep .mat-mdc-button,
+::ng-deep .mat-mdc-raised-button,
+::ng-deep .mat-mdc-outlined-button,
+::ng-deep .mat-mdc-unelevated-button {
   color: white !important;
 }
 
-::ng-deep .mat-raised-button:not([class*="mat-elevation-z"]) {
+::ng-deep .mat-mdc-button .mat-mdc-button-persistent-ripple,
+::ng-deep .mat-mdc-unelevated-button .mat-mdc-button-persistent-ripple {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+::ng-deep .mat-mdc-button .mdc-button__label,
+::ng-deep .mat-mdc-unelevated-button .mdc-button__label,
+::ng-deep .mat-mdc-raised-button .mdc-button__label,
+::ng-deep .mat-mdc-outlined-button .mdc-button__label {
   color: white !important;
 }
 
-::ng-deep .mat-raised-button.mat-primary {
+::ng-deep .mat-primary.mat-mdc-raised-button {
   background-color: #1e4a6d !important;
 }
 
-::ng-deep .mat-raised-button.mat-primary:hover {
+::ng-deep .mat-primary.mat-mdc-raised-button:hover {
   background-color: #2a5a7d !important;
 }
 
-::ng-deep .mat-button-wrapper {
-  color: white !important;
+/* Regular button styling */
+::ng-deep .mat-mdc-button:not(.mat-primary) {
+  background-color: #333 !important;
+}
+
+::ng-deep .mat-mdc-button:not(.mat-primary):hover {
+  background-color: #444 !important;
 }
 
 /* Ensure all inputs have white text */
