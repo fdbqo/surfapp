@@ -44,10 +44,6 @@
   border-bottom: 1px solid rgba(135, 206, 250, 0.2);
 }
 
-#span {
-  color: #6ba5c7 !important;
-}
-
 .header-content {
   flex: 1;
 }
@@ -359,6 +355,7 @@
   display: flex;
 }
 
+/* Update the star button styles */
 .star-button {
   background: none;
   border: none;
@@ -371,7 +368,23 @@
 }
 
 .star-button.active {
-  color: #ffc107;
+  color: #ffc107 !important; /* Add !important to ensure it overrides other styles */
+}
+
+/* Add specific styles for the rating input stars */
+.rating-input .star-button {
+  color: #444;
+  font-size: 1.5rem; /* Make them slightly larger */
+}
+
+.rating-input .star-button:hover,
+.rating-input .star-button.active {
+  color: #ffc107 !important; /* Gold/yellow color for active stars */
+}
+
+/* Add hover effect for better user experience */
+.rating-input .star-button:hover ~ .star-button {
+  color: #444; /* Reset color for stars after hovered one */
 }
 
 .comment-input {
