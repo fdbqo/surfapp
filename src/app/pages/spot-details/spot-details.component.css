@@ -2,6 +2,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+  background-color: #121212;
 }
 
 /* Loading and error states */
@@ -164,7 +165,7 @@
   flex: 1;
   background: none;
   border: none;
-  color: #87cefa; /* Change from #6ba5c7 to #87cefa for consistency */
+  color: #87cefa; 
   padding: 0.75rem 0.5rem;
   display: flex;
   flex-direction: column;
