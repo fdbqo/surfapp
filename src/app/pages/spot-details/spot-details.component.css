@@ -182,6 +182,10 @@
   color: #87cefa; /* Ensure icon is also blue */
 }
 
+.tab-button span {
+  color: #87cefa !important;
+}
+
 .tab-button.active {
   color: #87cefa;
   background-color: rgba(135, 206, 250, 0.1);
