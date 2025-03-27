@@ -7,44 +7,43 @@
 }
 
 /* 
-  FLEX CONTAINER:
-  'align-items: stretch' so each child 
-  matches the container's height.
+  Let the container flex, and stretch both children
+  (the search bar and the button) to the same height.
+  Removing any min-height so the mat-form-field's
+  natural height sets the row height. 
 */
 .search-container {
   display: flex;
-  align-items: stretch; /* each child (search + button) fills full height */
+  align-items: stretch;  /* each child takes the same vertical space */
   gap: 0.5rem;
-  
-  /* If your outlined mat-form-field is 56px, use 56px. 
-     If DevTools shows 60px or something else, change this to match. */
-  min-height: 56px;
-  
   padding: 0.5rem 1rem;
+  margin: 0;            /* remove any default margin */
 }
 
-/* Let the mat-form-field expand freely; no forced margin. */
+/* The mat-form-field (search bar) expands freely. */
 .search-field {
   flex: 1;
   margin: 0;
 }
 
-/* Remove default margin from mat-form-field */
+/* Remove margin from the Angular Material form field. */
 ::ng-deep .search-field .mat-mdc-form-field {
   margin: 0 !important;
-  
-  /* Make the form-field fill the available vertical space */
+  /* Let it fill vertically, so the label and input are centered. */
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* FILTER BUTTON: also stretch to match the container's height. */
+/* 
+  BUTTON: no forced height; let it stretch to match 
+  the form field's computed height.
+*/
 .filter-toggle-button {
+  align-self: stretch;    /* ensures it fills parent’s full height */
   display: flex;
   align-items: center;
   justify-content: center;
-  height: auto; /* it will stretch to fill the parent's min-height */
   margin: 0;
   padding: 0 16px;
   background-color: rgba(135, 206, 250, 0.1);
@@ -72,15 +71,14 @@
   justify-content: center;
 }
 
-/* Icon button inside the search: no forced height, 
-   just a little margin for breathing room. */
+/* The mat-icon-button in the search field can auto-size; no need to force height. */
 ::ng-deep .search-container .mat-mdc-icon-button {
   margin-right: 4px;
   background-color: rgba(135, 206, 250, 0.1);
   color: #87cefa;
 }
 
-/* Filter panel styles remain the same */
+/* Keep your existing panel/filter styling as is. */
 .filter-panel {
   max-height: 0;
   overflow: hidden;
@@ -130,10 +128,7 @@
   width: 100%;
 }
 
-/* 
-  Optional styling for the form field, input, selects, etc.
-  (You can keep your existing styles here as is.)
-*/
+/* Optional form field theming (unchanged) */
 ::ng-deep .mat-mdc-text-field-wrapper {
   background-color: #2a2a2a !important;
 }
