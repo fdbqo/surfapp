@@ -7,7 +7,8 @@ import { MatDividerModule } from "@angular/material/divider"
 import { MatMenuModule } from "@angular/material/menu"
 import { RouterModule } from "@angular/router"
 import { FormsModule } from "@angular/forms"
-import { ApiService } from "../../services/api.service"
+import { ApiService } from "@/app/services/api.service"
+import { AnalyticsService } from "@/app/services/analytics.service"
 
 @Component({
   selector: "app-comment-section",
@@ -29,6 +30,7 @@ export class CommentSectionComponent implements OnChanges {
   @Input() comments: any[] = []
   @Input() currentUser: any = null
   @Input() spotId = ""
+  
 
   displayedComments: any[] = []
   replyingTo: string | null = null
@@ -36,12 +38,14 @@ export class CommentSectionComponent implements OnChanges {
   editingComment: string | null = null
   editText = ""
 
-  // New properties for accordion style
   commentsExpanded = true
   newCommentText = ""
   newCommentRating = 5
 
-  constructor(private api: ApiService) { }
+  constructor(
+    private api: ApiService,
+    private analytics: AnalyticsService
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["comments"]) {
@@ -100,6 +104,7 @@ export class CommentSectionComponent implements OnChanges {
       })
     }
   }
+
 
   startReply(commentId: string): void {
     this.replyingTo = commentId
@@ -163,6 +168,9 @@ export class CommentSectionComponent implements OnChanges {
       next: () => {
         comment.text = this.editText
         comment.edited = true
+
+        this.analytics.trackCommentEdited(comment._id, this.spotId);
+
         this.cancelEdit()
       },
       error: (err) => {
@@ -176,6 +184,9 @@ export class CommentSectionComponent implements OnChanges {
     if (confirm("Are you sure you want to delete this comment?")) {
       this.api.deleteComment(comment._id).subscribe({
         next: () => {
+
+          this.analytics.trackCommentDeleted(comment._id, this.spotId);
+          
           if (parentComment) {
             const index = parentComment.replies.findIndex((c: any) => c._id === comment._id)
             if (index !== -1) {
@@ -239,6 +250,8 @@ export class CommentSectionComponent implements OnChanges {
             }
 
             parentComment.replies.unshift(newReply)
+
+            this.analytics.trackCommentPosted('reply', this.spotId);
 
             this.newCommentText = ""
             this.replyingTo = null

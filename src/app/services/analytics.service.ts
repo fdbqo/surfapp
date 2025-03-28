@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 declare let gtag: Function;
@@ -9,16 +9,16 @@ declare let gtag: Function;
 })
 export class AnalyticsService {
   constructor(private router: Router) {
+    this.trackPageViews();
+  }
+
+  private trackPageViews() {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      this.sendPageView(event.urlAfterRedirects);
-    });
-  }
-
-  sendPageView(url: string) {
-    gtag('event', 'page_view', {
-      page_path: url
+      gtag('event', 'page_view', {
+        page_path: event.urlAfterRedirects
+      });
     });
   }
 
@@ -26,14 +26,24 @@ export class AnalyticsService {
     gtag('event', eventName, params || {});
   }
 
-
-  setUserProperties(properties: { [key: string]: any }) {
-    gtag('set', 'user_properties', properties);
+  trackCommentPosted(type: 'comment' | 'reply', spotId: string) {
+    this.sendEvent('comment_posted', {
+      type,
+      spot_id: spotId
+    });
   }
 
-  setUserId(userId: string) {
-    gtag('config', 'G-XXXXXXXXXX', {
-      user_id: userId
+  trackCommentEdited(commentId: string, spotId: string) {
+    this.sendEvent('comment_edited', {
+      comment_id: commentId,
+      spot_id: spotId
+    });
+  }
+
+  trackCommentDeleted(commentId: string, spotId: string) {
+    this.sendEvent('comment_deleted', {
+      comment_id: commentId,
+      spot_id: spotId
     });
   }
 }
