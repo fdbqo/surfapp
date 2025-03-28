@@ -1,96 +1,151 @@
 <div class="filter-panel-container">
-  <!-- Search bar (always visible) -->
-  <div class="search-container">
-    <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Search surf spots</mat-label>
-      <input matInput [formControl]="searchTermControl" placeholder="Search by name, description...">
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+  <!-- Search and filter toggle bar -->
+  <div class="search-bar-container">
+    <div class="search-input-wrapper">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input 
+        type="text" 
+        [formControl]="filterForm.controls.searchTerm" 
+        placeholder="Search surf spots..."
+        class="search-input"
+      >
+      <button 
+        *ngIf="filterForm.controls.searchTerm.value" 
+        class="clear-search-btn" 
+        (click)="filterForm.controls.searchTerm.setValue('')"
+        matTooltip="Clear search">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     
     <button 
-      mat-flat-button 
-      class="filter-toggle-button" 
+      class="filter-toggle-btn" 
+      [class.has-filters]="activeFilterCount > 0"
+      [matBadge]="activeFilterCount" 
+      [matBadgeHidden]="activeFilterCount === 0"
+      matBadgeSize="small"
+      matBadgeColor="accent"
       (click)="toggleFilterPanel()"
-      [matTooltip]="activeFilterCount > 0 ? 'Filters active' : 'Show filters'">
-      <mat-icon>filter_list</mat-icon>
+      matTooltip="Toggle filters">
+      <mat-icon>tune</mat-icon>
       <span class="filter-text">Filters</span>
-      <span *ngIf="activeFilterCount > 0" class="filter-badge">{{ activeFilterCount }}</span>
     </button>
   </div>
   
   <!-- Expandable filter panel -->
-  <div class="filter-panel" [class.expanded]="panelOpenState">
-    <div class="filter-panel-header">
+  <div class="filters-container" [class.expanded]="filterExpanded">
+    <div class="filters-header">
       <h3>Filter Surf Spots</h3>
-      <button mat-button color="primary" (click)="clearFilters()" [disabled]="activeFilterCount === 0">
+      <button 
+        mat-button 
+        color="primary" 
+        class="clear-all-btn" 
+        [disabled]="activeFilterCount === 0"
+        (click)="clearFilters()">
         <mat-icon>clear_all</mat-icon>
         Clear All
       </button>
     </div>
     
-    <div class="filter-panel-content">
+    <div class="filters-grid">
       <!-- Difficulty -->
-      <div class="filter-section">
-        <h4>Difficulty</h4>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Select difficulty</mat-label>
-          <mat-select [formControl]="difficultyControl" multiple>
-            <mat-option *ngFor="let level of difficulties" [value]="level">{{ level }}</mat-option>
+      <div class="filter-group" [class.has-active]="getActiveCount('difficulty') > 0">
+        <label class="filter-label">
+          Difficulty
+          <span *ngIf="getActiveCount('difficulty') > 0" class="filter-count">
+            ({{getActiveCount('difficulty')}})
+          </span>
+        </label>
+        <mat-form-field appearance="outline">
+          <mat-select [formControl]="filterForm.controls.difficulty" multiple>
+            <mat-option *ngFor="let level of difficulties" [value]="level">
+              {{level}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       
       <!-- Wave Type -->
-      <div class="filter-section">
-        <h4>Wave Type</h4>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Select wave types</mat-label>
-          <mat-select [formControl]="waveTypeControl" multiple>
-            <mat-option *ngFor="let type of waveTypes" [value]="type">{{ type }}</mat-option>
+      <div class="filter-group" [class.has-active]="getActiveCount('waveType') > 0">
+        <label class="filter-label">
+          Wave Type
+          <span *ngIf="getActiveCount('waveType') > 0" class="filter-count">
+            ({{getActiveCount('waveType')}})
+          </span>
+        </label>
+        <mat-form-field appearance="outline">
+          <mat-select [formControl]="filterForm.controls.waveType" multiple>
+            <mat-option *ngFor="let type of waveTypes" [value]="type">
+              {{type}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       
       <!-- Region -->
-      <div class="filter-section">
-        <h4>Region</h4>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Select regions</mat-label>
-          <mat-select [formControl]="regionControl" multiple>
-            <mat-option *ngFor="let region of allRegions" [value]="region">{{ region }}</mat-option>
+      <div class="filter-group" [class.has-active]="getActiveCount('region') > 0">
+        <label class="filter-label">
+          Region
+          <span *ngIf="getActiveCount('region') > 0" class="filter-count">
+            ({{getActiveCount('region')}})
+          </span>
+        </label>
+        <mat-form-field appearance="outline">
+          <mat-select [formControl]="filterForm.controls.region" multiple>
+            <mat-option *ngFor="let region of allRegions" [value]="region">
+              {{region}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       
       <!-- Country -->
-      <div class="filter-section">
-        <h4>Country</h4>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Select countries</mat-label>
-          <mat-select [formControl]="countryControl" multiple>
-            <mat-option *ngFor="let country of allCountries" [value]="country">{{ country }}</mat-option>
+      <div class="filter-group" [class.has-active]="getActiveCount('country') > 0">
+        <label class="filter-label">
+          Country
+          <span *ngIf="getActiveCount('country') > 0" class="filter-count">
+            ({{getActiveCount('country')}})
+          </span>
+        </label>
+        <mat-form-field appearance="outline">
+          <mat-select [formControl]="filterForm.controls.country" multiple>
+            <mat-option *ngFor="let country of allCountries" [value]="country">
+              {{country}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       
       <!-- Season -->
-      <div class="filter-section">
-        <h4>Best Season</h4>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Select seasons</mat-label>
-          <mat-select [formControl]="seasonControl" multiple>
-            <mat-option *ngFor="let season of seasons" [value]="season">{{ season }}</mat-option>
+      <div class="filter-group" [class.has-active]="getActiveCount('season') > 0">
+        <label class="filter-label">
+          Best Season
+          <span *ngIf="getActiveCount('season') > 0" class="filter-count">
+            ({{getActiveCount('season')}})
+          </span>
+        </label>
+        <mat-form-field appearance="outline">
+          <mat-select [formControl]="filterForm.controls.season" multiple>
+            <mat-option *ngFor="let season of seasons" [value]="season">
+              {{season}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       
       <!-- Crowd Factor -->
-      <div class="filter-section">
-        <h4>Crowd Factor</h4>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Select crowd levels</mat-label>
-          <mat-select [formControl]="crowdFactorControl" multiple>
-            <mat-option *ngFor="let factor of crowdFactors" [value]="factor">{{ factor }}</mat-option>
+      <div class="filter-group" [class.has-active]="getActiveCount('crowdFactor') > 0">
+        <label class="filter-label">
+          Crowd Factor
+          <span *ngIf="getActiveCount('crowdFactor') > 0" class="filter-count">
+            ({{getActiveCount('crowdFactor')}})
+          </span>
+        </label>
+        <mat-form-field appearance="outline">
+          <mat-select [formControl]="filterForm.controls.crowdFactor" multiple>
+            <mat-option *ngFor="let factor of crowdFactors" [value]="factor">
+              {{factor}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
