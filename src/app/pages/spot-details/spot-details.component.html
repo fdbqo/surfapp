@@ -23,7 +23,7 @@
         </div>
         <div class="spot-location">
           <mat-icon>location_on</mat-icon>
-          <span>{{ spot.region }}, {{ spot.country }}</span>
+          <span>{{ spot.region }}, {{ spot.country }} {{' (' + spot.location.lat + ', ' + spot.location.lng + ')'}}</span>
         </div>
       </div>
 
