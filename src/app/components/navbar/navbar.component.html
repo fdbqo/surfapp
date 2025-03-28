@@ -3,7 +3,6 @@
       <span class="title">SurfApp</span>
       <div class="nav-links">
         <a mat-button routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <a mat-button routerLink="/spots" routerLinkActive="active-link">Spots</a>
         <a *ngIf="user?.role === 'admin'" mat-button routerLink="/create" routerLinkActive="active-link">Create</a>
       </div>
     </div>
