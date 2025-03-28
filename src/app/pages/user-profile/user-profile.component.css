@@ -1,0 +1,151 @@
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+  
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    margin-top: 1rem;
+  }
+  
+  .loading-container p {
+    margin-top: 1rem;
+    color: #87cefa;
+  }
+  
+  .profile-card {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(135, 206, 250, 0.1);
+  }
+  
+  /* Profile Header */
+  .profile-header {
+    display: flex;
+    padding: 2rem;
+    background-color: rgba(135, 206, 250, 0.05);
+  }
+  
+  .profile-avatar-container {
+    margin-right: 2rem;
+  }
+  
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #87cefa;
+  }
+  
+  .profile-info {
+    flex: 1;
+  }
+  
+  .profile-name {
+    color: #87cefa;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.75rem;
+  }
+  
+  .member-since {
+    color: #6ba5c7;
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .user-email {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  /* Profile Details */
+  .profile-details {
+    padding: 1.5rem;
+  }
+  
+  .detail-section {
+    margin-bottom: 2rem;
+  }
+  
+  .detail-section h2 {
+    color: #87cefa;
+    font-size: 1.25rem;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(135, 206, 250, 0.1);
+  }
+  
+  .detail-item {
+    display: flex;
+    margin-bottom: 1.25rem;
+  }
+  
+  .detail-item mat-icon {
+    color: #6ba5c7;
+    margin-right: 1rem;
+    margin-top: 0.25rem;
+  }
+  
+  .detail-content h3 {
+    color: #e0e0e0;
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  .detail-content p {
+    color: #a0a0a0;
+    margin: 0;
+  }
+  
+  .chip-container {
+    margin-top: 0.5rem;
+  }
+  
+  ::ng-deep .mat-mdc-chip {
+    background-color: rgba(135, 206, 250, 0.1) !important;
+    color: #87cefa !important;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .profile-container {
+      padding: 1rem;
+    }
+  
+    .profile-header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1.5rem;
+    }
+  
+    .profile-avatar-container {
+      margin-right: 0;
+      margin-bottom: 1.5rem;
+    }
+  
+    .detail-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .detail-item mat-icon {
+      margin-right: 0;
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  

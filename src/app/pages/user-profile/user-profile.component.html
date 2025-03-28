@@ -1,0 +1,87 @@
+<div class="profile-container">
+    <!-- Loading spinner -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading profile...</p>
+    </div>
+    
+    <div *ngIf="!loading && user" class="profile-content">
+      <mat-card class="profile-card">
+        <div class="profile-header">
+          <div class="profile-avatar-container">
+            <img [src]="user.photoURL || '/assets/images/default-avatar.png'" alt="Profile photo" class="profile-avatar">
+          </div>
+          
+          <div class="profile-info">
+            <h1 class="profile-name">{{ user.displayName || 'Surfer' }}</h1>
+            <p class="member-since" *ngIf="user.createdAt">Member since {{ formatDate(user.createdAt) }}</p>
+            <p class="user-email" *ngIf="user.email">{{ user.email }}</p>
+          </div>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <div class="profile-details">
+          <!-- Personal Information -->
+          <div class="detail-section" *ngIf="user.location || user.bio">
+            <h2>Personal Information</h2>
+            
+            <div class="detail-item" *ngIf="user.location">
+              <mat-icon>location_on</mat-icon>
+              <div class="detail-content">
+                <h3>Location</h3>
+                <p>{{ user.location }}</p>
+              </div>
+            </div>
+            
+            <div class="detail-item" *ngIf="user.bio">
+              <mat-icon>info</mat-icon>
+              <div class="detail-content">
+                <h3>Bio</h3>
+                <p>{{ user.bio }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Surf Preferences -->
+          <div class="detail-section" *ngIf="user.skillLevel || user.preferredWaveTypes?.length || user.preferredSeasons?.length">
+            <h2>Surf Preferences</h2>
+            
+            <div class="detail-item" *ngIf="user.skillLevel">
+              <mat-icon>surfing</mat-icon>
+              <div class="detail-content">
+                <h3>Skill Level</h3>
+                <p>{{ user.skillLevel }}</p>
+              </div>
+            </div>
+            
+            <div class="detail-item" *ngIf="user.preferredWaveTypes?.length">
+              <mat-icon>waves</mat-icon>
+              <div class="detail-content">
+                <h3>Preferred Wave Types</h3>
+                <div class="chip-container">
+                  <mat-chip-listbox>
+                    <mat-chip *ngFor="let type of user.preferredWaveTypes">{{ type }}</mat-chip>
+                  </mat-chip-listbox>
+                </div>
+              </div>
+            </div>
+            
+            <div class="detail-item" *ngIf="user.preferredSeasons?.length">
+              <mat-icon>wb_sunny</mat-icon>
+              <div class="detail-content">
+                <h3>Preferred Seasons</h3>
+                <div class="chip-container">
+                  <mat-chip-listbox>
+                    <mat-chip *ngFor="let season of user.preferredSeasons">{{ season }}</mat-chip>
+                  </mat-chip-listbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  
+  
