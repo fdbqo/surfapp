@@ -1,36 +1,57 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { ApiService } from '../services/api.service';
+import { Injectable } from "@angular/core"
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router"
+import { type Observable, of } from "rxjs"
+import { catchError, map } from "rxjs/operators"
+import { ApiService } from "../services/api.service"
+import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthGuard implements CanActivate {
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+  ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.api.getUser().pipe(
-      map(user => {
+      map((user) => {
         if (user) {
-          return true;
+          return true
         } else {
-          this.router.navigate(['/login'], { 
-            queryParams: { returnUrl: state.url } 
-          });
-          return false;
+          if (state.url.includes("/spots/")) {
+            this.snackBar
+              .open("Please log in to view spot details", "Login", {
+                duration: 5000,
+                panelClass: "warning-snackbar",
+                horizontalPosition: "center",
+                verticalPosition: "bottom",
+              })
+              .onAction()
+              .subscribe(() => {
+                this.router.navigate(["/login"], {
+                  queryParams: { returnUrl: state.url },
+                })
+              })
+
+            this.router.navigate(["/"])
+          } else {
+            this.router.navigate(["/login"], {
+              queryParams: { returnUrl: state.url },
+            })
+          }
+          return false
         }
       }),
       catchError(() => {
-        this.router.navigate(['/login'], { 
-          queryParams: { returnUrl: state.url } 
-        });
-        return of(false);
-      })
-    );
+        this.router.navigate(["/login"], {
+          queryParams: { returnUrl: state.url },
+        })
+        return of(false)
+      }),
+    )
   }
 }
+
