@@ -4,9 +4,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { ApiService } from '@/app/services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-surf-spot-card',
@@ -17,7 +19,6 @@ import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-d
     MatChipsModule,
     MatIconModule,
     MatButtonModule,
-    RouterModule,
     MatDialogModule
   ],
   templateUrl: './surf-spot-card.component.html',
@@ -45,10 +46,47 @@ export class SurfSpotCardComponent {
   
   @Output() deleteSpot = new EventEmitter<string>();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private api: ApiService,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
   getStarRating(rating: number): string {
     return '★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating));
+  }
+
+  viewDetails(event: Event): void {
+    event.preventDefault()
+    event.stopPropagation()
+
+    this.api.getUser().subscribe({
+      next: (user) => {
+        if (user) {
+          this.router.navigate(["/spots", this.spot._id])
+        } else {
+          this.snackBar
+            .open("Please log in to view spot details", "Login", {
+              duration: 5000,
+              panelClass: ["warning-snackbar"],
+              horizontalPosition: "center",
+              verticalPosition: "bottom",
+            })
+            .onAction()
+            .subscribe(() => {
+              window.location.href = "https://surfapi2.vercel.app/api/auth/signin/google"
+            })
+        }
+      },
+      error: (err) => {
+        console.error("Error checking user:", err)
+        this.snackBar.open("Something went wrong", "Close", {
+          duration: 3000,
+          panelClass: ["error-snackbar"],
+        })
+      },
+    })
   }
   
   confirmDelete(event: Event): void {

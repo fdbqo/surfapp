@@ -65,6 +65,6 @@
   </mat-card-content>
 
   <mat-card-actions *ngIf="!isPreview">
-    <button mat-button [routerLink]="['/spots', spot._id]">VIEW DETAILS</button>
+    <button mat-button (click)="viewDetails($event)">VIEW DETAILS</button>
   </mat-card-actions>
 </mat-card>
