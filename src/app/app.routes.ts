@@ -6,11 +6,11 @@ import { UserProfileComponent } from "./pages/user-profile/user-profile.componen
 import { AuthGuard } from "./guards/auth.guard"
 
 export const routes: Routes = [
-  { path: "", component: SurfSpotListComponent },
-  { path: "create", component: CreateSpotComponent, canActivate: [AuthGuard] },
-  { path: "edit/:id", component: CreateSpotComponent, canActivate: [AuthGuard] },
-  { path: "spots/:id", component: SpotDetailsComponent, canActivate: [AuthGuard] },
-  { path: "profile", component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: "", component: SurfSpotListComponent, title: "Surf Spots" },
+  { path: "create", component: CreateSpotComponent, canActivate: [AuthGuard], title: "Create Spot" },
+  { path: "edit/:id", component: CreateSpotComponent, canActivate: [AuthGuard], title: "Edit Spot" },
+  { path: "spots/:id", component: SpotDetailsComponent, canActivate: [AuthGuard], title: "Spot Details" },
+  { path: "profile", component: UserProfileComponent, canActivate: [AuthGuard], title: "User Profile" },
   { path: "**", redirectTo: "" },
 ]
 

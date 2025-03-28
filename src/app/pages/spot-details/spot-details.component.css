@@ -377,6 +377,7 @@
 .rating-input .star-button {
   color: #444;
   font-size: 1.5rem; 
+}
 
 .rating-input .star-button:hover,
 .rating-input .star-button.active {
