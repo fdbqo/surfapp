@@ -254,7 +254,6 @@ export class CommentSectionComponent implements OnChanges {
 
             parentComment.replies.unshift(newReply)
 
-            this.analytics.trackCommentPosted('comment', this.spotId);
 
             this.newCommentText = ""
             this.replyingTo = null
@@ -278,6 +277,8 @@ export class CommentSectionComponent implements OnChanges {
           }
 
           this.displayedComments.unshift(newComment)
+
+          this.analytics.trackCommentPosted('comment', this.spotId);
 
           this.newCommentText = ""
           this.newCommentRating = 5
