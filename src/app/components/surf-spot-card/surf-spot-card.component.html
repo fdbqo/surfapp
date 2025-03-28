@@ -21,7 +21,7 @@
   <mat-card-header>
     <mat-card-title>{{ spot.name || 'Surf Spot Name' }}</mat-card-title>
     <mat-card-subtitle *ngIf="spot.region || spot.country">
-      {{ spot.region || 'Region' }}{{ spot.region && spot.country ? ', ' : '' }}{{ spot.country || 'Country' }}
+      {{ spot.region || 'Region' }}{{ spot.region && spot.country ? ', ' : '' }}{{ spot.country || 'Country' }} {{' (' + spot.location.lat + ',' + spot.location.lng + ')'}}
     </mat-card-subtitle>
   </mat-card-header>
 
