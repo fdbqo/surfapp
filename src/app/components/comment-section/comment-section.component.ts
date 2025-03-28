@@ -136,6 +136,9 @@ export class CommentSectionComponent implements OnChanges {
           replies: [],
         })
 
+        this.analytics.trackCommentPosted('reply', this.spotId);
+
+
         this.cancelReply()
       },
       error: (err) => {
