@@ -9,6 +9,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { ApiService } from '@/app/services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-surf-spot-card',
@@ -58,35 +59,38 @@ export class SurfSpotCardComponent {
   }
 
   viewDetails(event: Event): void {
-    event.preventDefault()
-    event.stopPropagation()
-
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Check if user is logged in
     this.api.getUser().subscribe({
       next: (user) => {
-        if (user) {
-          this.router.navigate(["/spots", this.spot._id])
+        // If we get here, user is logged in
+        this.router.navigate(['/spots', this.spot._id]);
+      },
+      error: (err: HttpErrorResponse) => {
+        // 401 means user is not logged in, which is expected
+        if (err.status === 401) {
+          // Show login toast
+          this.snackBar.open('Please log in to view spot details', 'Login', {
+            duration: 5000,
+            panelClass: ['warning-snackbar'],
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+          }).onAction().subscribe(() => {
+            // Redirect to login when snackbar action is clicked
+            window.location.href = 'https://surfapi2.vercel.app/api/auth/signin/google';
+          });
         } else {
-          this.snackBar
-            .open("Please log in to view spot details", "Login", {
-              duration: 5000,
-              panelClass: ["warning-snackbar"],
-              horizontalPosition: "center",
-              verticalPosition: "bottom",
-            })
-            .onAction()
-            .subscribe(() => {
-              window.location.href = "https://surfapi2.vercel.app/api/auth/signin/google"
-            })
+          // Some other unexpected error occurred
+          console.error('Unexpected error checking user:', err);
+          this.snackBar.open('Something went wrong', 'Close', {
+            duration: 3000,
+            panelClass: ['error-snackbar']
+          });
         }
-      },
-      error: (err) => {
-        console.error("Error checking user:", err)
-        this.snackBar.open("Something went wrong", "Close", {
-          duration: 3000,
-          panelClass: ["error-snackbar"],
-        })
-      },
-    })
+      }
+    });
   }
   
   confirmDelete(event: Event): void {
