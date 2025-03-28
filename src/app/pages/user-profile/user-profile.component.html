@@ -9,11 +9,11 @@
       <mat-card class="profile-card">
         <div class="profile-header">
           <div class="profile-avatar-container">
-            <img [src]="user.photoURL || '/assets/images/default-avatar.png'" alt="Profile photo" class="profile-avatar">
+            <img [src]="user.image" alt="Profile photo" class="profile-avatar">
           </div>
           
           <div class="profile-info">
-            <h1 class="profile-name">{{ user.displayName || 'Surfer' }}</h1>
+            <h1 class="profile-name">{{ user.username || 'Surfer' }}</h1>
             <p class="member-since" *ngIf="user.createdAt">Member since {{ formatDate(user.createdAt) }}</p>
             <p class="user-email" *ngIf="user.email">{{ user.email }}</p>
           </div>
