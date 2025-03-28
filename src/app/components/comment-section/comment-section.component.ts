@@ -251,7 +251,7 @@ export class CommentSectionComponent implements OnChanges {
 
             parentComment.replies.unshift(newReply)
 
-            this.analytics.trackCommentPosted('reply', this.spotId);
+            this.analytics.trackCommentPosted('comment', this.spotId);
 
             this.newCommentText = ""
             this.replyingTo = null
